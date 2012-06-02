@@ -1,0 +1,58 @@
+\documentclass[ngerman]{article}
+
+% Packages
+% Was macht das hier?
+\usepackage[T1]{fontenc}
+% Encoding der Datei (um Umlaute so zu nutzen)
+\usepackage[utf8]{inputenc}
+% Silbentrennung
+\usepackage[ngerman]{babel}
+% Für \begin{align} und Konsorten
+\usepackage{amsmath}
+% Für \mathbb und Konsorten
+\usepackage{amssymb}
+% Um im PDF geile Links zu erzeugen
+% Weniger unnütze Fehlermeldungen/Warnungen hoffentlich
+\usepackage{silence}
+% Für internationalisierte Quotes
+\usepackage{csquotes}
+% Für Subfigures und Figures (alle)
+\usepackage{graphicx}
+\usepackage[footnotesize,bf]{caption}
+\usepackage{subcaption}
+% Links (und autoref)
+\usepackage{hyperref}
+
+% Macros
+\newcommand{\PimiddyName}[1]{\emph{#1}}
+\newcommand{\PimiddyBegriff}[1]{\textbf{#1}}
+\newcommand{\PimiddyQuotes}[1]{\enquote{#1}}
+\newcommand{\PimiddyFormelText}[1]{\textrm{#1}}
+\newcommand{\PimiddyReell}{\ensuremath{\mathbb{R}}}
+\newcommand{\PimiddyGanz}{\ensuremath{\mathbb{Z}}}
+\newcommand{\PimiddyNorm}[2]{\left\|#2\right\|_{#1}}
+\newcommand{\PimiddyFootnote}[1]{\footnote{#1}}
+\newcommand{\PimiddyTodo}[1]{{\tiny \textbf{TODO: #1}}}
+\newcommand{\PimiddyEnglisch}[1]{{engl. \emph{#1}}}
+
+% Operators
+\DeclareMathOperator*{\PimiddyGrad}{grad}
+\DeclareMathOperator*{\PimiddyDiv}{div}
+\DeclareMathOperator*{\PimiddyRot}{rot}
+\newcommand{\PimiddyLaplace}{\Delta}
+\newcommand{\PimiddyProjection}{\mathbb{P}}
+\DeclareMathOperator*{\PimiddyVectorfields}{Vect}
+\DeclareMathOperator*{\PimiddyScalarfields}{Scal}
+
+\begin{document}
+
+\tableofcontents
+
+\include{mathematics}
+\include{navier_stokes}
+\include{stam}
+
+\bibliographystyle{plain}
+\bibliography{mendeley_bibliography}
+
+\end{document}

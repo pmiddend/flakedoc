@@ -1,0 +1,165 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Notizen
+\end_layout
+
+\begin_layout Itemize
+Irgendwo klarstellen, dass Wasser und Luft Flüssigkeiten sind, nur mit anderer
+ Dichte
+\end_layout
+
+\begin_layout Itemize
+Material Derivative: Gegeben irgendeine Größe (Temparatur z.B.) 
+\begin_inset Formula $q(t,x)$
+\end_inset
+
+, wobei 
+\begin_inset Formula $t$
+\end_inset
+
+ die Zeit angibt und 
+\begin_inset Formula $x$
+\end_inset
+
+ die Position, an der die Größe 
+\begin_inset Quotes eld
+\end_inset
+
+gemessen
+\begin_inset Quotes erd
+\end_inset
+
+ werden soll.
+ Dann ist die Material Derivative (substanzielle Ableitung) definiert als
+ die Ableitung von 
+\begin_inset Formula $q(t,x)$
+\end_inset
+
+ nach allen Komponenten.
+ 
+\begin_inset Formula 
+\[
+\frac{Dq}{Dt}=\frac{\partial q}{\partial t}+\nabla q\cdot\vec{u}
+\]
+
+\end_inset
+
+Leitet man die Größe nur nach der Zeit ab, nimmt man den Standpunkt eines
+ fest positionierten Beobachters an (z.B.
+ einem Menschen, der in einem Fluss steht).
+ Der zweite Summand bezieht die Strömung des Wassers mit ein.
+\end_layout
+
+\begin_layout Itemize
+Herleitung der Navier-Stokes-Gleichungen aus Bridson übernehmen, die ist
+ ganz gut.
+\end_layout
+
+\begin_layout Itemize
+Statt dieser Splittingsache bei den Navier-Stokes-Gleichungen lieber die
+ Herleitung nehmen, die zu dem Term führt, wo die einzelnen Teile des Algorithmu
+s ineinander eingesetzt sind (denke Crane erklärt das).
+\end_layout
+
+\begin_layout Itemize
+Staggered Grid erklären und wieso ich das nicht benutze.
+\end_layout
+
+\begin_layout Section*
+TODO
+\end_layout
+
+\begin_layout Itemize
+Wieso ist die totale Ableitung von 
+\begin_inset Formula $q(x,t)$
+\end_inset
+
+, wobei 
+\begin_inset Formula $x$
+\end_inset
+
+ eine vektorielle Größe und 
+\begin_inset Formula $t$
+\end_inset
+
+ eine skalare ist, grade:
+\begin_inset Formula 
+\[
+\frac{\partial q}{\partial t}+\nabla q\cdot\frac{\partial q}{\partial x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Schreibt man bei Personen irgendwelche Geburts- und Sterbedaten hin?
+\end_layout
+
+\begin_layout Itemize
+Wann wurden die Navier-Stokes-Gleichungen erfunden?
+\end_layout
+
+\end_body
+\end_document

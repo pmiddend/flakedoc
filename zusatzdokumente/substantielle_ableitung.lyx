@@ -1,0 +1,199 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Die substantielle Ableitung
+\end_layout
+
+\begin_layout Standard
+Gegeben ist
+\begin_inset Formula 
+\[
+\vec{p}(t)\colon\mathbb{R}\to\mathbb{R}^{3},\vec{p}(t)=(p_{1}(t),p_{2}(t),p_{3}(t))
+\]
+
+\end_inset
+
+Dies beschreibt eine Kurve im 3D-Raum (die Flugbahn eines Partikels).
+ Sei außerdem 
+\begin_inset Formula $q(\vec{x},t)$
+\end_inset
+
+ eine beliebige Größe (z.B.
+ die Temparatur) am Punkt 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ zum Zeitpunkt 
+\begin_inset Formula $t$
+\end_inset
+
+ gegeben.
+ Die Größe
+\begin_inset Formula 
+\[
+q(\vec{p}(t),t)
+\]
+
+\end_inset
+
+beschreibt die Quantität (Temparatur) auf dem Pfad des Partikels.
+ Diese wollen wir jetzt ableiten.
+ Dazu brauchen wir aber die Form
+\begin_inset Formula 
+\[
+f(g(x))
+\]
+
+\end_inset
+
+und wir haben zwei Eingabegrößen für 
+\begin_inset Formula $q$
+\end_inset
+
+.
+ Also definieren wir
+\begin_inset Formula 
+\[
+\vec{x}(t)=(p_{1}(t),p_{2}(t),p_{3}(t),t)
+\]
+
+\end_inset
+
+und haben jetzt
+\begin_inset Formula 
+\[
+q(\vec{x}(t))
+\]
+
+\end_inset
+
+wenn wir 
+\begin_inset Formula $q$
+\end_inset
+
+ als Element von 
+\begin_inset Formula $\mathbb{R}^{4}\to\mathbb{R}$
+\end_inset
+
+ auffassen.
+ Die Ableitung ist dann wegen der Kettenregel
+\begin_inset Formula 
+\[
+Dq(\vec{x}(t))=(Dq)(\vec{x}(t))\cdot D\vec{x}
+\]
+
+\end_inset
+
+jetzt brauchen wir also die Ableitungen von 
+\begin_inset Formula $q$
+\end_inset
+
+ und von 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+.
+ Die von 
+\begin_inset Formula $q$
+\end_inset
+
+ ist einfach:
+\begin_inset Formula 
+\[
+Dq=\left(\frac{\partial q}{\partial x_{1}},\frac{\partial q}{\partial x_{2}},\frac{\partial q}{\partial x_{3}},\frac{\partial q}{\partial t}\right)
+\]
+
+\end_inset
+
+die von 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ ist
+\begin_inset Formula 
+\[
+D\vec{x}=\left(\frac{\partial p_{1}}{\partial t},\frac{\partial p_{2}}{\partial t},\frac{\partial p_{3}}{\partial t},\frac{t}{\partial t}\right)=\left(\frac{\partial p_{1}}{\partial t},\frac{\partial p_{2}}{\partial t},\frac{\partial p_{3}}{\partial t},1\right)
+\]
+
+\end_inset
+
+für das Skalarprodukt ergibt sich daher als
+\begin_inset Formula 
+\[
+Dq(\vec{x}(t))=\nabla q\cdot\frac{\partial\vec{p}}{\partial t}+\frac{\partial q}{\partial t}
+\]
+
+\end_inset
+
+Die substantielle Ableitung erhält man nun, wenn man 
+\begin_inset Formula $\frac{\partial\vec{p}}{\partial t}=\vec{u}$
+\end_inset
+
+ setzt, wobei 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ das Vektorfeld ist, was die Fluidgeschwindigkeit angibt.
+\end_layout
+
+\end_body
+\end_document
