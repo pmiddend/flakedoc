@@ -9,6 +9,8 @@
 \usepackage[ngerman]{babel}
 % Für \begin{align} und Konsorten
 \usepackage{amsmath}
+% Für Sätze
+\usepackage{amsthm}
 % Für \mathbb und Konsorten
 \usepackage{amssymb}
 % Um im PDF geile Links zu erzeugen
@@ -22,6 +24,19 @@
 \usepackage{subcaption}
 % Links (und autoref)
 \usepackage{hyperref}
+%\def\algorithmautorefname{Algorithmus}
+\addto\extrasngerman{
+	  \def\algorithmautorefname{Algorithmus}
+}
+
+% Beide für Tabellen
+\usepackage{array}
+\usepackage{booktabs}
+
+% Pseudocode
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 % Macros
 \newcommand{\PimiddyName}[1]{\emph{#1}}
@@ -34,6 +49,8 @@
 \newcommand{\PimiddyFootnote}[1]{\footnote{#1}}
 \newcommand{\PimiddyTodo}[1]{{\tiny \textbf{TODO: #1}}}
 \newcommand{\PimiddyEnglisch}[1]{{engl. \emph{#1}}}
+\newcommand{\PimiddyTableHeading}[1]{{\textbf{#1}}}
+\newcommand{\PimiddyInlineCode}[1]{{\texttt{#1}}}
 
 % Operators
 \DeclareMathOperator*{\PimiddyGrad}{grad}
@@ -44,10 +61,22 @@
 \DeclareMathOperator*{\PimiddyVectorfields}{Vect}
 \DeclareMathOperator*{\PimiddyScalarfields}{Scal}
 
+% Theorems
+\newtheorem*{PimiddySatz}{Satz}
+
+% For latex+inkscape to work. The eps_tex files use \includegraphics{foo.eps}
+% which diesn't find the images unless this is defined
+\graphicspath{{images/}}
+% Also for latex+inkscape
+\usepackage{xcolor}
+
 \begin{document}
+
+\include{preamble}
 
 \tableofcontents
 
+\include{introduction}
 \include{mathematics}
 \include{navier_stokes}
 \include{stam}

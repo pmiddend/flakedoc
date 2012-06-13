@@ -1,0 +1,247 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      8656,        238]
+NotebookOptionsPosition[      8345,        222]
+NotebookOutlinePosition[      8681,        237]
+CellTagsIndexPosition[      8638,        234]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"baseVectorField", "=", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]},
+      {
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"-", "0.8"}]}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "0.5"}], ",", 
+         RowBox[{"-", "0.5"}]}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "0.8"}], ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "0.7"}], ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"0", "-", "0.6"}], ",", "0.3"}], "}"}]},
+      {
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0.6", ",", "0.2"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0.7"}], "}"}]},
+      {
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]},
+      {
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}
+     }], "\[NoBreak]", ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tableRows", "[", "table_", "]"}], ":=", 
+   RowBox[{"Length", "[", "table", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tableColumns", "[", "table_", "]"}], ":=", 
+   RowBox[{"Length", "[", 
+    RowBox[{"table", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"mapTable", "[", 
+    RowBox[{"f_", ",", "table_"}], "]"}], ":=", 
+   RowBox[{"Map", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"f", "[", "\[IndentingNewLine]", 
+       RowBox[{"#1", ",", "\[IndentingNewLine]", 
+        RowBox[{"table", "[", 
+         RowBox[{"[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"#1", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"#1", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "\[IndentingNewLine]", "]"}], 
+         "]"}]}], "\[IndentingNewLine]", "]"}], "&"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Table", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"i", ",", "j"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "1", ",", 
+         RowBox[{"tableRows", "[", "table", "]"}]}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "1", ",", 
+         RowBox[{"tableColumns", "[", "table", "]"}]}], "}"}]}], 
+      "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tableTranspose", "[", "table_", "]"}], ":=", 
+   RowBox[{"Transpose", "[", "\[IndentingNewLine]", 
+    RowBox[{"mapTable", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"table", "[", 
+        RowBox[{"[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"tableRows", "[", "table", "]"}], "-", 
+           RowBox[{"#1", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "+", "1"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"#1", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], "\[IndentingNewLine]", "]"}], 
+        "]"}], "&"}], ",", "\[IndentingNewLine]", "table"}], 
+     "\[IndentingNewLine]", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Graphics", "[", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"mapTable", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Arrow", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", "0.5"}], "}"}], "+", "#1"}], ",", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", "0.5"}], "}"}], "+", "#1", "+", "#2"}]}], 
+         "}"}], "]"}], "&"}], ",", 
+      RowBox[{"tableTranspose", "[", "baseVectorField", "]"}]}], "]"}], 
+    "\[IndentingNewLine]", "}"}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.5478108740236483`*^9, 3.547810917660945*^9}, {
+  3.547810949080558*^9, 3.547811043965596*^9}, {3.547811097085649*^9, 
+  3.5478111600171127`*^9}, {3.547811224994549*^9, 3.547811392689844*^9}, {
+  3.547811445934669*^9, 3.547811473620829*^9}, {3.547811522785598*^9, 
+  3.547811588844281*^9}, {3.5478116192043533`*^9, 3.547811834352043*^9}, {
+  3.5478119081411753`*^9, 3.547811944393178*^9}, {3.547811995572617*^9, 
+  3.547812093242124*^9}, {3.547812200097386*^9, 3.547812201660204*^9}, {
+  3.547812241288802*^9, 3.5478125530024014`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{ArrowBox[{{1.5, 1.5}, {1.5, 1.5}}], 
+    ArrowBox[{{1.5, 2.5}, {1.5, 2.5}}], ArrowBox[{{1.5, 3.5}, {1.5, 3.5}}], 
+    ArrowBox[{{1.5, 4.5}, {1.5, 4.5}}], ArrowBox[{{1.5, 5.5}, {1.5, 5.5}}]}, {
+    ArrowBox[{{2.5, 1.5}, {2.5, 1.5}}], ArrowBox[{{2.5, 2.5}, {2.5, 2.5}}], 
+    ArrowBox[{{2.5, 3.5}, {2.5, 3.5}}], ArrowBox[{{2.5, 4.5}, {2.5, 3.7}}], 
+    ArrowBox[{{2.5, 5.5}, {2.5, 5.5}}]}, {ArrowBox[{{3.5, 1.5}, {3.5, 1.5}}], 
+    ArrowBox[{{3.5, 2.5}, {3.5, 2.5}}], ArrowBox[{{3.5, 3.5}, {3.5, 3.5}}], 
+    ArrowBox[{{3.5, 4.5}, {3., 4.}}], ArrowBox[{{3.5, 5.5}, {3.5, 5.5}}]}, {
+    ArrowBox[{{4.5, 1.5}, {4.5, 1.5}}], ArrowBox[{{4.5, 2.5}, {4.5, 2.5}}], 
+    ArrowBox[{{4.5, 3.5}, {4.5, 3.5}}], ArrowBox[{{4.5, 4.5}, {3.5, 4.5}}], 
+    ArrowBox[{{4.5, 5.5}, {4.5, 5.5}}]}, {ArrowBox[{{5.5, 1.5}, {5.5, 1.5}}], 
+    ArrowBox[{{5.5, 2.5}, {5.5, 2.5}}], ArrowBox[{{5.5, 3.5}, {5.5, 3.5}}], 
+    ArrowBox[{{5.5, 4.5}, {4.7, 4.5}}], ArrowBox[{{5.5, 5.5}, {5.5, 5.5}}]}, {
+    ArrowBox[{{6.5, 1.5}, {6.5, 1.5}}], ArrowBox[{{6.5, 2.5}, {6.5, 2.5}}], 
+    ArrowBox[{{6.5, 3.5}, {7.1, 3.7}}], ArrowBox[{{6.5, 4.5}, {5.8, 4.5}}], 
+    ArrowBox[{{6.5, 5.5}, {6.5, 5.5}}]}, {ArrowBox[{{7.5, 1.5}, {7.5, 1.5}}], 
+    ArrowBox[{{7.5, 2.5}, {7.5, 2.5}}], ArrowBox[{{7.5, 3.5}, {7.5, 4.2}}], 
+    ArrowBox[{{7.5, 4.5}, {6.9, 4.8}}], 
+    ArrowBox[{{7.5, 5.5}, {7.5, 5.5}}]}}]], "Output",
+ CellChangeTimes->{{3.547812055236054*^9, 3.547812093512134*^9}, 
+   3.5478122024153547`*^9, {3.5478124395717793`*^9, 3.547812473829458*^9}, {
+   3.547812505525832*^9, 3.547812553613709*^9}}]
+}, Open  ]]
+},
+WindowSize->{1918, 1059},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Linux x86 (64-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 6153, 173, 634, "Input"],
+Cell[6735, 197, 1594, 22, 260, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
