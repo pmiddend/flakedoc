@@ -30,6 +30,7 @@ set(
 	images/simulation_blowup.eps
 	images/swimmer_in_water.png
 	images/schloss_grey.png
+	images/flat_3d_texture.png
 	images/schloss_grey_laplace.png
 	images/stam_loop.eps
 	images/incompressibility_condition_example.eps
@@ -47,7 +48,8 @@ set(
 
 set(
 	FLAKE_BIBFILES
-	mendeley_bibliography.bib)
+	mendeley_bibliography.bib
+	other_sources.bib)
 
 set(
 	FLAKE_ADDITIONAL_INPUTS
@@ -56,6 +58,7 @@ set(
 	preamble.tex
 	mathematics.tex
 	stam.tex
+	implementation.tex
 	${FLAKE_INKSCAPE_IMAGES_TEX})
 
 set(

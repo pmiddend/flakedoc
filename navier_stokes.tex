@@ -23,7 +23,7 @@ unterscheidet man zwischen \PimiddyBegriff{komprimierbaren} und
 \PimiddyBegriff{unkomprimierbaren} Fluiden, je nachdem, ob die Veränderung des
 Volumens eine Rolle für die Simulation spielt.
 
-Es werden hier nur \emph{inkompressible} Fluide betrachtet. Dies stellt kein
+Es werden hier nur \emph{unkomprimierbare} Fluide betrachtet. Dies stellt kein
 Problem dar, da nur vergleichsweise kleine Geschwindigkeiten modelliert werden.
 Das Modell wird dadurch allerdings wesentlich vereinfacht.
 
@@ -123,7 +123,7 @@ von mikroskopisch kleinen \emph{Partikeln} (man modelliert sozusagen die
 Moleküle des Fluids einzeln). Jedes Partikel hat ein Volumen $V$, eine
 Masse $m$, eine Position $\vec{x}$ und eine Geschwindigkeit $\vec{u}$. In jedem
 Simulationsschritt berechnet man die Kräfte, die auf die Partikel wirken, und
-berechnet die resultierende Beschelunigung mit der Newton'schen Formel:
+berechnet die resultierende Beschleunigung mit der Newton'schen Formel:
 
 \begin{align*}
 m \cdot \vec{a} &= \vec{F} \\
@@ -148,21 +148,21 @@ mit Hilfe von Vektorfeldern und Skalarfeldern aber sehr gut mathematisch erfasse
 \end{figure}
 
 Sowohl die Euler'sche- als auch die Lagrang'sche Betrachtungsweise spiegeln sich
-in den Navier-Stokes-Gleichungen wider. Sie bilden eine Entsprechung der
-Gleichung $\vec{F} = m \cdot \vec{a}$ mit dem Unterschied, dass keine Kraft auf
-einen einzelnen Körper berechnet wird, sondern auf einen Raumabschnitt (
-ein \PimiddyQuotes{Kontinuum}).
+in den Navier-Stokes-Gleichungen wider. Die Gleichungen bilden eine Entsprechung
+der Gleichung $\vec{F} = m \cdot \vec{a}$ mit dem Unterschied, dass keine Kraft
+auf einen einzelnen Körper berechnet wird, sondern auf einen Raumabschnitt (ein
+\PimiddyQuotes{Kontinuum}).
 
 Was die beiden Betrachtungsweisen verbindet, ist die
 \PimiddyBegriff{substantielle Ableitung}. Zur Herleitung dieser Ableitungsform
 betrachten wir zunächst eine beliebige Größe $q(\vec{x},t)$. Dies kann eine
 skalare Größe wie z.B. die Temperatur eines Gewässers sein oder eine Vektorgröße
-wie die Farbe des Wassers an einem Punkt. Sie ist eine Lagrange'sche Größe, ist
+wie die Farbe des Wassers an einem Punkt. Sie ist eine Euler'sche Größe, ist
 also in jedem Punkt $\vec{x}$ und in jedem Zeitpunkt $t$ gegeben.
 
 Zudem betrachten wir ein Partikel mit einer Bewegungsbahn durch das Fluid (z.B.
 einen Fisch im Wasser). Seine Position zum Zeitpunkt $t$ sei gegeben durch
-$\vec{p}(t)$. Dies entspricht einer Euler'schen Größe.
+$\vec{p}(t)$. Dies entspricht einer Lagrange'schen Größe.
 
 Setzen wir beide Größen zusammen, erhalten wir beispielsweise die Temperatur des
 Wassers auf der Bahn, die der Fisch im Wasser verfolgt:
@@ -198,11 +198,11 @@ verändert, bilden wir die (totale) Ableitung dieser zusammengesetzten Größe:
 \end{equation}
 
 Die Summe auf der rechten Seite besteht aus zwei Teilen. Der erste Term,
-$\frac{\partial q}{\partial t}$, gibt an, wie sich das Fluid unabhängig von
-der Position verändert. Bezogen auf den Fisch gibt dieser Term an, wie
-sich die Temperatur des Gewässers über den Tag verteilt verändert. Der
-zweite Term ergänzt die Temperaturveränderungen, die durch die Bahn des
-Fischs verursacht werden.
+    $\frac{\partial q}{\partial t}$, gibt an, wie sich das Fluid unabhängig von
+    der betrachteten Position verändert. Bezogen auf den Fisch gibt dieser Term
+    an, wie sich die Temperatur des Gewässers über den Tag verteilt verändert.
+    Der zweite Term ergänzt die Temperaturveränderungen, die durch die Bahn des
+    Fischs verursacht werden.
 
 Statt eines beliebigen Pfades durch das Fluid nimmt man zur Definition der
 substantiellen Ableitung nun das Geschwindigkeitsfeld des Fluids zur Hilfe:

@@ -265,7 +265,7 @@ können.
 Allerdings liegt hier auch eine Fehlerquelle des Verfahrens. Interpolation ist
 eine glättende Operation, sie liefert nur eine \emph{Approximation} des Wertes,
 der zwischen den Gitterzellen angenommen würde. Ähnlich wie bei der
-Herleitung der diskreten Ableitung in \autoref{eq:mathematics_discretization}
+Herleitung der diskreten Ableitung in \autoref{sec:mathematics_discretization}
 muss man in der Implementierung einen Kompromiss eingehen und ein
 Interpolationsverfahren wählen, was Genauigkeit und Rechenleistung verbindet.
 
@@ -340,10 +340,42 @@ bessere Fehlerabschätzung liefert \cite{Selle2008}\cite{Crane2007}. Dadurch
 entstehen mehr Wirbelphänomene, allerdings bietet diese Methode keinen Einfluss
 darauf, wie stark die Wirbel auftreten sollen.
 
-Stattdessen wurde hier eine Technik namens
+Statt des MacCormack-Verfahrens wurde hier eine Technik namens
 \PimiddyBegriff{Wirbelstärkenerhaltung} (\PimiddyEnglisch{vorticity
-confinement}) umgesetzt. Sie ist einfach zu implementieren und erlaubt,
-die Stärke zu variieren.
+confinement}) umgesetzt. Sie ist einfach zu implementieren, schnell und
+erlaubt, die Stärke zu variieren. Entwickelt wurde sie, um die komplexen
+Turbulenzen in der Umgebung von Helikoptern zu modellieren\cite{Steinhoff1994}.
+
+Die Idee ist, Wirbel zu identifizieren und an den \PimiddyQuotes{richtigen}
+Stellen zu verstärken. Dazu wird zuerst die Rotation des Geschwindigkeitsfeldes,
+$\vec{R} = \PimiddyRot \vec{u}_{i,j,k}$, bestimmt. Der Betrag der Rotation,
+$|\vec{R}|$, gibt an, wie stark die Rotation in einem Punkt ist. Der
+\emph{Gradient} des Betrags, $\PimiddyGrad |\vec{R}|$, zeigt also
+von Bereichen niedriger Wirbelstärke zu bereichen hoher Wirbelstärke.
+
+Um die Wirbel zu verstärken, bildet man eine Kraft, die senkrecht zum
+(normalisierten) Gradienten und zur Rotation ist:
+
+\begin{equation}
+\label{eq:stam_vorticity_confinement}
+\vec{F}_{\PimiddyFormelText{vorticity}}
+=
+\varepsilon \cdot
+\left(
+	\frac
+	{
+		\PimiddyGrad \vec{R}
+	}
+	{
+		|\PimiddyGrad \vec{R}|
+	}
+	\times
+	\vec{R}
+\right)
+\end{equation}
+
+Die Konstante $\varepsilon$ in \autoref{eq:stam_vorticity_confinement} gibt die
+Stärke der Kraft an.
 
 \subsection{Projektion}
 
