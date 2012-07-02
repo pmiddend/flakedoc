@@ -23,7 +23,7 @@
 \usepackage[footnotesize,bf]{caption}
 \usepackage{subcaption}
 % Links (und autoref)
-\usepackage{hyperref}
+\usepackage[pdfborder={0 0 0}]{hyperref}
 %\def\algorithmautorefname{Algorithmus}
 \addto\extrasngerman{
 	  \def\algorithmautorefname{Algorithmus}
@@ -117,6 +117,17 @@
 	morekeywords={
 		abs,abs_diff,acos,acosh,acospi,add_sat,all,any,asin,asinh,asinpi,async_work_group_copy,async_work_group_strided_copy,atan,atan2,atan2pi,atanh,atanpi,atomic_add,atomic_and,atomic_cmpxchg,atomic_dec,atomic_inc,atomic_max,acomit_min,atomic_or,atomic_sub,atomic_xchg,atomic_xor,barrier,bitselect,cbrt,ceil,clamp,clz,copysign,cos,cosh,cospi,cross,degrees,distance,dot,erf,erfc,exp,exp10,exp2,expm1,fabs,fast_distance,fast_length,fast_normalize,fdim,floor,fma,fmax,fmin,fmod,fract,frexp,get_global_id,get_global_size,get_global_offset,get_group_id,get_image_channel_data_type,get_image_channel_order,get_image_depth,get_image_dim,get_image_height,get_image_width,get_local_id,get_local_size,get_num_groups,get_work_dim,hadd,half_cos,half_divide,half_exp,half_exp2,half_exp10,half_log,half_log10,half_log2,half_powr,half_recip,half_rsqrt,half_sin,half_sqrt,half_tan,hypot,ilogb,isequal,isfinite,isgreater,isgreaterequal,isinf,isless,islessequal,islessgreater,isnan,isnormal,isnotequal,isordered,isunordered,ldexp,length,lgamma,lgamma_r,log,log10,log1p,log2,logb,mad,mad_hi,mad_sat,mad24,max,maxmag,minmag,mem_fence,min,mix,modf,mul_hi,mul24,nan,native_cos,native_divide,native_exp,native_exp2,native_exp10,native_log,native_log2,native_log10,native_powr,native_recip,native_rsqrt,native_sin,native_sqrt,native_tan,nextafter,normalize,pow,pown,powr,prefetch,radians,read_imagef,read_imageh,read_imageui,read_mem_fence,remainder,remquo,rhadd,rint,rootn,rotate,round,rsqrt,select,shuffle,shuffle2,sign,signbit,sin,sincos,sinh,sinpi,sqrt,step,smoothstep,sub_sat,tan,tanh,tanpi,tgamma,trunc,upsample,vec_step,wait_group_events,write_imagef,write_imageh,write_imagei,write_imageui,write_mem_fence,convert_float4},
 	keywordstyle=\color{BlueViolet}}
+
+
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}2
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
 
 % This is a package nagging about deprecated stuff
 \usepackage{nag}

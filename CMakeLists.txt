@@ -8,7 +8,7 @@ project(
 	NONE)
 
 include(
-	UseLATEX.cmake)
+	UseLATEX)
 
 set(
 	FLAKE_INKSCAPE_IMAGES
@@ -26,6 +26,7 @@ set(
 	images/scalarfield.eps
 	images/boundary_with_normals.png
 	images/boundary_field_for_pressure.eps
+	images/right_neighborhood.eps
 	images/boundary_types.eps
 	images/simulation_blowup.eps
 	images/swimmer_in_water.png
