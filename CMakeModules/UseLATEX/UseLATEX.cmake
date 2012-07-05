@@ -569,7 +569,7 @@ FUNCTION(LATEX_SETUP_VARIABLES)
   LATEX_WANTIT(PDFTOPS_CONVERTER pdftops)
   LATEX_WANTIT(LATEX2HTML_CONVERTER latex2html)
 
-  SET(LATEX_COMPILER_FLAGS "-interaction=nonstopmode"
+  SET(LATEX_COMPILER_FLAGS "-interaction=nonstopmode -shell-escape"
     CACHE STRING "Flags passed to latex.")
   SET(PDFLATEX_COMPILER_FLAGS ${LATEX_COMPILER_FLAGS}
     CACHE STRING "Flags passed to pdflatex.")
