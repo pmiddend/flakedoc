@@ -25,8 +25,14 @@ set(
 	images/vectorfield.eps
 	images/scalarfield.eps
 	images/boundary_with_normals.png
+	images/single_snow_crystal.png
+	images/real_snowflakes.png
 	images/boundary_field_for_pressure.eps
 	images/right_neighborhood.eps
+	images/point_sprite_vs_billboard.png
+	images/aagaard_layer_model.png
+	images/aagaard_spheres.png
+	images/moist_air.png
 	images/boundary_types.eps
 	images/simulation_blowup.eps
 	images/swimmer_in_water.png
