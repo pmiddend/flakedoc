@@ -26,6 +26,7 @@ set(
 	images/scalarfield.eps
 	images/boundary_with_normals.png
 	images/single_snow_crystal.png
+	images/drag_forces.png
 	images/real_snowflakes.png
 	images/boundary_field_for_pressure.eps
 	images/right_neighborhood.eps
@@ -40,6 +41,9 @@ set(
 	images/flat_3d_texture.png
 	images/schloss_grey_laplace.png
 	images/stam_loop.eps
+	images/snowflake_helix.png
+	images/vortex_shedding.png
+	images/vortex_shedding_macroscopic.png
 	images/incompressibility_condition_example.eps
 	images/stam_loop_with_projection.eps
 	images/particle_system_wall_collision.eps
@@ -60,17 +64,21 @@ set(
 
 set(
 	FLAKE_ADDITIONAL_INPUTS
-	navier_stokes.tex
-	introduction.tex
 	preamble.tex
+	introduction.tex
 	mathematics.tex
+	navier_stokes.tex
 	stam.tex
-	implementation.tex
+	opencl.tex
+	opengl.tex
+	wind_implementation.tex
+	snowflake_implementation.tex
+	fallen_snow_implementation.tex
 	${FLAKE_INKSCAPE_IMAGES_TEX})
 
-set(
-	LATEX_COMPILER_FLAGS
-	"-file-line-error")
+#set(
+#	LATEX_COMPILER_FLAGS
+#	"${LATEX_COMPILER_FLAGS} -file-line-error -shell-escape")
 
 ADD_LATEX_DOCUMENT(
 	main.tex

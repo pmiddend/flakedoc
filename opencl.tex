@@ -1,0 +1,66 @@
+\section{OpenCL}
+
+\subsection{Einleitung}
+
+\begin{itemize}
+\item CFD ist sehr anspruchsvoll was Rechenaufwand angeht
+\item Traditionellerweise hat man (für Endanwender) auf CPUs programmiert
+\item CPUs haben seit kurzem immerhin mehrere Kerne, sodass OpenMP und MPI Sinn ergeben
+\item Die Entwicklung zu mehreren Kernen wurde von der Stromsparüberlegung angetrieben (viele Kerne mit niedrigeren Frequenzen leisten dasselbe, sind aber energieeffizienter)
+\item Dadurch außerdem kleinere, spezialisiertere Prozessoren (weniger "wasted transistors")
+\item Aber GPUs haben theoretisch wesentlich mehr Rechenpower\cite{Guide2012}
+\item Grade CFD ist sauschnell
+\item Aber natürlich brauch man Probleme, die gut parallelisierbar sind
+\item Definition Concurrency: "A software system is concurrent when it consists of more than one stream of operations that are active and can make progress at one time."
+\item Definition Parallelism: "When concurrent software runs on a computer with multiple processing elements so that threads actually run simultaneously, we have parallel computation. Concurrency enabled by hardware is parallelism."
+\item In diesem Abschnitt Architektur von OpenCL deutlich machen und klären welche Probleme damit gut lösbar sind.
+\end{itemize}
+
+\subsection{Architektur}
+
+\begin{itemize}
+\item Dezember 2008 released
+\item Momentan bei Version 1.2, obwohl das noch wenige implementieren
+\item Parallelisierbarkeit erklären: data parallelism und task parallelism
+\item Dataparallelism: Idee ist, dass man eine Sammlung von Daten hat, die
+nebenläufig upgedatet werden können. Parallelität wird nun grade dadurch
+erzeugt, dass man denselben Instructionstream auf jedes Datenelement abfeuert
+(nicht etwa für jedes Datenelement 'nen eigenen Thread hat, der sich beliebig
+anders verhält als der nächste Thread). Beispiel: Addition zweier Vektoren
+(SIMD allgemein).
+\item Taskparallelism: Eignet sich vielleicht eher für Traversierung von Graphen
+oder so.
+\item Platform-Model erklären
+    \begin{itemize}
+            \item "High level description of the heterogenous system"
+            \item Host (gibt nur einen)
+            \item Host enthält Devices
+            \item Devices enthalten Compute Units
+            \item Compute Units enthalten Processing Elements
+            \item Host program, was auf Host läuft
+            \item Mehrere Kernel laufen auf jeweils einem Device
+            \item Execution Model klärt, wie Kernel ausgeführt werden
+    \end{itemize}
+\item Execution-Model
+    \begin{itemize}
+            \item "abstract representation of how streams of instructions execute on the heterogenous platform"
+            \item Kernelexecution löst die Erstellung eines ganzzahligen "Gitters" aus, jeder Kernel kriegt eine Gitterzelle, die globale ID und wird zum "Work-Item"
+            \item Workitems werden in Workgroups zusammengefasst (haben auch ID, bilden eine gröbere Struktur, haben geteilten Speicher, werden auf derselben Computeunit ausgeführt)
+            \item Command-Queues, schedulen Kernel, Memorycommands, Synchronisierungskommandos, in-order, out-of-order
+            \item Barrieren, Warps
+    \end{itemize}
+\item Memory-Model
+    \begin{itemize}
+            \item "the collection of memory regions withing OpenCL and how they interact during an OpenCL computation"
+            \item Bufferobjects (eindimensional, beliebige Datentypen), Imageobjects, mehrdimensional usw., Inhalt "versteckt"
+            \item Host memory
+            \item Global, local, private, constant
+            \item Zusammenspiel mit OpenGL
+    \end{itemize}
+\item Programming model
+\begin{itemize}
+    \item High level abstractions for algorithm programming
+    \item OpenCL-C erläutern
+\end{itemize}
+\end{itemize}
+

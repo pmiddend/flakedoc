@@ -927,7 +927,8 @@ FUNCTION(ADD_LATEX_TARGETS_INTERNAL)
 
   # The commands to run LaTeX.  They are repeated multiple times.
   SET(latex_build_command
-    ${LATEX_COMPILER} ${LATEX_COMPILER_FLAGS} ${synctex_flags} ${LATEX_MAIN_INPUT}
+	  #    ${LATEX_COMPILER} ${LATEX_COMPILER_FLAGS} ${synctex_flags} ${LATEX_MAIN_INPUT}
+      ${LATEX_COMPILER} -shell-escape -file-line-error ${synctex_flags} ${LATEX_MAIN_INPUT}
     )
   SET(pdflatex_build_command
     ${PDFLATEX_COMPILER} ${PDFLATEX_COMPILER_FLAGS} ${synctex_flags} ${LATEX_MAIN_INPUT}

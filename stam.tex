@@ -21,10 +21,10 @@ Besonderheiten eingegangen wurde:
 	Differentialgleichungen hier eine besondere Herausforderung.
 \item
 	Man ist außerdem nicht unbedingt an einer exakten Lösung interessiert.
-	Will man z.B. Wasser oder Rauch simulieren reicht es, ein physikalisch
+	Will man z.\,B. Wasser oder Rauch simulieren reicht es, ein physikalisch
 	annähernd korrektes Verhalten zu erzielen.
 \item
-	Bisherige Verfahren (wie z.B. die finiten Differenzen in
+	Bisherige Verfahren (wie z.\,B. die finiten Differenzen in
 	\cite{Foster1997}) waren numerisch \emph{instabil} für große
 	Zeitschritte. Dynamische Anwendungen wie Spiele oder Animationssoftware
 	können allerdings keine minimiale Framerate garantieren, da sie mit
@@ -72,7 +72,7 @@ Fassung, bei der andere Randbedingungen verwendet werden.
 Die Fluidsimulation findet auf einem diskreten, endlichen Gitter, also einer
 Teilmenge von $\PimiddyGanz^n$ statt. Gegeben sei das Geschwindigkeitsfeld zum
 Zeitpunkt $t$: $\vec{u}_{i,j,k}^t$. Als Anfangsbedingung könnten zum Zeitpunkt $0$
-z.B. alle Zellen auf eine vorgegebene \PimiddyQuotes{Windrichtung} gesetzt sein.
+z.\,B. alle Zellen auf eine vorgegebene \PimiddyQuotes{Windrichtung} gesetzt sein.
 Gegeben sei außerdem ein Zeitdelta $\Delta t$ (nicht zu verwechseln mit dem
 Laplaceoperator). Ziel ist es, unter Zuhilfenahme der
 Navier-Stokes-Gleichungen ein neues Geschwindigkeitsfeld $\vec{u}_{i,j,k}^{t+\Delta
@@ -83,7 +83,7 @@ Außerdem berechnen wir einmalig ein \emph{Hindernisfeld} $b_{i,j,k}$. Ist $b_{i
 ist die Zelle frei. Im Implementierungsteil wird erklärt, wie dieses
 Hindernisfeld gefüllt wird.
 
-Die rechte Seite Impulsgleichung \eqref{eq:navier_stokes_momentum_equation} besteht
+Die rechte Seite der Impulsgleichung \eqref{eq:navier_stokes_momentum_equation} besteht
 aus mehreren Summanden:
 
 \begin{equation}
@@ -207,7 +207,7 @@ modifiziert, um Stabilität zu erreichen.
 \label{fig:stam_numerically_unstable_advection}
 \end{figure}
 
-Das neue Feld $q_{i,j,k}^{t+\Delta t}$ sei anfangs überall 0 (bzw. $(0,0,0)$,
+Das neue Feld $q_{i,j,k}^{t+\Delta t}$ sei anfangs überall 0 (bzw\,. $(0,0,0)$,
 falls es ein Vektorfeld ist). Man stelle sich an jedem Gitterpunkt
 $(i,j,k)$ ein Partikel mit \PimiddyQuotes{Ladung} $q_{i,j,k}$ vor, was im Fluid
 treibt. Durch die Bewegung des Fluids würde dieses Partikel um $\Delta t \cdot
@@ -527,7 +527,7 @@ p_i
 Der Wert $p_i$ definiert sich also durch seine direkten Nachbarn $p_{i-1},
 p_{i+1}$, die Gleichung ist für sich genommen nicht aufzulösen.
 
-Sei nun eine Anfangslösung $p^0$ gegeben, z.B. $p^0_i = 0$ für alle $i$.
+Sei nun eine Anfangslösung $p^0$ gegeben, z.\,B. $p^0_i = 0$ für alle $i$.
 Dann lässt sich eine neue, bessere Lösung bestimmen, indem man die Werte aus
 $p^0$ als Näherungen für die Nachbarn in der exakten Lösung nimmt:
 
@@ -605,7 +605,7 @@ Differentialgleichung (wie der Poissongleichung),
 \item
 	Bei Dirichlet-Randbedingungen wird der \emph{Wert} des Feldes am Rand
 	fest vorgeschrieben. Beispielsweise könnte man die Druckwerte, die über
-	den Simulationsrand hinausgehen (z.B. $p_{-1,-1,-1}$), als $0$ annehmen.
+	den Simulationsrand hinausgehen (z.\,B. $p_{-1,-1,-1}$), als $0$ annehmen.
 	Dies ist gewissermaßen bei der Advektion geschehen, wo die
 	Geschwindigkeit bei Hinderniszellen als $(0,0,0)$ angenommen wurde.
 \item
@@ -715,7 +715,7 @@ subtrahiert wurde).
 Idealerweise bräuchten wir dazu noch ein Feld $\vec{n}_{i,j,k}$, was in jedem
 Punkt die Normale des Hindernisses angibt (siehe
 \autoref{fig:stam_boundary_with_normals}). Dies wurde in einigen
-Arbeiten umgesetzt (z.B. \cite{Bordignon}), es gibt jedoch eine Vereinfachung,
+Arbeiten umgesetzt (z.\,B. \cite{Bordignon}), es gibt jedoch eine Vereinfachung,
 die dieses Feld nicht benötigt: Man iteriert erneut über alle
 Gitterzellen und testet indem für jede Gitterzelle $(i,j,k)$, welche
 Nachbarzellen von einem Hindernis ausgefüllt sind. Die zugehörige

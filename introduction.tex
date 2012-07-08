@@ -17,4 +17,30 @@ den Aufbau der Arbeit.
 
 \subsection{Aufbau}
 
-...
+Obacht, was folgt ist aus dem eigentlich geplanten Kapitel
+``Implementierung'' entnommen, daher fehlt noch was am Grundaufbau.
+
+In diesem Kapitel soll auf die Details der Implementierung eingegangen werden. Es
+wird zunächst OpenGL eingeführt, was zur Visualisierung eingesetzt wird. Danach
+wird OpenCL eingeführt, was für die eigentlichen Berechnungen zuständig ist.
+
+Danach das Verfahren von Stam mittels OpenCL umgesetzt. Als Ausgabe erhält man
+ein Schnee-Vektorfeld, was dann weiterverwendet werden kann. Hier wird auch auf
+Hindernisse wie Gebäude eingegangen. Dazu gehört das Laden der Hindernisse aus
+obj-Dateien sowie die Anzeige mittels OpenGL, sowie die Einspeisung in die
+Simulation.
+
+Anschließend wird der fallende Schnee modelliert. Hierzu soll zunächst die
+Entstehung von Schnee in der Natur erläutert werden, sowie physikalische
+Hindergründe bezüglich fallendem Schnee.
+
+Diese idealen physikalischen Gegebenheiten werden dann in ein einfacheres
+Modell transformiert, welches für das Partikelsystem verwendet wird. Zu diesem
+Partikelsystem gehört neben der Simulation auch die Visualisierung, für die in
+dieser Arbeit Pointsprites verwendet werden.
+
+Im letzten Abschnitt wird schließlich auf die Modellierung der Schneedecke
+eingegangen, wobei die Ergebnisse von Manuel Schwarz \cite{Schwarz2012} eine
+tragende Rolle spielen. Außerdem werden noch einige weitere
+Anwendungsmöglichkeiten der Fluidsimulation wie die Simulation von Rauch
+angesprochen.
