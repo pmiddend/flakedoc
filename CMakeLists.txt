@@ -27,8 +27,28 @@ set(
 	images/boundary_with_normals.png
 	images/single_snow_crystal.png
 	images/drag_forces.png
+	images/jacobi_times.eps
+	images/force_free_slip.eps
+	images/point_in_polygon.png
+	images/lamp_discrete.png
+	images/lamp_obj.jpg
+	images/memory_model.png
 	images/real_snowflakes.png
+	images/graphics_pipeline.eps
+	images/triplanar_mountain.png
+	images/noise_texture_artifact.png
+	images/producer_consumer.eps
+	images/ndinterpolation.png
+	images/von_neumann.jpg
 	images/boundary_field_for_pressure.eps
+	images/snow_cover_textures.png
+	images/snow_cover_textures_principle.eps
+	images/marching_cubes_combinations.svg
+	images/shading_comparison.png
+	images/perlin_noise_snow.png
+	images/execution_model.png
+	images/gflops_cpu_vs_gpu.png
+	images/gbs_cpu_vs_gpu.png
 	images/right_neighborhood.eps
 	images/point_sprite_vs_billboard.png
 	images/aagaard_layer_model.png
@@ -36,7 +56,7 @@ set(
 	images/moist_air.png
 	images/boundary_types.eps
 	images/simulation_blowup.eps
-	images/swimmer_in_water.png
+	images/swimmer_in_water.eps
 	images/schloss_grey.png
 	images/flat_3d_texture.png
 	images/schloss_grey_laplace.png
@@ -46,11 +66,14 @@ set(
 	images/vortex_shedding_macroscopic.png
 	images/incompressibility_condition_example.eps
 	images/stam_loop_with_projection.eps
+	images/opencl_platform_model.png
 	images/particle_system_wall_collision.eps
 	images/vector_field_rotation.png
-	images/thermal_imaging.jpg
+	images/thermal_imaging.png
 	images/vector_field_rotation_arrows.png
 	images/advection_bad.eps
+	images/snowflake_size_graph.eps
+	images/snowflake_three_rectangles.png
 	images/scalar_field_to_show_gradient.eps
 	images/gradient_of_scalar_field.eps
 	images/advection_good.eps
@@ -71,9 +94,9 @@ set(
 	stam.tex
 	opencl.tex
 	opengl.tex
-	wind_implementation.tex
-	snowflake_implementation.tex
-	fallen_snow_implementation.tex
+	implementation_wind.tex
+	implementation_snowflake.tex
+	implementation_fallen_snow.tex
 	${FLAKE_INKSCAPE_IMAGES_TEX})
 
 #set(

@@ -1,4 +1,5 @@
 \section{Methode nach Stam}
+\label{sec:stam}
 
 \subsection{Motivation}
 
@@ -16,18 +17,21 @@ Besonderheiten eingegangen wurde:
 	Strömungssimulation jedes Frame um einen Zeitschritt weiterbewegen. Um
 	eine flüssige Simulation zu erhalten, ist die Laufzeit des
 	Lösungsalgorithmus also auf 16 Millisekunden (für 60 Bilder pro Sekunde)
-	bzw. 33 Millisekunden (für 30 Bilder pro Sekunde) beschränkt. Die
+	bzw.\ 33 Millisekunden (für 30 Bilder pro Sekunde) beschränkt. Die
 	Navier-Stokes-Gleichungen bilden als System von nichtlinearen
 	Differentialgleichungen hier eine besondere Herausforderung.
 \item
-	Man ist außerdem nicht unbedingt an einer exakten Lösung interessiert.
-	Will man z.\,B. Wasser oder Rauch simulieren reicht es, ein physikalisch
-	annähernd korrektes Verhalten zu erzielen.
+	Bisherige Ansätze zur Strömungsmechanik kamen aus dem
+	wissenschaftlichen Bereich, wo meist Exaktheit eine große Rolle
+	spielte. In der Computergrafik allgemein und auch bei der
+	Aufgabenstellung dieser Arbeit ist man allerdings nicht unbedingt an
+	einer an einer exakten Lösung interessiert.  Ein physikalisch
+	annähernd korrektes Ergebnis genügt.
 \item
-	Bisherige Verfahren (wie z.\,B. die finiten Differenzen in
+	Bisherige Verfahren (wie z.\,B.\ die finiten Differenzen in
 	\cite{Foster1997}) waren numerisch \emph{instabil} für große
-	Zeitschritte. Dynamische Anwendungen wie Spiele oder Animationssoftware
-	können allerdings keine minimiale Framerate garantieren, da sie mit
+	Zeitschritte. Echtzeitanwendungen wie Spiele oder Animationssoftware
+	können allerdings keine minimiale Bildwiederholrate garantieren, da sie mit
 	verschiedenen Umgebungen und Hardwarekonfigurationen ausgeführt werden
 	können.
 
@@ -39,7 +43,8 @@ Besonderheiten eingegangen wurde:
 	entsprechend lang wird.
 
 	Dieser Effekt ist nicht mehr aufzuhalten und die Simulation
-	\PimiddyQuotes{explodiert}.
+	\PimiddyQuotes{explodiert}, siehe
+	\autoref{fig:stam_simulation_blowup}.
 \item
 	Bisherige Verfahren waren auf Hilfe des Designers angewiesen, um Teile
 	der Simulation möglichst realistisch zu modellieren. Bestimmte natürlich
@@ -53,14 +58,15 @@ Besonderheiten eingegangen wurde:
 \begin{figure}[ht]
 \includegraphics[width=12cm]{images/simulation_blowup}
 \caption{Instabilität in Simulationen: Hier wird angenommen, die maximal zu simulierende Simulationsdauer sei $0.1s$. Längere Frames werden in mehreren Ticks berechnet, die aber konstant lange Laufzeit haben. Dies führt zu dauerhaft langen Frames, der Effekt potenziert sich.}
+\label{fig:stam_simulation_blowup}
 \end{figure}
 
 Das Verfahren ist also auf Geschwindigkeit ausgelegt, basiert aber
 nichtsdestotrotz auf den Navier-Stokes-Gleichungen und erzielt akkurate
 Simulationsergebnisse. Anfängliche Schwachstellen des Verfahrens wie die zu
 starke Dämpfung von Wirbeln wurden in weiteren Arbeiten ausgebessert
-\cite{Foster}. Diese Verbesserungen sind teilweise auch in die Arbeit
-eingeflossen.
+\cite{Foster}. Diese Verbesserungen sind teilweise auch in diese
+Arbeit eingeflossen.
 
 Wegen der numerischen Stabilität und sehr guten Parallelisierbarkeit wird Stams
 Verfahren bereits in einigen Spielen eingesetzt (siehe \cite{Crane2007},
@@ -72,18 +78,19 @@ Fassung, bei der andere Randbedingungen verwendet werden.
 Die Fluidsimulation findet auf einem diskreten, endlichen Gitter, also einer
 Teilmenge von $\PimiddyGanz^n$ statt. Gegeben sei das Geschwindigkeitsfeld zum
 Zeitpunkt $t$: $\vec{u}_{i,j,k}^t$. Als Anfangsbedingung könnten zum Zeitpunkt $0$
-z.\,B. alle Zellen auf eine vorgegebene \PimiddyQuotes{Windrichtung} gesetzt sein.
+z.\,B.\ alle Zellen auf eine vorgegebene \PimiddyQuotes{Windrichtung} gesetzt sein.
 Gegeben sei außerdem ein Zeitdelta $\Delta t$ (nicht zu verwechseln mit dem
 Laplaceoperator). Ziel ist es, unter Zuhilfenahme der
 Navier-Stokes-Gleichungen ein neues Geschwindigkeitsfeld $\vec{u}_{i,j,k}^{t+\Delta
 t}$ zu berechnen.
 
-Außerdem berechnen wir einmalig ein \emph{Hindernisfeld} $b_{i,j,k}$. Ist $b_{i,j,k}
-= 1$, dann ist diese Zelle mit einem Hindernis ausgefüllt. Ist $b_{i,j,k} = 0$,
-ist die Zelle frei. Im Implementierungsteil wird erklärt, wie dieses
-Hindernisfeld gefüllt wird.
+Außerdem berechnet man einmalig ein \emph{Hindernisfeld}
+$b_{i,j,k}$. Ist $b_{i,j,k} = 1$, dann ist diese Zelle mit einem
+Hindernis ausgefüllt. Ist $b_{i,j,k} = 0$, ist die Zelle frei. Im
+Implementierungsteil wird erklärt, wie dieses Hindernisfeld gefüllt
+wird.
 
-Die rechte Seite der Impulsgleichung \eqref{eq:navier_stokes_momentum_equation} besteht
+Die rechte Seite der Impulsgleichung \ref{eq:navier_stokes_momentum_equation} besteht
 aus mehreren Summanden:
 
 \begin{equation}
@@ -133,7 +140,7 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
 	als auch der von außen eingeführte Wind. Die Operation bekommt als
 	Eingabe das Geschwindigkeitsfeld sowie das Zeitdelta (bei größerem
 	Zeitunterschied zum letzten Simulationsschritt sollen die Kräfte
-	stärker wirken). Sei sei im folgenden mit
+	stärker wirken). Sie sei im folgenden mit
 	\PimiddyInlineCode{externalForces}$(\vec{u},\Delta t)$ bezeichnet.
 \item
 	Der \emph{Druck} des Fluids wird in dem Term
@@ -147,11 +154,11 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
 \item
 	Wie bei Differentialgleichungen üblich, müssen wir noch die
 	\emph{Rand- und Anfangsbedingungen} behandeln. Dadurch wird
-	einerseits sichergestellt, dass der das Fluid nicht in Hindernisse
+	einerseits sichergestellt, dass das Fluid nicht in Hindernisse
 	eindringt, andererseits an den Rändern der Simulation frei hinausfließen
 	kann. Diese Operation wird im Folgenden als
-	\PimiddyInlineCode{boundaries}$(\vec{u})$ bezeichnet und wird vor der
-	Berechnung des Drucks eingefügt.
+	\PimiddyInlineCode{boundaries}$(\vec{u})$ bezeichnet und wird noch vor der
+	Berechnung des Drucks durchgeführt.
 \end{itemize}
 
 \begin{algorithm}
@@ -169,14 +176,16 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
 \end{algorithm}
 
 \begin{figure}[ht]
-\includegraphics[width=10cm]{images/stam_loop}
-\caption{Die Simulationsschleife ohne Projektion.}
+\includegraphics[width=10cm]{images/stam_loop_with_projection}
+\caption{Die Simulationsschleife. Projektion bezeichnet die Berechnung des Druckgradienten und das Abziehen des Gradienten vom Geschwindigkeitsfeld.}
 \end{figure}
 
-Für jeden Term wird im Folgenden ein Lösungsalgorithmus vorgestellt, insgesamt
-erhält man den Pseudocode in \autoref{alg:stam_first_algorithm}.
+Für jede Operation wird im Folgenden ein Lösungsalgorithmus
+vorgestellt, insgesamt erhält man den Pseudocode in
+\autoref{alg:stam_first_algorithm}.
 
 \subsection{Advektion}
+\label{sec:stam_advection}
 
 Wie bereits in der Erklärung der Navier-Stokes-Gleichungen angedeutet, wird bei
 der Advektion das Geschwindigkeitsfeld entlang \PimiddyQuotes{sich selber}
@@ -195,10 +204,11 @@ $q_{i,j,k}^{t+\Delta t}$.
 Um die Advektion durchzuführen gibt es mehrere Ansätze. Der gängigste arbeitet
 mit der Methode der finiten Differenzen und wurde unter anderem in
 \cite{Foster} benutzt. Finite Differenzen führen aber zu einem numerisch
-instabilen Algorithmus. Im Gegensatz dazu soll hier zunächst ein intuitiver
-Ansatz erläutert werden, der auch numerisch instabil ist und somit nicht ohne
-große Einschränkungen verwendbar ist. Dieser Ansatz wird danach leicht
-modifiziert, um Stabilität zu erreichen.
+instabilen Algorithmus, wie in der Einleitung bereits erwähnt. Hier
+soll zunächst ein intuitiver Ansatz erläutert werden, der auch
+numerisch instabil ist und somit nicht ohne große Einschränkungen
+verwendbar ist. Dieser Ansatz wird danach aber leicht modifiziert, um
+Stabilität zu erreichen.
 
 \begin{figure}[ht]
 \centering
@@ -207,16 +217,18 @@ modifiziert, um Stabilität zu erreichen.
 \label{fig:stam_numerically_unstable_advection}
 \end{figure}
 
-Das neue Feld $q_{i,j,k}^{t+\Delta t}$ sei anfangs überall 0 (bzw\,. $(0,0,0)$,
-falls es ein Vektorfeld ist). Man stelle sich an jedem Gitterpunkt
-$(i,j,k)$ ein Partikel mit \PimiddyQuotes{Ladung} $q_{i,j,k}$ vor, was im Fluid
-treibt. Durch die Bewegung des Fluids würde dieses Partikel um $\Delta t \cdot
-\vec{u}_{i,j,k}$ verschoben und läge im nächsten Zeitschritt bei
-$\vec{p}=(i,j,k)+\Delta t \cdot \vec{u}_{i,j,k}$. Somit läge es im Allgemeinen
-nicht mehr \emph{exakt} auf einem Gitterpunkt, sondern zwischen 8 Nachbarpunkten
-$n_i \in \PimiddyGanz^3, i \in \{1,\ldots,8\}$ (siehe
-\autoref{fig:stam_numerically_unstable_advection}). Man bestimmt jetzt die
-Distanz von $\vec{p}$ zu jedem der Nachbarpunkte:
+Das zu berechnende neue Feld $q_{i,j,k}^{t+\Delta t}$ sei anfangs
+überall 0 (bzw.\ $(0,0,0)$, falls es ein Vektorfeld ist). Man stelle
+sich nun an jedem Gitterpunkt $(i,j,k)$ ein Partikel mit
+\PimiddyQuotes{Ladung} $q_{i,j,k}$ vor, was im Fluid treibt. Das
+Partikel wird durch das Fluid beschleunigt und dadurch um $\Delta t
+\cdot \vec{u}_{i,j,k}$ verschoben. Es befindet sich im nächsten
+Zeitschritt bei $\vec{p}=(i,j,k)+\Delta t \cdot
+\vec{u}_{i,j,k}$. Somit läge es im Allgemeinen nicht mehr \emph{exakt}
+auf einem Gitterpunkt, sondern zwischen 8 Nachbarpunkten $n_i \in
+\PimiddyGanz^3, i \in \{1,\ldots,8\}$ (siehe
+\autoref{fig:stam_numerically_unstable_advection}). Zu jedem dieser
+Nachbarpunkte kann man den Abstand zum Partikel bestimmen:
 
 \begin{equation}
 d_i = \PimiddyNorm{2}{\vec{p} - n_i}, i \in \{1,\ldots,8\}
@@ -238,6 +250,7 @@ Charakteristika}. Die Idee ist ähnlich zu der gerade vorgestellten, funktionier
 aber in die \PimiddyQuotes{umgekehrte Richtung}.
 
 \begin{figure}[ht]
+\centering
 \includegraphics[width=6cm]{images/advection_bad_example}
 \caption{Das numerisch instabile Advektionsverfahren für ein Temperaturfeld}
 \end{figure}
@@ -248,12 +261,13 @@ nächsten Zeitschritt. Das (gedachte) Partikel an Position $(i,j,k)$ habe die
 Geschwindigkeit $\vec{u}_{i,j,k}^t$.
 
 Rechnet man auf der Zeitachse um $\Delta t$ zurück, erhält man die
-\PimiddyQuotes{vorherige} Position des Partikels, nämlich $(i,j,k) - \Delta t
-\cdot \vec{u}_{i,j,k}^t$ \PimiddyFootnote{Hier wird nur ein Schritt der
-Partikelflugbahn zurückverfolgt. Es besteht die Möglichkeit, mehrere
-Schritte zurückzuverfolgen, die ist aber aufwändig zu implementieren.}. Es
-ergibt sich allerdings dasselbe Problem wie bei dem vorher beschriebenen Ansatz:
-Diese Position liegt nicht genau auf dem Gitter, sondern dazwischen (siehe
+\PimiddyQuotes{vorherige} Position des Partikels, nämlich $(i,j,k) -
+\Delta t \cdot \vec{u}_{i,j,k}^t$ \PimiddyFootnote{Hier wird nur ein
+Schritt der Partikelflugbahn zurückverfolgt. Es besteht die
+Möglichkeit, mehrere Schritte zurückzuverfolgen, die ist aber
+aufwändig zu implementieren.}. Es ergibt sich dasselbe Problem wie bei
+dem vorher beschriebenen Ansatz: Diese Position liegt nicht genau auf
+dem Gitter, sondern dazwischen (siehe
 \autoref{fig:stam_good_advection}).
 
 Als Lösung \emph{interpolieren} wir zwischen den 8 Nachbarwerten des
@@ -270,10 +284,13 @@ muss man in der Implementierung einen Kompromiss eingehen und ein
 Interpolationsverfahren wählen, was Genauigkeit und Rechenleistung verbindet.
 
 Auch für große Zeitschritte liefert das Verfahren ein Vektorfeld als Ausgabe,
-was in seinem Wertebereich beschränkt ist, denn die Interpolation liefert kein
+was in seinem Wertebereich beschränkt ist, denn die Interpolation liefert nie einen
 Wert zurück, der betragsmäßig größer ist als die Ausgangswerte. Das Verfahren
 ist deshalb stabil. Allerdings sollte $\Delta t$ nicht zu groß gewählt werden.
-\cite{Foster} gibt hier als Richtlinie etwa $5\times$ die Gittergröße an.
+\cite{Foster} gibt hier als Richtlinie etwa $5\times$ die Gittergröße
+an. Diese Art der Advektion wird auch
+\PimiddyBegriff{semilagrange'sche Advektion} genannt, da hier erneut
+die Sichtweise mit Partikeln und mit Feldern verknüpft wird.
 
 \begin{figure}[ht]
 \centering
@@ -282,15 +299,20 @@ ist deshalb stabil. Allerdings sollte $\Delta t$ nicht zu groß gewählt werden.
 \label{fig:stam_good_advection}
 \end{figure}
 
-Natürlich kann es passieren, dass wir über den Rand des Simulationsbereiches
-\PimiddyQuotes{hinauslaufen}. Es gibt mehrere Möglichkeiten, dies zu behandeln.
+Natürlich kann es passieren, dass man über den Rand des Simulationsbereiches
+\PimiddyQuotes{hinausläuft}. Es gibt mehrere Möglichkeiten, dies zu behandeln.
 Beispielsweise könnte man auf die gegenüberliegenden Seite des
-Simulationsbereiches umbrechen (periodische Randbedingung), was in Stams Arbeit
-getan wurde. Alternativ kann man die Gerade betrachten, die durch den
-Mittelpunkt der aktuellen Zelle geht, und diese Gerade mit den Rändern der
-Simulation schneiden. Man wählt dann den Schnittpunkt auf dem Rand als Basis für
-die Interpolation (siehe \autoref{fig:stam_clamping_borders}). Dies wurde in der
-Arbeit implementiert.
+Simulationsbereiches umbrechen (periodische Randbedingung), was in
+Stams Originalarbeit getan wurde. Allerdings erhält man hier auf ein
+Windfeld bezogen unrealistische Ergebnisse.
+
+Alternativ kann man die Gerade betrachten, die durch den Mittelpunkt
+der aktuellen Zelle geht und als Richtungsvektor den
+Geschwindigkeitspfeil des Fluids besitzt. Diese Gerade schneidet man
+mit den Rändern der Simulation. Man wählt dann den Schnittpunkt auf
+dem Rand als Basis für die Interpolation (siehe
+\autoref{fig:stam_clamping_borders}). Dies wurde in der Arbeit
+implementiert.
 
 \begin{figure}[ht]
 \centering
@@ -299,16 +321,16 @@ Arbeit implementiert.
 \label{fig:stam_clamping_borders}
 \end{figure}
 
-Weiterhin kann der zurückberechnete Vektor $(i,j,k) - \Delta t u_{i,j,k}^t$ in
-einem Hindernis landen. Man kann in diesem Fall einen Geschwindigkeitswert
-von $(0,0,0)$ annehmen, was einem stationären Hindernis wie einem Gebäude
+Weiterhin kann der zurückberechnete Vektor $(i,j,k) - \Delta t \cdot
+u_{i,j,k}^t$ in einem Hindernis landen, was auch behandelt werden
+muss. Man kann in diesem Fall einen Geschwindigkeitswert von $(0,0,0)$
+annehmen, was einem stationären Hindernis wie einem Gebäude
 entspricht. Es ist aber auch möglich, ein weiteres Vektorfeld
-$\vec{u}_{\PimiddyFormelText{boundary}}$ zu verwalten, wo für jede Gitterzelle die
-\emph{Geschwindigkeit} des dort vorhandenen Hindernisses notiert ist. Dies wurde
-in \cite{Crane2007} umgesetzt. Für die Simulation in dieser Arbeit wurde von
-unbeweglichen Hindernissen ausgegangen.
-
-\PimiddyTodo{Hier kurz erklären, dass das auch Semilagrangeadvektion genannt wird.}
+$\vec{u}_{\PimiddyFormelText{boundary}}$ zu verwalten, wo für jede
+Gitterzelle die \emph{Geschwindigkeit} des dort vorhandenen
+Hindernisses notiert ist. Dies wurde in \cite{Crane2007}
+umgesetzt. Für die Simulation in dieser Arbeit wurde von unbeweglichen
+Hindernissen ausgegangen.
 
 \subsection{Äußere Kräfte}
 
@@ -322,6 +344,8 @@ F_g = \Delta t (0,-9.81,0)
 \end{equation}
 
 \subsubsection{Auftrieb}
+
+\label{sec:stam_buoyancy}
 
 \PimiddyTodo{Auftrieb allgemein und konkret mit Buissnesq erklären}
 
@@ -349,7 +373,7 @@ Turbulenzen in der Umgebung von Helikoptern zu modellieren\cite{Steinhoff1994}.
 Die Idee ist, Wirbel zu identifizieren und an den \PimiddyQuotes{richtigen}
 Stellen zu verstärken. Dazu wird zuerst die Rotation des Geschwindigkeitsfeldes,
 $\vec{R} = \PimiddyRot \vec{u}_{i,j,k}$, bestimmt. Der Betrag der Rotation,
-$|\vec{R}|$, gibt an, wie stark die Rotation in einem Punkt ist. Der
+$|\vec{R}|$, gibt an, wie stark die Wirbelbildung in einem Punkt ist. Der
 \emph{Gradient} des Betrags, $\PimiddyGrad |\vec{R}|$, zeigt also
 von Bereichen niedriger Wirbelstärke zu bereichen hoher Wirbelstärke.
 
@@ -378,18 +402,20 @@ Die Konstante $\varepsilon$ in \autoref{eq:stam_vorticity_confinement} gibt die
 Stärke der Kraft an.
 
 \subsection{Projektion}
+\label{sec:stam_projection}
 
 \subsubsection{Einleitung}
 
 Die vorgestellten Al"-go"-rith"-men be"-rück"-sich"-ti"-gen die
-Un"-komp"-ri"-mier"-bar"-keit des Flu"-ids nicht. Nach der Advektion und der
-Addition der äußeren Kräfte kann die zweite Bedingung
+Un"-komp"-ri"-mier"-bar"-keit des Flu"-ids nicht, sondern lösen einzig
+die Impulsgleichung. Nach der Advektion und der Addition der äußeren
+Kräfte kann die zweite Bedingung
 \ref{eq:navier_stokes_incompressibility_condition} in den
-Navier-Stokes-Gleichungen also verletzt sein, und die Simulation somit nicht
-mehr physikalisch korrekt. Außerdem sind die Randbedingungen eventuell verletzt
-worden. Beispielsweise wurde bei der Advektion nicht beachtet, dass das Fluid um
-Hindernisse herumströmen sollte. Für beide Fälle kommt der Druck $p$ als
-Korrekturterm ins Spiel.
+Navier-Stokes-Gleichungen also verletzt sein, und die Simulation somit
+nicht mehr physikalisch korrekt. Außerdem sind die Randbedingungen
+eventuell verletzt worden. Beispielsweise wurde bei der Advektion
+nicht beachtet, dass das Fluid um Hindernisse herumströmen sollte. Für
+beide Fälle kommt der Druck $p$ als Korrekturterm ins Spiel.
 
 Gegeben sei ein beliebiges Vektorfeld $\vec{u}$. Gesucht ist eine Funktion
 $\PimiddyProjection$, die dieses Vektorfeld auf ein quellenfreies Vektorfeld
@@ -398,7 +424,7 @@ Ergebnisses aus der Vektoranalysis:
 
 \begin{PimiddySatz}[Helmholtz-Zerlegung]
 Sei $\vec{u}$ ein zweimal stetig differenzierbares Vektorfeld auf einem
-beschränkten Definitionsbereich, dann lässt $\vec{u}$ sich zerlegen in
+beschränkten Definitionsbereich. Dann lässt $\vec{u}$ sich zerlegen in
 ein \emph{quellenfreies} Vektorfeld $\vec{w}$ und den \emph{Gradienten}
 eines Skalarfeldes $p$:
 
@@ -447,11 +473,6 @@ Helmholtz-Zerlegung abbildet (ein Vektorfeld also quellenfrei
 \PimiddyBegriff{Projektion} genannt. Führt man $\PimiddyProjection$ am Ende des
 Algorithmus' aus, erhält man ein unkomprimierbares Vektorfeld.
 
-\begin{figure}[ht]
-\includegraphics[width=10cm]{images/stam_loop_with_projection}
-\caption{Die Simulationsschleife mit Projektion.}
-\end{figure}
-
 \subsubsection{Lösung des Poissonproblems}
 
 Um das Vektorfeld quellenfrei zu machen, muss folgende
@@ -478,11 +499,13 @@ ein zweites Iterationsverfahren benötigt wird (der sogenannte
 Restriktionsoperator), sowie Methoden zum hoch- und runterskalieren von
 3D-Feldern.
 
-Simplere Iterationsverfahren sind SOR (\cite{Saltvik2006}),
+Simplere Iterationsverfahren, die auch in der Praxis schon auf die GPU
+übertragen wurden, sind SOR (\cite{Saltvik2006}),
 Gauss-Seidel-Re"-la"-xa"-ti"-on (\cite{Stam2003}) und das
 Jacobiverfahren (\cite{Crane2007}, \cite{Harris2008},
-\cite{Peschel2009}). Letzteres ist besonders einfach zu
-implementieren und gleichzeitig hervorragend für die GPU geeignet.
+\cite{Peschel2009}). Letzteres ist besonders einfach zu implementieren
+und gleichzeitig hervorragend für die GPU geeignet. Es wurde daher für
+die Implementierung verwendet und soll jetzt näher erläutert werden.
 
 \subsubsection{Das Jacobiverfahren}
 
@@ -527,7 +550,7 @@ p_i
 Der Wert $p_i$ definiert sich also durch seine direkten Nachbarn $p_{i-1},
 p_{i+1}$, die Gleichung ist für sich genommen nicht aufzulösen.
 
-Sei nun eine Anfangslösung $p^0$ gegeben, z.\,B. $p^0_i = 0$ für alle $i$.
+Sei nun eine Anfangslösung $p^0$ gegeben, z.\,B.\ $p^0_i = 0$ für alle $i$.
 Dann lässt sich eine neue, bessere Lösung bestimmen, indem man die Werte aus
 $p^0$ als Näherungen für die Nachbarn in der exakten Lösung nimmt:
 
@@ -589,6 +612,7 @@ p_{i,j,k}^{n+1}
 \end{equation*}
 
 \subsubsection{Randbedingungen in Differentialgleichungen}
+\label{sec:stam_boundaries}
 
 Auch bei der Berechnung des Drucks müssen Randbedingungen beachtet werden. Dies
 betrifft einerseits den Rand der Simulation, denn dort hat nicht jede Zelle 6
@@ -605,7 +629,7 @@ Differentialgleichung (wie der Poissongleichung),
 \item
 	Bei Dirichlet-Randbedingungen wird der \emph{Wert} des Feldes am Rand
 	fest vorgeschrieben. Beispielsweise könnte man die Druckwerte, die über
-	den Simulationsrand hinausgehen (z.\,B. $p_{-1,-1,-1}$), als $0$ annehmen.
+	den Simulationsrand hinausgehen (z.\,B.\ $p_{-1,-1,-1}$), als $0$ annehmen.
 	Dies ist gewissermaßen bei der Advektion geschehen, wo die
 	Geschwindigkeit bei Hinderniszellen als $(0,0,0)$ angenommen wurde.
 \item
@@ -715,7 +739,7 @@ subtrahiert wurde).
 Idealerweise bräuchten wir dazu noch ein Feld $\vec{n}_{i,j,k}$, was in jedem
 Punkt die Normale des Hindernisses angibt (siehe
 \autoref{fig:stam_boundary_with_normals}). Dies wurde in einigen
-Arbeiten umgesetzt (z.\,B. \cite{Bordignon}), es gibt jedoch eine Vereinfachung,
+Arbeiten umgesetzt (z.\,B.\ \cite{Bordignon}), es gibt jedoch eine Vereinfachung,
 die dieses Feld nicht benötigt: Man iteriert erneut über alle
 Gitterzellen und testet indem für jede Gitterzelle $(i,j,k)$, welche
 Nachbarzellen von einem Hindernis ausgefüllt sind. Die zugehörige

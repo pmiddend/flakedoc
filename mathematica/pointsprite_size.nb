@@ -1,0 +1,186 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      7223,        177]
+NotebookOptionsPosition[      6874,        160]
+NotebookOutlinePosition[      7209,        175]
+CellTagsIndexPosition[      7166,        172]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Module", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"pointSize", "=", "1"}], "\[IndentingNewLine]", "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Max", "[", "\[IndentingNewLine]", 
+        RowBox[{"0", ",", "\[IndentingNewLine]", 
+         RowBox[{"pointSize", " ", 
+          SqrtBox[
+           FractionBox["1", 
+            RowBox[{"A", "+", 
+             RowBox[{"B", " ", "distanceToCamera"}], "+", 
+             RowBox[{"C", " ", 
+              SuperscriptBox["distanceToCamera", "2"]}]}]]]}]}], 
+        "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"distanceToCamera", ",", "0.1", ",", "64"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"AxesLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Kamera-Abstand\>\"", ",", 
+          "\"\<Spritegr\[ODoubleDot]\[SZ]e\>\""}], "}"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "64"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1.4"}], "}"}]}], "}"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"BaseStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"FontSize", "\[Rule]", "14"}], ",", 
+          RowBox[{"FontFamily", "\[Rule]", "\"\<Helvetica\>\""}]}], "}"}]}]}],
+       "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"A", ",", "0.1", ",", "\"\<A\>\""}], "}"}], ",", "0", ",", 
+       "2"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"B", ",", "8.6", ",", "\"\<B\>\""}], "}"}], ",", "0", ",", 
+       "2"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"C", ",", "1", ",", "\"\<C\>\""}], "}"}], ",", "0", ",", 
+       "2"}], "}"}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.550815163758608*^9, 3.550815202422141*^9}, {
+   3.550815369595683*^9, 3.550815471599333*^9}, {3.550815540801383*^9, 
+   3.55081559017101*^9}, {3.5508156880411453`*^9, 3.55081590313625*^9}, {
+   3.550817481429797*^9, 3.550817556150387*^9}, {3.550817590784511*^9, 
+   3.550817592133466*^9}, 3.550817639759111*^9, {3.5508176835149727`*^9, 
+   3.550817694222211*^9}, {3.550818190077339*^9, 3.550818190136345*^9}, {
+   3.550818233282791*^9, 3.5508182362104797`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`A$$ = 0.1, $CellContext`B$$ = 0.15, C$$ = 
+    0., Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`A$$], 0.1, "A"}, 0, 2}, {{
+       Hold[$CellContext`B$$], 8.6, "B"}, 0, 2}, {{
+       Hold[C$$], 1, "C"}, 0, 2}}, Typeset`size$$ = {360., {81., 87.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`A$3472$$ = 0, $CellContext`B$3473$$ = 0, C$3474$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`A$$ = 0.1, $CellContext`B$$ = 8.6, C$$ = 
+        1}, "ControllerVariables" :> {
+        Hold[$CellContext`A$$, $CellContext`A$3472$$, 0], 
+        Hold[$CellContext`B$$, $CellContext`B$3473$$, 0], 
+        Hold[C$$, C$3474$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot[
+        Max[
+        0, $CellContext`pointSize$3471 (
+           1/($CellContext`A$$ + $CellContext`B$$ \
+$CellContext`distanceToCamera + C$$ $CellContext`distanceToCamera^2))^
+          Rational[1, 2]], {$CellContext`distanceToCamera, 0.1, 64}, 
+        AxesLabel -> {"Kamera-Abstand", "Spritegr\[ODoubleDot]\[SZ]e"}, 
+        PlotRange -> {{0, 64}, {0, 1.4}}, 
+        BaseStyle -> {FontSize -> 14, FontFamily -> "Helvetica"}], 
+      "Specifications" :> {{{$CellContext`A$$, 0.1, "A"}, 0, 
+         2}, {{$CellContext`B$$, 8.6, "B"}, 0, 2}, {{C$$, 1, "C"}, 0, 2}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{405., {149., 154.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.550815443050902*^9, 3.550815473049309*^9}, 
+   3.5508155573130493`*^9, 3.550815590445588*^9, {3.5508156955622463`*^9, 
+   3.550815776613731*^9}, 3.550815859245554*^9, 3.550815903474678*^9, {
+   3.55081748226462*^9, 3.550817556593316*^9}, 3.550817592984374*^9, 
+   3.5508176402805777`*^9, 3.5508176946107683`*^9, 3.5508181906590137`*^9, 
+   3.550818236781253*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Plot", "::", "exclul"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\({\\(\\(\\(\\(Im[\\(\\(1\\/\\(\\(\\(0.1` \
+\[VeryThinSpace]\\)\\) + \\(\\(0.15`\\\\ \
+distanceToCamera\\)\\)\\)\\)\\)]\\)\\) - 0\\)\\), \
+\\(\\(\\(\\(\\(\\(-\\@\\(1\\/\\(\\(\\(0.1` \[VeryThinSpace]\\)\\) + \
+\\(\\(0.15`\\\\ distanceToCamera\\)\\)\\)\\)\\)\\)\\\\ pointSize$3471\\)\\) - \
+0\\)\\), \\(\\(\\(\\(\\@\\(1\\/\\(\\(\\(0.1` \[VeryThinSpace]\\)\\) + \
+\\(\\(0.15`\\\\ distanceToCamera\\)\\)\\)\\)\\\\ pointSize$3471\\)\\) - \
+0\\)\\)}\\)\\n\[NoBreak] must be a list of equalities or real-valued \
+functions. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\
+\\\", ButtonFrame->None, ButtonData:>\\\"paclet:ref/Plot\\\", ButtonNote -> \
+\\\"Plot::exclul\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.551075550154825*^9}]
+}, Open  ]]
+},
+WindowSize->{958, 1059},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Linux x86 (64-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 2752, 65, 481, "Input"],
+Cell[3334, 89, 2631, 50, 320, "Output"],
+Cell[5968, 141, 890, 16, 92, "Message"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

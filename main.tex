@@ -1,4 +1,6 @@
-\documentclass[ngerman]{article}
+\documentclass[ngerman,a4paper,11pt]{article}
+
+\usepackage{a4wide}
 
 % Packages
 % Was macht das hier?
@@ -23,7 +25,14 @@
 \usepackage[footnotesize,bf]{caption}
 \usepackage{subcaption}
 % Links (und autoref)
-\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage[pdfborder={0 0 0},breaklinks=true]{hyperref}
+
+
+\addto\extrasngerman{
+  \def\subsectionautorefname{Abschnitt}
+  \def\subsubsectionautorefname{Abschnitt}
+}
+
 %\def\algorithmautorefname{Algorithmus}
 \addto\extrasngerman{
 	  \def\algorithmautorefname{Algorithmus}
@@ -40,13 +49,21 @@
 
 % Für URLs in Bibliografie
 \usepackage{url}
+\usepackage{breakurl}
 
 \usepackage{minted}
 
 % Macros
 \newcommand{\PimiddyName}[1]{\emph{#1}}
+\newcommand{\PimiddyzB}{z.\,B.\ }
+\newcommand{\Pimiddydh}{d.\,h.\ }
+\newcommand{\Pimiddyvgl}{vgl.\ }
+\newcommand{\Pimiddyggf}{ggf.\ }
+\newcommand{\Pimiddybzw}{bzw.\ }
+\newcommand{\Pimiddyca}{ca.\ }
 \newcommand{\PimiddyBegriff}[1]{\textbf{#1}}
 \newcommand{\PimiddyBetrag}[1]{\left|#1\right|}
+\newcommand{\PimiddyEnglBegriff}[1]{#1}
 \newcommand{\PimiddyQuotes}[1]{\enquote{#1}}
 \newcommand{\PimiddyFormelText}[1]{\textnormal{#1}}
 \newcommand{\PimiddyReell}{\ensuremath{\mathbb{R}}}
@@ -60,7 +77,6 @@
 \newcommand{\PimiddyInlineCode}[1]{{\texttt{#1}}}
 \newcommand{\PimiddyModulo}{\bmod}
 \newcommand{\PimiddyDegree}[1]{\ensuremath{{#1}^{\circ}C}}
-
 
 \numberwithin{figure}{section}
 \numberwithin{equation}{section}
@@ -84,7 +100,8 @@
 \graphicspath{{images/}}
 % Also for latex+inkscape
 % Also for general colors, dvipsnames adds more colors
-\usepackage[usenames,dvipsnames]{xcolor}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{xcolor}
 
 \usepackage{listings}
 
@@ -96,24 +113,25 @@
 
 % This is a package nagging about deprecated stuff
 \usepackage{nag}
+%\includeonly{implementation_fallen_snow}
 
 \begin{document}
 
 
 
-\include{preamble}
+%\include{preamble}
 
 \tableofcontents
 
-\include{introduction}
+%\include{introduction}
 \include{mathematics}
 \include{navier_stokes}
 \include{stam}
 \include{opencl}
 \include{opengl}
-\include{wind_implementation}
-\include{snowflake_implementation}
-\include{fallen_snow_implementation}
+\include{implementation_wind}
+\include{implementation_snowflake}
+\include{implementation_fallen_snow}
 
 \bibliographystyle{plain}
 \bibliography{mendeley_bibliography,other_sources}

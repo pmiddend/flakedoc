@@ -4,28 +4,31 @@
 
 Schnee ist, genau wie Regen, eine Spezialform von \PimiddyBegriff{Niederschlag}.
 Hier soll kurz auf die Entstehung von Niederschlag und die Bildung von
-Schneeflocken eingegangen werden\cite{wiki:Luftfeuchtigkeit}.
+Schneeflocken eingegangen werden. Der Erklärungsansatz orientiert sich
+an \cite{wiki:Luftfeuchtigkeit}.
 
-Überall dort, wo sich eine freie Wasseroberfläche wie z.\,B. ein See befindet und
+Überall dort, wo sich eine freie Wasseroberfläche wie z.\,B.\ ein See befindet und
 die Temparatur einen bestimmten Wert übersteigt, lösen sich Moleküle der
 Wasseroberfläche von ihrem Verbund und verdunsten in die Luft. Umgekehrt treffen
 verdunstete Wassermoleküle wieder auf die Wasseroberfläche und kondensieren
-dort. Die Begriffe \emph{Kondensationsrate} und
-\emph{Verdunstungsrate} geben an, wie viel Wasser zu einem Zeitpunkt
-verdunstet und wie viel kondensiert.
+dort. Die \emph{Kondensationsrate} und die
+\emph{Verdunstungsrate} geben an, wie viel Wasser in einem Bereich zu
+einem Zeitpunkt verdunstet und wie viel kondensiert.
 
 Stellt man sich eine Wasseroberfläche bei trockener Luft vor, so ist
 die Kondensationsrate anfangs 0, da keine Wassermoleküle in der Luft
 enthalten sind, die kondensieren können. Die Verdunstungsrate ist
-bei einer ausreichend hohen Temperatur allerdings nicht 0. Mit der
-Zeit steigt so die Anzahl der Wassermoleküle in der Luft. Dadurch
-steigt auch die Kondensationsrate. Die Dichte der Wassermoleküle in
-der Luft steigt solange an, bis die Kondensationsrate und die
-Verdunstungsrate gleich sind. Die in diesem Gleichgewichtszustand
-vorliegende Konzentration von Wassermolekülen in der Luft ist die
+bei einer ausreichend hohen Temperatur allerdings ungleich 0. Mit der
+Zeit steigt so die Anzahl der Wassermoleküle in der Luft, die Luft
+\PimiddyQuotes{sättigt} sich mit Wasser. Dadurch steigt widerum die
+Kondensationsrate. Bei gleich bleibenden Bedingungen gleichen sich
+nach einiger Zeit die Kondensation und Verdunstung aneinander an.  Die
+in diesem Gleichgewichtszustand vorliegende Konzentration von
+Wassermolekülen in der Luft ist die
 \PimiddyBegriff{Sättigungskonzentration} oder \PimiddyBegriff{maximale
 Luftfeuchtigkeit}. Sie ist umso höher, je wärmer es ist, siehe
-\autoref{fig:implementation_moist_air}.
+\autoref{fig:implementation_moist_air}. Umgangssprachlich sagt man
+daher, warme Luft könne \PimiddyQuotes{mehr Wasser aufnehmen}.
 
 \begin{figure}[ht]
 \centering
@@ -36,7 +39,7 @@ Luftfeuchtigkeit}. Sie ist umso höher, je wärmer es ist, siehe
 
 Steigt warme Luft mit hoher Wassersättigung vom Boden in die
 Atmosphäre auf, kann die Sättigungsmenge in den höheren Luftschichten
-über den eigentlich maximalen Wert steigen, es entsteht ein
+über den eigentlich maximalen Wert steigen -- es entsteht wieder ein
 Ungleichgewicht. Um dieses Ungleichgewicht zu kompensieren, kondensiert
 das überschüssige Wasser an sogenannten
 \PimiddyBegriff{Kondensationskernen} (beispielsweise Staubpartikeln in
@@ -46,9 +49,9 @@ Himmel. Verdichten sich die kondensierten Tropfen weiter, werden sie
 irgendwann zu schwer und fallen aufgrund der Schwerkraft herunter, es
 entsteht \emph{Regen}.
 
-Eine Spezialform der eben beschriebenen Kondensationskernen sind die
+Eine Spezialform der eben beschriebenen Kondensationskerne sind die
 \emph{Kristallisationskerne}. Bei Temperaturen unter \PimiddyDegree{0}
-C bilden sich an diesen Kernen keine Tropfen sondern \emph{Kristalle}.
+bilden sich an diesen Kernen keine Tropfen sondern \emph{Kristalle}.
 Bei starken Minustemperaturen (ab \PimiddyDegree{-40}) müssen sie
 jedoch nicht vorhanden sein, es bildet sich auch so Kristalle.
 
@@ -78,6 +81,13 @@ allerdings keine Symmetrie mehr aufweisen, siehe
     \end{subfigure}
 \end{figure}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=8cm]{images/snowflake_size_graph}
+\caption{Der Zusammenhang von Schneeflockengröße und Temparatur nach \cite{Jun00}.}
+\label{fig:implementation_snowflake_size_graph}
+\end{figure}
+
 \subsection{Visualisierung}
 
 Bei der Wahl der Visualisierungsmethode müssen mehrere Faktoren in
@@ -92,9 +102,11 @@ Es sollen mindestens die zwei wichtigsten Eigenschaften einer
 Schneeflocke modelliert werden: die Größe und das Aussehen. Beide
 Eigenschaften hängen von der Umgebungstemparatur ab. Für den Durchmesser $D$
 einer Schneeflocke in Abhängigkeit von der Temperatur $T$ wurde in
-\cite{Jun00} folgende Relation aufgestellt:
+\cite{Jun00} folgende Relation aufgestellt (siehe
+\autoref{fig:implementation_snowflake_size_graph}):
 
 \begin{equation}
+\label{eq:implementation_snowflake_diameter}
 D =
 \begin{cases}
 0.015 \cdot |T|^{-0.35} & \PimiddyFormelText{ für }T \leq -0.061 \\
@@ -121,20 +133,28 @@ Wetterbedingungen angepasst werden. Durch die dreidimensionale
 Modellierung kann man den Flocken außerdem eine Rotation geben und sie
 von allen Seiten betrachten.
 
-Allerdings ist das Modell sehr laufzeitintensiv. Dies rührt einerseits
-daher, dass einzelnen Dreiecke sind transparent sind. Dies führt dazu,
-dass weit mehr Fragments erzeugt werden als es Pixel auf dem
-Bildschirm gibt. Diesen Effekt nennt man \emph{Overdraw}.
+Allerdings ist das Modell sehr laufzeitintensiv. Dies hat zwei Ursachen:
 
-Außerdem werden sehr sehr viele kleine Dreiecke für eine einzelne
+\begin{enumerate}
+\item Die einzelnen Dreiecke einer Schneeflocke sind
+halbtransparent. Dies führt dazu, dass weit mehr Fragments erzeugt
+werden als es Pixel auf dem Bildschirm gibt. Diesen Effekt nennt man
+\emph{Overdraw}.
+\item Es werden Außerdem sehr sehr viele kleine Dreiecke für eine einzelne
 Flocke benötigt (Aagaard geht von mindestens 10 aus, maximal über
 100). Für 1.000 Flocken erhält man so schon 10.000 Dreiecke. Die
 angestrebte Flockenzahl bei heftigem Schneefall liegt aber bei weit
 über 1.000 Flocken. Aagaard schlägt daher vor, ein \PimiddyQuotes{Level
 of detail}-System einzubauen, bei dem weiter entfernte Flocken durch
-simplere Geometrie (z.\,B. mit weniger Dreiecken) angenähert werden. Er
+simplere Geometrie (z.\,B.\ mit weniger Dreiecken) angenähert werden. Er
 implementiert dies jedoch selber nicht, da Performance kein
 entscheidender Faktor für die Implementierung ist.
+\item Die Eigenschaften einer Schneeflocke wie etwa ihre Geschwindigkeit
+und die Darstellung der Flocke müssen getrennt werden, da OpenGL es
+nicht direkt erlaubt, Daten für einen \PimiddyQuotes{Block} von
+Primitiven anzugeben wie etwa die Dreiecke der Schneeflocke. Dies
+macht die Implementierung schwieriger und langsamer.
+\end{enumerate}
 
 \begin{figure}[ht]
     \centering
@@ -150,15 +170,31 @@ entscheidender Faktor für die Implementierung ist.
     \label{fig:implementation_aagaard_spheres}
 \end{figure}
 
-In dieser Arbeit wird stattdessen eine weit simplere Visualisierung
-mit Hilfe von \PimiddyBegriff{Pointsprites} gewählt. Statt mehrerer
-Dreiecke repräsentiert nur ein einzelner Punkt eine
-Schneeflocke. Punkte in OpenGL sind allerdings keine mathematischen
-Punkte, denn sie besitzen eine \emph{Ausdehnung}. Diese ist jedoch
-nicht in Weltkoordinaten angegeben, sondern in Pixeln auf dem
-Bildschirm. Dies bedeutet auch, dass die Punkte immer zum Betrachter
-zeigen, man kann sich nicht um sie herum bewegen, siehe
-\autoref{fig:implementation_point_sprite_vs_billboard}. Außerdem muss
+\begin{figure}[ht]
+    \centering
+    \includegraphics{images/snowflake_three_rectangles}
+    \caption{Eine Schneeflocke aus drei Rechtecken zusammengesetzt.}
+    \label{fig:implementation_snowflake_three_rectangles}
+\end{figure}
+
+In \cite{Saltvik2006} findet sich ein etwas simplerer Ansatz, der nur
+drei transparente Rechtecke pro Schneeflocke verwendet (siehe
+\autoref{fig:implementation_snowflake_three_rectangles}). Dadurch wird
+massiv Performance gespart, die Daten für die Flocken müssen
+allerdings trotzdem in einem separaten Buffer gespeichert werden.
+
+In dieser Arbeit wird stattdessen eine simplere Visualisierung mit
+Hilfe von sogenannten \PimiddyBegriff{Pointsprites} gewählt. Statt
+mehrerer Dreiecke repräsentiert nur ein einzelner Punkt eine
+Schneeflocke. Dadurch wird es möglich, alle Daten für eine Flocke im
+OpenGL-Buffer selber zu speichern. Zudem sind Punkte in OpenGL sind
+allerdings mathematischen Punkte, denn sie besitzen eine
+\emph{Ausdehnung}. Dadurch wird es möglich, die Flockengröße zu variieren.
+
+Diese Ausdehnung jedoch nicht in Weltkoordinaten angegeben, sondern in
+Pixeln auf dem Bildschirm. Das bedeutet, dass die Flocken immer zum
+Betrachter zeigen, man kann sich nicht um sie herum bewegen (siehe
+\autoref{fig:implementation_point_sprite_vs_billboard}). Außerdem muss
 -- im Gegensatz zu Dreiecken -- eine Formel für die Größe erdacht
 werden, damit weiter entfernte Punkte kleiner werden (für Dreiecke
 wird dies mit Hilfe einer perspektivischen Projektionsmatrix
@@ -222,30 +258,34 @@ Projektionsmatrix, den Augenpunkt, die Größe der Schneeflocke und
 deren Position bekommt. Mit Hilfe der Variable
 \PimiddyInlineCode{gl\_PointSize}, der man einen
 \PimiddyInlineCode{float}-Wert zuweist, kann man die Größe des Punktes
-setzen. Die Funktion \PimiddyInlineCode{determine\_point\_size} wird gleich erläutert.
-lol
+setzen. Die Funktion \PimiddyInlineCode{determine\_point\_size} wird
+gleich erläutert.
 
-Der Fragmentshader
+Der zu
+\PimiddyListingRef{lst:implementation_point_sprite_vertex_shader}
+gehörige Fragmentshader
 \PimiddyListingRef{lst:implementation_point_sprite_fragment_shader}
-enthält den zweidimensionalen Vektor
+verwendet den zweidimensionalen Vektor
 \PimiddyInlineCode{gl\_FragCoords} $\in [0,1]^2$. Dieser Vektor gibt
-an, wo sich das Fragment innerhalb des aktuellen Punktes
-befindet. OpenGL verwaltet also ein eigenes Koordinatensystem
-innerhalb des Punktes. Mit Hilfe dessen kann man den Punkten im
-Fragmentshader nicht nur eine einheitliche Farbe geben, sondern auch
-eine Textur. Die Textur der Punkte wird in der konkreten
+an, wo sich das Fragment innerhalb des aktuellen Punktes (respektive,
+der aktuellen Flocke) befindet. OpenGL verwaltet also ein eigenes
+Koordinatensystem innerhalb des Punktes. Mit Hilfe dessen kann man den
+Punkten im Fragmentshader nicht nur eine einheitliche Farbe geben,
+sondern auch eine Textur. Die Textur der Punkte wird in der
 Implementierung zufällig aus einer Menge von Texturen ausgewählt, die
 zur aktuellen Außentemperatur passen.
 
-Es muss noch die Größe der Pointsprites bestimmt werden. Verwendet
-man für seine Szene eine perspektivische Projektion, besteht zwischen
-dem Abstand von Objekten und ihrer dargestellten Größe ein
-nichtlinearer Zusammenhang. Daher sollte auch für die Größe der
-Pointsprites eine ähnliche Proportionalität bestehen. Microsofts
-DirectX-Framework verwendet hierfür folgende
+Um den Vertexshader zu komplettieren, muss noch die Größe der
+Pointsprites bestimmt werden. Verwendet man für seine Szene eine
+perspektivische Projektion, besteht zwischen dem Abstand von Objekten
+und ihrer dargestellten Größe ein nichtlinearer Zusammenhang. Daher
+sollte auch für die Größe der Pointsprites eine ähnliche
+Proportionalität bestehen. Microsofts DirectX-Framework verwendet
+hierfür folgende
 Formel\cite{DirectXPointSprites}:
 
 \begin{equation}
+\label{eq:implementation_snowflake_perspective_formula}
 S =
 S'
 \sqrt{
@@ -261,18 +301,30 @@ S'
 }
 \end{equation}
 
-In der Formel ist $S'$ die vorgegebene Punktgröße, die Konstanten
+$S'$ bezeichnet hierbei die vorgegebene Punktgröße, die Konstanten
 $A,B,C$ sind frei wählbar und $D_e$ bezeichnet den Abstand des Punktes
-von der Kamera. Die Werte $A=B=C=1$ haben sich als visuell ansprechend
-herausgestellt\PimiddyTodo{Werte ergänzen!}.
+von der Kamera. Die Werte $A=0.96,B=0.19,C=0.06$ haben sich als
+visuell ansprechend herausgestellt.
+
+Für die Simulation von heftigem Schneefall reicht es allerdings nicht
+aus, nur die Anzahl der Flocken zu erhöhen und deren Größe zu
+randomisieren. Das menschliche Auge interpretiert die Flocken dann
+eher als unrealistisches \PimiddyQuotes{Rauschen}. Um dies auszumerzen
+wird in \cite{Langer2004} wird ein Verfahren vorgestellt, mit dem in
+der Bildebene aus einigen wenigen Schneeflocken weitere synthetisiert
+werden, sodass ein realistischer Eindruck einer großen Menge
+Schneeflocken entsteht. Dieses Verfahren ist sehr performant,
+allerdings relativ schwierig umzusetzen. Daher wurde ein anderer Weg
+gewählt, nämlich die \emph{Transparenz} der Schneeflocken ebenfalls
+abhängig von der Entfernung zur Kamera mit Hilfe von
+\autoref{eq:implementation_snowflake_perspective_formula} zu
+variieren, allerdings mit den Konstanten $A=0.1,B=0.15,C=0$ und
+$S'=1$.
 
 Mit Hilfe von Pointsprites ist es möglich, auf einem aktuellen System
 weit über 100.000 Schneeflocken gleichzeitig anzuzeigen. Es ist jedoch
-nicht möglich, diese beliebig rotieren zu lassen, was allerdings
-visuell nicht kritisch ist.\PimiddyTodo{Hier noch was über die
-Transparenz erzählen und dass einfach nur mehr Flocken hinzuzufügen
-nicht reicht, siehe anderes Paper über die \PimiddyQuotes{Frequenz}
-von Schneeflocken im Bildraum}
+nicht möglich, die Flocken rotieren zu lassen, was allerdings visuell
+nicht kritisch ist.
 
 \subsection{Modellierung}
 
@@ -360,7 +412,8 @@ stärker, je schneller die Flocke ist. Dadurch stellt sich irgendwann
 ein Gleichgewicht zwischen Schwerkraft und Luftwiderstand ein und die
 Flocke erreicht ihre \PimiddyBegriff{Endgeschwindigkeit}
 $v_{y,\PimiddyFormelText{max}}$. Im Vakuum hingegen könnte eine
-Schneeflocke theoretisch beliebig schnell fallen. $\vec{v}_r$ bezeichne die Relativgeschwindigkeit von Flocke und Wind:
+Schneeflocke theoretisch beliebig schnell fallen. $\vec{v}_r$
+bezeichne die Relativgeschwindigkeit von Flocke und Wind:
 
 \begin{equation}
 \vec{v}_r = \vec{v}_w - \vec{v}_f
@@ -451,7 +504,7 @@ Dies eingesetzt in die Luftwiderstandsformel
 
 Die Formel hängt nur noch von $v_{y,\PimiddyFormelText{max}}^2$
 ab. Diese Größe ist -- im Gegensatz zu $C_d$ -- gut bestimmt worden,
-z.B. in \cite{Hanesch1966} für Temperaturen zwischen \PimiddyDegree{-2}
+z.B.\ in \cite{Hanesch1966} für Temperaturen zwischen \PimiddyDegree{-2}
 und \PimiddyDegree{0}. Dabei wurde festgestellt,
 dass die Größe der Schneeflocke kaum Einfluss auf die
 Fallgeschwindigkeit hat. Es wurden Geschwindigkeiten im Bereich \PimiddyDegree{0.5}
@@ -558,74 +611,208 @@ C_a =
 
 Es wurden keine Experimente bezüglich des Bahnradius $r$ und der
 Winkelgeschwindigkeit $\omega$ gefunden. Experimentelle Werte ergeben
-aber für diese Größen folgende Einschränkungen\PimiddyTodo{$r$ ist
-total fingiert}:
+aber für diese Größen folgende Einschränkungen:
 
 \begin{gather}
 -\frac{\pi}{4} \leq \omega \leq -\frac{\pi}{3} \\
-0.2 \leq r \leq 3
+0 \leq r \leq 2
 \end{gather}
 
 Auch diese Größen werden also randomisiert.
 
-\begin{itemize}
-\item Physikalische Eigenschaften einer Schneeflocke
-\item Kräfte sind gravity, buoyant, lift und drag.
-\item Drag ist die Kraft, die die Schneeflocke entlang des Wind treiben lässt
-\item Lift lässt die Flocke in Kreisförmigen Bewegungen runterfallen
-\item Drag ist definiert durch
-\[
-F_{drag} = \frac{1}{2} \rho_{air} \vec{U}_{fluid}^2 A C_D
-\]
-wobei $\rho$ die Dichte der Luft angibt, $U$ die
-Geschwindigkeit, $A$ der Durchmesser, $C_D$ der Drag-Koeffizient, der auf die
-Form der Schneeflocke ankommt und die Turbulenzen die sie erzeugt.
-\item Angenommen die Schneeflocke hat eine bestimmte Masse und fällt mit
-terminal velocity nach unten, dann kann man $C_D$ bestimmen (abhängig von $U_{max}, \rho, A, m_{snow}$
-\item Das kann man in $F_{drag}$ einsetzen und erhält
-\[
-F_{drag} = \frac{U_{fluid} m_{snow} g}{U_{max}}
-\]
-\item Man muss also nur $U_{max}$ schätzen. In \cite{Hanesch1966} wurde das
-gemacht (bei -2 bis 0 Grad Celsius). Feststellung: Größe der Schneeflocke hat
-kaum Einfluss. Geschwindigkeit ist zwischen $0.5m/s$ und $2m/s$. In
-\cite{Canada1999} wurde zudem festgestellt, dass zwischen trockenem Schnee und
-nassem Schnee ein Faktor von 2 ergibt, d.h. nasser Schnee hat $1-4m/s$ und
-trockener eben $0.5-2$
-\item Lift force ist orthogonal zur Dragforce und entsteht durch vortex shedding
-hinter der Schneeflocke. Flocke wird zur Seite abgetrieben.
-\item Via Weg-Zeit-Gesetz:
-\[
-s=\frac{1}{2}at^2 + v_0 t + s_0
-\]
-Berechnen wir die neue Position eine Schneeflocke via:
-\[
-\vec{p}^{t+\Delta t} = \vec{p}^t + \vec{u} \Delta t + \frac{1}{2} \vec{a} \Delta t^2
-\]
-D.h. wir speichern eine Geschwindigkeit und Berechnen eine (konstante) Beschleunigung
+\subsubsection{Statische Auftrieb}
 
-\textbf{Alternativ}: Schlicht zwei DGL hinschreiben:
-\begin{gather}
-p^{t + \Delta t} = p^{t} + \Delta t \cdot \vec{u}^{t} \\
-\vec{u}^{t+ \Delta t} = \vec{u}^{t} + \Delta t \cdot \vec{a}^{t} \\
-\vec{a}^t = \frac{\vec{F}_{ges}}{m_{snow}}
-\end{gather}
-\item Erste Kraft, Gravitation
-\item Zweite Kraft, Auftrieb, wird aber vernachlässigt
-\item $F_{lift}$ erzeugt spiralförmige Bewegung, allerdings relativ subtil. Wird angenähert durch:
-\[
-U_{circ} = C_{vel} \omega (\sin(\omega t),0,\cos(\omega t))
-\]
-\item Erstmal weglassen
-\item Nötige Eigenschaften einer Schneeflocke: Position, Geschwindigkeit (dynamisch), Masse (für Drag), Maximalgeschwindigkeit $U_{max}$.
-\item Simulation vom Aufbau her:
-    \begin{itemize}
-            \item Generiere Zufallswerte für Schneeflockenposition-,
-            Geschwindigkeit, Masse, Maximalgeschwindigkeit, Bild
-            \item In jedem Frame update Geschwindigkeit und Position
-            \item Teste auf Hindernis, falls erfolgreich, generiere neue
-            Zufallsposition (oder wenn Schneeflocke außerhalb ist)
-            \item Update ggf. die Schneeaktivität.
-    \end{itemize}
-\item Simulation in Code, Buffersharing mit OpenGL, Shader in OpenG.
-\end{itemize}
+Wie bereits in \autoref{sec:stam_buoyancy} beschrieben, bezeichnet
+Auftrieb eine Kraft, die der Schwerkraft entgegengesetzt ist, wirkt
+also in Richtung $(0,1,0)$. Sie entsteht durch die Verdrängung des
+Fluids durch einen Körper und sie ist indirekt abhängig von der
+Luftdichte. Sei daher $\rho_{\PimiddyFormelText{Luft}}(x,y,z)$ das
+Vektorfeld der Dichte in jedem Punkt. Es ergibt sich bei $(x,y,z)$ der
+folgende (betragsmäßige) Auftrieb:
+
+\begin{equation}
+|F_A| = \rho_{\PimiddyFormelText{Luft}}(x,y,z) \cdot V \cdot g
+\end{equation}
+
+Hier ist $V$ das Volumen der Schneeflocke und $g$ die
+Gravitationskonstante. Dieser Zusammenhang ist als
+\emph{Archimedisches Prinzip} bekannt.
+
+Aus folgenden Gründen wurde sich allerdings \emph{dagegen}
+entschieden, den statischen Auftrieb zu modellieren:
+
+\begin{enumerate}
+\item Die Dichte der Luft ist abhängig vom Druck und von der
+Temperatur. Die Temperatur wird allerdings nicht explizit
+modelliert, man kann sie also überall als konstant annehmen. Der Druck
+variiert verhältnismäßig wenig. Daher kann insgesamt die Dichte der
+Luft als konstant angenommen werden. Die Auftriebskraft variiert so
+nur mit dem (ebenfalls sehr kleinen) randomisierten Volumen der
+Schneeflocken.
+\item Die Dichte der Luft ist nicht nur konstant, sie ist auch sehr
+klein im Vergleich zu anderen Fluiden wie z.\,B.\ Wasser, was den
+Effekt von Auftrieb vernachlässigbar macht.
+\end{enumerate}
+
+\subsubsection{Code}
+
+\begin{table}[H]
+	\caption{Die zu einer Flocke gehörigen Daten und ihr Ursprung}
+	\centering
+	\begin{tabular}{@{}cm{5cm}m{7cm}@{}}
+		\toprule \\
+                \PimiddyTableHeading{E}
+		&
+                \PimiddyTableHeading{Beschreibung}
+                &
+                \PimiddyTableHeading{Berechnung} \\
+		\midrule \\
+			$\vec{p}$
+		&
+                        Position
+		&
+                        Zufälliger Anfangswert innerhalb der Simulationsgrenzen
+		\\
+			$\vec{v}$
+		&
+                        Geschwindigkeit
+		&
+                        Anfangs gleich $v_{y,\PimiddyFormelText{max}}$
+		\\
+			$D$
+		&
+                        Durchmesser der Flocke
+		&
+                        Gemäß \autoref{eq:implementation_snowflake_diameter}
+		\\
+			$r$
+		&
+                        Rotationsradius für dynamischen Auftrieb
+		&
+                        Zufällig, gleichverteilt aus dem Intervall $[0,2]$
+		\\
+			$\omega$
+		&
+                        Winkelgeschwindigkeit für dynamischen Auftrieb
+		&
+                        Zufällig, gleichverteilt aus dem Intervall $[-\pi/4,-\pi/3]$ oder $[\pi/4,\pi/3]$
+		\\
+			$v_{y,\PimiddyFormelText{max}}$
+		&
+                        Endgeschwindigkeit
+		&
+                        Zufällig, gleichverteilt aus $[0.5,1.5]$ für feuchten Schnee bzw.\ $[1.0,2.0]$ für trockenen Schnee.
+		\\
+		\\
+		\bottomrule
+	\end{tabular}
+	\label{table:implementation_snowflake_properties}
+\end{table}
+
+Nun wird die konkrete Umsetzung der Partikelsimulation
+besprochen. \autoref{table:implementation_snowflake_properties} zeigt
+die Eigenschaften, die für jede Flocke zu verwalten sind. Viele dieser
+Eigenschaften wie die Größe oder der Rotationsradius können einmalig
+beim Erstellen des Buffers auf dem Host gesetzt werden und bleiben
+dann konstant, sofern die Außentemperatur $T$ nicht verändert
+wird. Dynamisch sind einzig die Eigenschaften Position und
+Geschwindigkeit. Für jede Eigenschaft wird ein Buffer auf der
+Grafikkarte rserviert.
+
+Die Bewegung der Schneeflocken ist in zwei Teile geteilt, den
+\emph{Bewegungsteil} und den \emph{Kollisionsteil}. Der Kernel für die
+Bewegung der Flocken bekommt als weitere Eingabe das Vektorfeld der
+Geschwindigkeitspfeile. Daraus wird die Geschwindigkeit des Fluids an
+der Position der Flocke interpoliert. Weiterhin wird ein fortlaufender
+Zeitparameter \PimiddyInlineCode{t} zusätzlich zum Zeitdelta
+\PimiddyInlineCode{dt} an den Kernel gegeben. Mit
+\PimiddyInlineCode{t} wird die Rotation der Flocke berechnet.
+
+Nach Ausführung des Bewegungskernels kann es allerdings vorkommen,
+dass eine Flocke entweder in einem Hindernis oder außerhalb des
+Simulationsbereiches landet. In diesem Fall muss eine neue Position
+für die Schneeflocke gefunden werden. Hier ergeben sich zwei
+Schwierigkeiten:
+
+\begin{enumerate}
+\item Die neue Position sollte zufällig gewählt werden, damit ein
+minimaler Grad an sich wiederholenden Mustern beim Schneefall
+auftreten. Die Grafikkarte bietet jedoch keinen Mechanismus hierfür,
+weder für Pseudozufallszahlen noch für echten Zufall.
+\item Die neue Position sollte idealerweise nicht so gewählt werden,
+dass sie wieder in einem Hindernis liegt.
+\end{enumerate}
+
+Da kein Mechanismus in OpenCL vorhanden ist, um Zufallszahlen zu
+generieren, müssen die im Kernel schon verfügbaren Daten als
+Zufallsquelle herangezogen werden. OpenCL schreibt vor, dass Zahlen
+vom Typ \PimiddyInlineCode{float} im IEEE-754-Format vorliegen
+müssen. Dies erlaubt es, Eigenschaften dieser Kodierung auszunutzen,
+um für einen gegebenen Fließkommawert einen pseudozufälligen Wert
+zurückzugeben, der aus den einzelnen Bits der Eingabezahl
+entsteht. Dies wurde in \cite{Eidissen2009} in CUDA umgesetzt, um die
+Positionen von Partikeln zu randomisieren. Die folgende
+OpenCL-C-Funktion gibt einen Wert im Intervall $[0,1]$ zurück.
+
+\begin{minted}[frame=lines]{c}
+float
+random_float_value(
+    float f)
+{
+    return
+        (as_float(
+             as_int(f) & 0x007fffff | 0x40000000)
+         - 3.0f
+         + 1.0f) /
+        2.0f;
+}
+\end{minted}
+
+Die Eingabe \PimiddyInlineCode{f} zeitweise als Ganzzahl interpretiert, um
+die Bit-Operatoren \PimiddyInlineCode{\&} und \PimiddyInlineCode{|}
+auszunutzen.
+
+Diese Funktion kann man jetzt nutzen, um gegeben der alten Position
+der Schneeflocke eine neue Position zu finden:
+
+\begin{minted}[frame=lines]{c}
+float4
+random_position(
+	int4 bounding_rect,
+	float4 f)
+{
+	float4 result;
+
+	result.x =
+		random_float_value(
+                    (f.x + f.z) / f.y);
+	result.z =
+		random_float_value(
+                    f.x / f.z + f.y);
+	result.y =
+		result.x +
+                (1.0f - result.x) *
+                random_float_value(
+                    f.x - f.z - f.y);
+
+	return
+		result *
+                convert_float4(
+                    bounding_rect);
+}
+\end{minted}
+
+Statt nur der alten Position der Schneeflocke könnte man noch weitere
+Daten wie seine Geschwindigkeit in die Berechnungen einfließen lassen.
+
+Durch diese Funktion ist allerdings nicht sichergestellt, dass die
+resultierende Position außerhalb eines Hindernisses liegt. Dies ist
+ebenfalls umsetzbar, zum Beispiel indem man einen neuen Buffer erstellt,
+der nur die Indizes der Gitterzellen enthält, die nicht von einem Hindernis
+ausgefüllt sind. Es wird dann zuerst ein zufälliges Element aus dem
+Indexbuffer ausgewählt und dann eine Position innerhalb der so gewählten
+Zelle. Da der Effekt einer fehlplatzierten Flocke allerdings
+vernachlässigbar ist wurde dieses Verfahren nicht
+umgesetzt.\PimiddyTodo{Das hier ruhig noch etwas näher beschreiben.}
+
+lol\PimiddyTodo{Hier muss jetzt noch der Code kommen.}

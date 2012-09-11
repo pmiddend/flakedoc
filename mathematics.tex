@@ -8,9 +8,9 @@ Operationen hier eingeführt werden.
 
 Die später betrachteten Gleichungen sind allerdings meist gar nicht oder nur sehr
 schwer analytisch zu lösen, daher greift man auf numerische Verfahren zurück.
-Dafür ist es allerdings notwendig, die Operationen wie den Gradienten oder die
-Divergenz zu \emph{diskretisieren}. Dies kann auf verschiedene Arten geschehen,
-was im letzten Teil des Abschnitts erläutert wird.
+Dafür ist es notwendig, die Operationen wie den Gradienten oder die
+Divergenz zu \emph{diskretisieren}. Im letzten Teil des Abschnitts
+werden verschiedene Arten der Diskretisierung erläutert.
 
 \subsection{Kontinuierliche Felder}
 
@@ -28,10 +28,12 @@ Ein \PimiddyBegriff{Vektorfeld} $\vec{u}$ ist eine Abbildung
 \vec{u} \colon \PimiddyReell^n \to \PimiddyReell^n,
 \end{equation*}
 
-die einem Punkt im Raum einen Pfeil zuordnet. So kann z.\,B. jedem Punkt im Raum
-die Flussgeschwindigkeit des Fluids an diesem Punkt zugeordnet werden.
-\autoref{fig:mathematics_vectorfield} zeigt ein solches Vektorfeld.
-$\PimiddyVectorfields(\PimiddyReell^n)$ bezeichne die Menge aller Vektorfelder.
+die einem Punkt im Raum einen Pfeil zuordnet. So kann \PimiddyzB jedem
+Punkt im Raum die Windgeschwindigkeit an diesem Punkt zugeordnet
+werden. \autoref{fig:mathematics_vectorfield} zeigt ein solches
+Vektorfeld. $\PimiddyVectorfields(\PimiddyReell^n)$ bezeichne die
+Menge aller Vektorfelder. In dieser Arbeit sind alle Vektorfelder
+differenzierbar.
 
 Analog ist ein \PimiddyBegriff{Skalarfeld} $p$ eine Abbildung
 
@@ -42,20 +44,22 @@ p \colon \PimiddyReell^n \to \PimiddyReell
 welche einem Punkt im Raum einen skalaren Wert zuordnet. Beispielsweise könnte
 für jeden Punkt im Raum die dortige Temperatur in einem Skalarfeld gespeichert
 sein (siehe \autoref{fig:mathematics_scalarfield}).
-$\PimiddyScalarfields(\PimiddyReell^n)$ bezeichne die Menge aller Skalarfelder.
+$\PimiddyScalarfields(\PimiddyReell^n)$ bezeichne die Menge aller
+Skalarfelder. Auch alle Skalarfelder sind in dieser Arbeit
+differenzierbar.
 
 \begin{figure}
-	\begin{subfigure}[b]{0.5\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/vectorfield}
 		\caption{Ein Vektorfeld}
 		\label{fig:mathematics_vectorfield}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{0.5\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/thermal_imaging}
-		\caption{Die Körpertemparatur eines Pferds als Skalarfeld.}
+		\caption{Die Körpertemperatur eines Pferds als Skalarfeld.}
 		\label{fig:mathematics_scalarfield}
 	\end{subfigure}
 	\caption{Die betrachteten Feldtypen}
@@ -72,34 +76,36 @@ $\PimiddyGrad p$ definiert als:
 \end{gather}
 
 \begin{figure}[ht]
-	\begin{subfigure}[b]{0.5\textwidth}
+        \captionsetup{singlelinecheck=off}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/scalar_field_to_show_gradient}
-		\caption{Das Skalarfeld zur Funktion $f(x,y) = \sin(x)\sin(y)$. Rötliche Färbung deutet hohe Werte an, lila und blau geringe.}
+		\caption{Das Skalarfeld zur Funktion \[ f(x,y) = \sin(x)\sin(y) \] Rötliche Färbung deutet hohe Werte an, lila und blau geringe.}
 		\label{fig:mathematics_sample_scalar_field}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{0.5\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/gradient_of_scalar_field}
-		\caption{Der Gradient des Skalarfeldes $f(x,y)=(\sin(y)\cos(x),\sin(x)\cos(y))$}
+		\caption{Der Gradient des Skalarfeldes \[ f(x,y)=(\sin(y)\cos(x),\sin(x)\cos(y)) \]}
 		\label{fig:mathematics_gradient_of_sample_scalar_field}
 	\end{subfigure}
 	\caption{Der Gradient am Beispiel}
 	\label{fig:mathematics_gradient_of_sample_scalar_field_total}
 \end{figure}
 
-Der Gradient eines Skalarfeldes ist also ein Vektorfeld, nämlich das Vektorfeld
-der partiellen Ableitungen. Genauso wie die Ableitung eines Graphen die Steigung
-an jedem Punkt angibt, so zeigt der Gradient eines Feldes in die Richtung des
-steilsten Anstiegs. Seine Länge gibt die Größe Steigung an. Der Gradient des
-negativen Skalarfeldes $-p$ zeigt folglich in Richtung des größten Gefälles.
-\autoref{fig:mathematics_gradient_of_sample_scalar_field_total} zeigt ein simples
-Beispiel für den Gradienten.
+Der Gradient eines Skalarfeldes ist also ein Vektorfeld, nämlich das
+Vektorfeld der partiellen Ableitungen. Genauso wie die Ableitung eines
+Graphen die Steigung an jedem Punkt angibt, so zeigt der Gradient
+eines Feldes in die Richtung des steilsten Anstiegs. Die Länge des
+Gradienten gibt die Größe der Steigung in diesem Punkt an. Der
+Gradient des negativen Skalarfeldes $-p$ zeigt folglich in Richtung
+des größten Gefälles.
+\autoref{fig:mathematics_gradient_of_sample_scalar_field_total} zeigt
+ein simples Beispiel für den Gradienten.
 
-Ist ein Vektorfeld $\vec{u}$ differenzierbar (was wir in dieser Arbeit für alle
-Vektorfelder annehmen), dann ist die \PimiddyBegriff{Divergenz} auf dem
-Feld definiert als
+Für differenzierbare Vektorfelder $\vec{u}$ ist die
+\PimiddyBegriff{Divergenz} auf dem Feld definiert als
 
 \begin{gather}
 \PimiddyDiv \colon \PimiddyVectorfields \to \PimiddyScalarfields \\
@@ -113,19 +119,21 @@ Feld definiert als
 Hier sind $u^x,u^y,u^z$ die einzelnen Komponenten des Vektorfeldes. Die
 Divergenz eines Vektorfelds ist also ein Skalarfeld. Dieses Skalarfeld kann
 gedeutet werden als \PimiddyQuotes{Quellendichte} des ursprünglichen
-Vektorfeldes. Ein Feld $\vec{u}$, was $\PimiddyDiv \vec{u}=0$ erfüllt, heißt
-folglich \PimiddyBegriff{quellenfrei}.
+Vektorfeldes\PimiddyTodo{Hier muss noch ein Bild hin.}. Ein Feld
+$\vec{u}$, welches $\PimiddyDiv \vec{u}=0$ erfüllt, heißt folglich
+\PimiddyBegriff{quellenfrei}.
 
 In der Physik findet man den Gradienten und die Divergenz meist unter dem Symbol
 $\nabla$ vereint. Je nachdem, ob es auf ein Vektor- oder ein Skalarfeld
 angewendet wird, wechselt es die Bedeutung.
-%Diese Notation wird in der Arbeit bevorzugt, da man die Symbole $\PimiddyGrad$ bzw\,. $\PimiddyDiv$ in der Literatur zu Fluiddynamik kaum vorfindet.
+%Diese Notation wird in der Arbeit bevorzugt, da man die Symbole $\PimiddyGrad$ bzw.\ $\PimiddyDiv$ in der Literatur zu Fluiddynamik kaum vorfindet.
 
-Auf Vektorfeldern ist schließlich noch die \PimiddyBegriff{Rotation} definiert:
+Auf Vektorfeldern ist schließlich die \PimiddyBegriff{Rotation}
+definiert als:
 
 \begin{gather}
-\PimiddyDiv \colon \PimiddyVectorfields \to \PimiddyVectorfields \\
-\PimiddyDiv \vec{u}
+\PimiddyRot \colon \PimiddyVectorfields \to \PimiddyVectorfields \\
+\PimiddyRot \vec{u}
 =
 \left(
 	\begin{array}{c}
@@ -136,13 +144,15 @@ Auf Vektorfeldern ist schließlich noch die \PimiddyBegriff{Rotation} definiert:
 \right)
 \end{gather}
 
-Wie der Name schon andeutet gibt sie für jeden Punkt des ursprünglichen
-Vektorfeldes an, wie stark und in welche Richtung das Feld in diesem Punkt
-rotiert. Im Zweidimensionalen ist die Rotation auch definiert, hier ist sie
-allerdings nur ein Skalar, die Rotationsachse ist immer die imaginäre
-\PimiddyQuotes{$z$-Achse} (in \autoref{fig:mathematics_scalarfield} wäre die
-Rotation überall konstant). Ein Feld $\vec{u}$, was $\PimiddyRot
-\vec{u}=0$ erfüllt, heißt \PimiddyBegriff{rotationsfrei}.
+Wie der Name schon andeutet gibt sie für jeden Punkt des
+ursprünglichen Vektorfeldes an, wie stark und in welche Richtung das
+Feld in diesem Punkt rotiert. Im Zweidimensionalen ist die Rotation
+auch definiert, hier ergibt sich für jeden Punkt im Raum allerdings
+nur ein Skalar, kein Vektor. Die Rotationsachse ist immer die
+imaginäre \PimiddyQuotes{$z$-Achse} (in
+\autoref{fig:mathematics_scalarfield} wäre die Rotation überall
+konstant). Ein Feld $\vec{u}$, welches $\PimiddyRot \vec{u}=0$
+erfüllt, heißt \PimiddyBegriff{rotationsfrei}.
 
 \begin{figure}
 	\begin{subfigure}[b]{0.5\textwidth}
@@ -181,13 +191,13 @@ Operators wird deswegen in der Bildverarbeitung zum Erkennen von Kanten in
 Bildern verwendet (siehe \autoref{fig:mathematics_image_laplacian}).
 
 \begin{figure}[ht]
-	\begin{subfigure}[b]{0.5\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/schloss_grey}
 		\caption{Originalbild}
 	\end{subfigure}
 	~
-	\begin{subfigure}[b]{0.5\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/schloss_grey_laplace}
 		\caption{Das Bild nach Anwendung des Laplace-Operators}
@@ -213,11 +223,14 @@ ergibt sich:
 \subsection{Diskretisierung}
 \label{sec:mathematics_discretization}
 
-Die eben vorgestellten mathematischen Definitionen gehen vom unendlichen,
-kontinuierlichen Raum $\PimiddyReell^n$ aus. Für die Berechnungen wird
-aber ein endliches, diskretes Gitter verwendet, also eine Teilmenge von
-$\PimiddyGanz^n$. Folglich müssen die Operatoren in eine diskrete Form gebracht
-werden. Dies geschieht zunächst in einer Dimension.
+Die eben vorgestellten mathematischen Definitionen gehen vom
+unendlichen, kontinuierlichen Raum $\PimiddyReell^n$ aus. Für die
+Berechnungen wird aber ein endliches, diskretes Gitter verwendet, also
+eine Teilmenge von $\PimiddyGanz^n$. Eine Zelle in dem diskreten
+Gitter wird auch \PimiddyBegriff{Voxel} (für
+\PimiddyQuotes{Volumen-Pixel}) genannt. Die eben vorgestellten
+Operatoren müssen in eine diskrete Form gebracht werden. Dies wird
+hier zunächst in einer Dimension erläutert.
 
 Es sei $f \colon \PimiddyReell \to \PimiddyReell$ eine reelle Funktion, von der
 wir in den späteren Berechnungen nur Stützpunkte in regelmäßigen Abständen
@@ -233,10 +246,11 @@ Die (kontinuierliche) Ableitung dieser Funktion ist definiert als
 f'(x) = \lim_{h \to 0} \frac{f(x) - f(x+h)}{x - h}
 \end{equation}
 
-Je nachdem, wie genau die Simulation sein soll, kann bei der Diskretisierung der
-Ableitung unterschiedlich viel Aufwand einfließen. Grundlage für die
-Diskretisierung (und die anschließende Abschätzung der Genauigkeit) ist die
-\PimiddyBegriff{Taylorreihe} von $f$ (um den Entwicklungspunkt $a$):
+Je nachdem, wie genau die Simulation sein soll, kann bei der
+Diskretisierung dieser Ableitung unterschiedlich viel Aufwand
+einfließen. Grundlage für die Diskretisierung und die anschließende
+Abschätzung der Genauigkeit ist die \PimiddyBegriff{Taylorreihe} von
+$f$ (um den Entwicklungspunkt $a$):
 
 \begin{equation}
 f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2 + O(\Delta x^2)
@@ -270,11 +284,12 @@ Eine bessere Näherung erhält man, wenn man
 f'(x_i) = \frac{f(x_{i+1}) - f(x_{i-1})}{2 \Delta x} + O(\Delta x^2)
 \end{equation}
 
-Diese Näherung wird \PimiddyBegriff{zentrale Differenz} genannt und hat
-nur quadratischen Fehler $O(\Delta x^2)$. Man kann das Schema fortführen, um
-noch bessere Näherung zu erhalten, dies führt allerdings dazu, dass eine immer
-größere Umgebung des aktuellen Punktes betrachtet werden muss, was in der
-Implementierung zu viele Speicherzugriffe verursacht.
+Diese Näherung wird \PimiddyBegriff{zentrale Differenz} genannt und
+hat nur quadratischen Fehler $O(\Delta x^2)$. Man kann dieses Schema
+fortführen, um noch bessere Näherung zu erhalten. Dies führt
+allerdings dazu, dass eine immer größere Umgebung des aktuellen
+Punktes betrachtet werden muss, was in der späteren Implementierung zu
+viele Speicherzugriffe verursacht.
 
 Mit Hilfe der zentralen Differenz lässt sich auch eine Näherung für die zweite
 Ableitung angeben:
@@ -298,7 +313,7 @@ f''(x_i)
 }
 \end{equation}
 
-Da alle Operatoren auf partiellen Ableitungen beruhigen, lassen sich nun
+Da alle Operatoren auf partiellen Ableitungen beruhen, lassen sich nun
 diskrete Näherungen für jeden Operator angeben. Dies ist in
 \autoref{table:mathematics_discrete_operator_table} für 3 Dimensionen für ein
 Skalarfeld $p$ beziehungsweise ein Vektorfeld $\vec{u}$ geschehen.

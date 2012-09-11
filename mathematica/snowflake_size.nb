@@ -1,0 +1,171 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      6885,        161]
+NotebookOptionsPosition[      6577,        145]
+NotebookOutlinePosition[      6912,        160]
+CellTagsIndexPosition[      6869,        157]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"If", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"T", "\[LessEqual]", " ", 
+      RowBox[{"-", "0.0610"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"0.015", " ", 
+      SuperscriptBox[
+       RowBox[{"Abs", "[", "T", "]"}], 
+       RowBox[{"-", "0.35"}]]}], ",", "\[IndentingNewLine]", "0.04"}], "]"}], 
+   ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"T", ",", 
+     RowBox[{"-", "20"}], ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Temparatur in \[Degree]C\>\"", ",", 
+      "\"\<Gr\[ODoubleDot]\[SZ]e der Schneeflocke\>\""}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"BaseStyle", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"FontSize", "\[Rule]", "14"}], ",", 
+      RowBox[{"FontFamily", "\[Rule]", "\"\<Helvetica\>\""}]}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "20"}], ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0.045"}], "}"}]}], "}"}]}]}], "\[IndentingNewLine]",
+   "]"}]], "Input",
+ CellChangeTimes->{{3.5510754163343697`*^9, 3.551075643741788*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1: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
+DRbWrPx8SPTUzuU137PxDlpdXV3zfwFO8/te
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Temparatur in \[Degree]C\"", TraditionalForm], 
+    FormBox["\"Gr\[ODoubleDot]\[SZ]e der Schneeflocke\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  BaseStyle->{FontSize -> 14, FontFamily -> "Helvetica"},
+  ImageSize->{633., Automatic},
+  PlotRange->{{-20, 2}, {0, 0.045}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.551075445289403*^9, {3.5510754895149803`*^9, 3.551075592608345*^9}, {
+   3.5510756233563643`*^9, 3.551075644268497*^9}}]
+}, Open  ]]
+},
+WindowSize->{958, 1059},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Linux x86 (64-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 1331, 36, 201, "Input"],
+Cell[1913, 60, 4648, 82, 366, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

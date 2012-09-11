@@ -2,47 +2,60 @@
 
 \subsection{Fluide}
 
-Die Gleichungen, die im folgenden beschrieben werden, gelten nicht nur für Gase
-wie Luft, sondern auch für Flüssigkeiten wie Wasser. Deshalb wird im Folgenden
-der Begriff \PimiddyBegriff{Fluid} verwendet, der beide Zustände zusammenfasst.
-Physikalisch gesehen sind Fluide Substanzen, die einer beliebig langsamen
-Scherung keinen Widerstand entgegensetzen. Dieses Konzept ist allerdings in
-dieser Arbeit nicht von Bedeutung.
+Die Gleichungen, die im folgenden beschrieben werden, gelten nicht nur
+für Gase wie Luft, sondern auch für Flüssigkeiten wie Wasser. Deshalb
+wird im Folgenden der Begriff \PimiddyBegriff{Fluid} verwendet,
+welcher beide Zustände zusammenfasst. Physikalisch gesehen sind
+Fluide Substanzen, die einer beliebig langsamen Scherung keinen
+Widerstand entgegensetzen. Dieses Konzept ist allerdings in dieser
+Arbeit nicht von Bedeutung.
 
-Fluide können unter unterschiedlichen Gesichtspunkten modelliert werden, je
-nachdem, an welcher Art Fluid man interessiert ist. Auch die äußeren
-Gegebenheiten haben Einfluss auf die gewählte Modellierung. Daher soll zunächst
-das Modell erläutert werden, bevor die zugehörigen Gleichungen vorgestellt
-werden.
+Welches Modell man für die Bewegung von Fluiden wählt, hängt davon ab,
+welche Art von Fluid man modelliert. Bei dickflüssigen Fluiden wie
+Honig muss ein Modell gewählt werden, was die Viskosität gut
+modelliert. Bei Fluiden mit geringer Dichte wie Luft können dagegen
+einige Faktoren ausgelassen werden. Auch die äußeren Gegebenheiten
+haben Einfluss auf das Modell. Daher sollen zunächst die
+Rahmenbedingungen des Modells erläutert werden, bevor die zugehörigen
+Gleichungen vorgestellt werden.
 
-Das \emph{Volumen} von Fluiden ist im Allgemeinen nicht konstant, es wird durch
-Veränderung von Druck und Dichte beeinflusst. Dies geschieht z.\,B. beim
-Übertreten der Schallmauer (im Medium Luft, beispielsweise bei einer Explosion)
-oder bei der Ausbreitung von Tönen unter Wasser. Bei der Modellierung
-unterscheidet man zwischen \PimiddyBegriff{komprimierbaren} und
-\PimiddyBegriff{unkomprimierbaren} Fluiden, je nachdem, ob die Veränderung des
-Volumens eine Rolle für die Simulation spielt.
+Das \emph{Volumen} von Fluiden ist im Allgemeinen nicht konstant, es
+wird durch Veränderung von Druck und Dichte beeinflusst. Dies
+geschieht z.\,B.\ beim Übertreten der Schallmauer (im Medium Luft,
+beispielsweise bei einer Explosion) oder bei der Ausbreitung von Tönen
+unter Wasser. In der Strömungsmechanik unterscheidet man daher
+zwischen \PimiddyBegriff{komprimierbaren} und
+\PimiddyBegriff{unkomprimierbaren} Fluiden, je nachdem, ob die
+Veränderung des Volumens eine Rolle für die Simulation spielt.
 
-Es werden hier nur \emph{unkomprimierbare} Fluide betrachtet. Dies stellt kein
-Problem dar, da nur vergleichsweise kleine Geschwindigkeiten modelliert werden.
-Das Modell wird dadurch allerdings wesentlich vereinfacht.
+Es werden hier nur \emph{unkomprimierbare} Fluide betrachtet. Dies
+stellt kein Problem dar, da nur vergleichsweise kleine
+Geschwindigkeiten betrachtet werden.  Das Modell wird dadurch
+allerdings wesentlich vereinfacht.
 
-Zudem haben Fluide im allgemeinen an jedem Punkt eine unterschiedliche
-\emph{Dichte} $\rho$. Zur weiteren Vereinfachung wird hier allerdings von einer
-konstanten Dichte ausgegangen.
+Zudem haben Fluide im allgemeinen an jedem Punkt $\vec{x}$ eine
+unterschiedliche \emph{Dichte} $\rho(\vec{x})$. Diese wird im
+Wesentlichen von Druck und Temperatur beeinflusst. Zur weiteren
+Vereinfachung wird hier allerdings von einer konstanten Dichte $\rho$
+ausgegangen und beispielsweise die Temperatur nicht in die
+Betrachtungen einbezogen. Effekte wie Auftrieb durch
+Temperaturunterschiede können allerdings optional in das Modell
+eingepasst werden, siehe \autoref{sec:stam_buoyancy}.
 
 \subsection{Einführung}
 
 Das Modell eines Fluids besteht mathematisch gesehen aus mehreren Feldern
-(Skalar- und Vektorfeldern), die den \emph{Zustand} des Fluids zu einem
+(Skalar- und Vektorfeldern), die den Zustand des Fluids zu einem
 \emph{Zeitpunkt} $t$ an einer \emph{Position} $\vec{x}$ angeben.
 
-Für die \PimiddyBegriff{Navier-Stokes-Gleichungen}, benannt nach den
-Mathematikern \PimiddyName{Claude-Louis Navier} und \PimiddyName{George Gabriel
-Stokes}, werden zwei Felder betrachtet, die \emph{Bewegungsgeschwindigkeit}
-$\vec{u}(\vec{x},t)$ des Fluids und der \emph{Druck} $p(\vec{x},t)$. Die
-Gleichungen lauten wie folgt:
+In den \PimiddyBegriff{Navier-Stokes-Gleichungen}, benannt nach den
+Mathematikern \PimiddyName{Claude-Louis Navier} und
+\PimiddyName{George Gabriel Stokes}, die in
+\autoref{eq:navier_stokes_equation} dargestellt sind, werden
+zwei Felder betrachtet, die \emph{Bewegungsgeschwindigkeit}
+$\vec{u}(\vec{x},t)$ des Fluids und der \emph{Druck} $p(\vec{x},t)$.
 
+\begin{figure}
 \begin{align}
 \label{eq:navier_stokes_momentum_equation}
 \frac{
@@ -67,6 +80,9 @@ Gleichungen lauten wie folgt:
 \label{eq:navier_stokes_incompressibility_condition}
 \PimiddyDiv \vec{u} & = 0
 \end{align}
+\caption{Die unkomprimierbaren Navier-Stokes-Gleichungen}
+\label{eq:navier_stokes_equation}
+\end{figure}
 
 \autoref{eq:navier_stokes_momentum_equation} ist eine Differentialgleichung, die
 wegen des Terms $\vec{u} \PimiddyDiv \vec{u}$ nichtlinear ist. Das macht sie
@@ -82,20 +98,21 @@ hier soll allerdings schon ein kurzer Überblick gegeben werden:
 \begin{itemize}
 \item
 	Die Konstante $\rho$ gibt die \emph{Dichte} des Fluids an. Für Wasser beträgt
-	sie etwa $1000 \frac{kg}{m^3}$, für Luft etwa $1.3 \frac{kg}{m^3}$
-	(\cite{Bridson2007}).
+	sie etwa $1000 \frac{kg}{m^3}$, für Luft etwa $1.3
+        \frac{kg}{m^3}$ \cite{Bridson2007}.
 \item
 	Der \emph{Druck} spielt bei den späteren Berechnungen eine große Rolle.
-	Er ist dort besonders hoch, wo das Fluid auf Hindernisse trifft.
+	Er ist dort besonders hoch, wo das Fluid auf Hindernisse
+        trifft und diese umfließt.
 \item
-	Kräfte, die von außen auf das Fluid wirken, wie z.\,B. die Schwerkraft
+	Kräfte, die von außen auf das Fluid wirken, wie z.\,B.\ die Schwerkraft
 	oder auch der eingeführte Wind, werden im Vektorfeld $\vec{g} \colon
 	\PimiddyReell^3 \to \PimiddyReell^3$ zusammengefasst.
 \item
-	Schließlich unterscheiden sich Fluide in ihrer \PimiddyBegriff{Viskosität} oder
-	\PimiddyQuotes{Zähflüssigkeit}, die in der Gleichung mit $\nu$ bezeichnet ist.
-	Dickflüssige Fluide wie Honig haben ein hohes $\nu$, dünnflüssige wie Luft ein
-	niedriges $\nu$.
+	Fluide unterscheiden sich in ihrer \PimiddyBegriff{Viskosität}
+	oder \PimiddyQuotes{Zähflüssigkeit}, die in der Gleichung mit $\nu$
+	bezeichnet ist. Dickflüssige Fluide wie Honig haben ein hohes $\nu$,
+	dünnflüssige wie Luft ein niedriges $\nu$.
 \end{itemize}
 
 \autoref{eq:navier_stokes_momentum_equation} wird
@@ -115,15 +132,16 @@ hierzu aufweisen.
 \subsubsection{Lagrange und Euler}
 
 Um Fluide zu modellieren, gibt es zwei Betrachtungsweisen. Die
-\PimiddyBegriff{Euler'sche-Betrachtungsweise} und die
+\PimiddyBegriff{Euler'sche-Be\-trach\-tungs\-wei\-se} und die
 \PimiddyBegriff{Lagrange'sche-Betrachtungsweise}.
 
-Bei der \emph{Lagrange'schen-Betrachtungsweise} modelliert man das Fluid als System
-von mikroskopisch kleinen \emph{Partikeln} (man modelliert sozusagen die
-Moleküle des Fluids einzeln). Jedes Partikel hat ein Volumen $V$, eine
-Masse $m$, eine Position $\vec{x}$ und eine Geschwindigkeit $\vec{u}$. In jedem
-Simulationsschritt berechnet man die Kräfte, die auf die Partikel wirken, und
-berechnet die resultierende Beschleunigung mit der Newton'schen Formel:
+Bei der \emph{Lagrange'schen-Betrachtungsweise} modelliert man das
+Fluid als System von mikroskopisch kleinen \emph{Partikeln} (man
+modelliert sozusagen die Moleküle des Fluids einzeln). Jedes Partikel
+hat ein Volumen $V$, eine Masse $m$, eine Position $\vec{x}$ und eine
+Geschwindigkeit $\vec{u}$. In jedem Simulationsschritt berechnet man
+die Kräfte, die auf die Partikel wirken, und berechnet die
+resultierende Beschleunigung mit der Newton'schen Formel:
 
 \begin{align*}
 m \cdot \vec{a} &= \vec{F} \\
@@ -133,7 +151,8 @@ m \cdot \frac{\partial \vec{u}}{\partial t} &= \vec{F}
 Diese Vorgehensweise ist intuitiv und einfach umzusetzen, aber mathematisch
 schwer zu analysieren. Beispielsweise kann man die Frage \PimiddyQuotes{Welche
 Geschwindigkeit hat das Fluid an Position $\vec{x}$?} nicht sofort
-beantworten.
+beantworten. Bei der Bewegung der Schneeflocken ist dies aber äußerst
+wichtig.
 
 Bei der \emph{Euler'schen-Betrachtungsweise} hingegen hält man jeweils einen Punkt im
 Raum fest und analysiert das Strömungsverhalten (Geschwindigkeit, Temperatur)
@@ -143,36 +162,41 @@ mit Hilfe von Vektorfeldern und Skalarfeldern aber sehr gut mathematisch erfasse
 \subsubsection{Die substantielle Ableitung}
 
 \begin{figure}[ht]
-\includegraphics[width=6cm]{images/swimmer_in_water}
-\caption{Die Bahn eines Fischs im Wasser. Die Temperatur des Fluids ist hier durch Farben kodiert. Rot bedeutet warmes Wasser, blau bedeutet kaltes Wasser. Nicht dargestellt ist die Veränderung der Wassertemperatur über die Zeit und die Fließrichtung des Wassers. Die Geschwindigkeit des Gewässers wird fürs erste außer Acht gelassen.}
+\centering
+\includegraphics[width=8cm]{images/swimmer_in_water}
+\caption{Die Bahn eines Bootes im Wasser. Die Temperatur des Fluids ist hier durch Farben kodiert. Rot bedeutet warmes Wasser, blau bedeutet kaltes Wasser. Nicht dargestellt ist die Veränderung der Wassertemperatur über die Zeit und die Fließrichtung des Wassers. Die Geschwindigkeit des Gewässers wird ebenfalls außer Acht gelassen.}
 \end{figure}
 
 Sowohl die Euler'sche- als auch die Lagrang'sche Betrachtungsweise spiegeln sich
-in den Navier-Stokes-Gleichungen wider. Die Gleichungen bilden eine Entsprechung
-der Gleichung $\vec{F} = m \cdot \vec{a}$ mit dem Unterschied, dass keine Kraft
-auf einen einzelnen Körper berechnet wird, sondern auf einen Raumabschnitt (ein
-\PimiddyQuotes{Kontinuum}).
+in den Navier-Stokes-Gleichungen wider. Obwohl es nicht sofort
+erkennbar ist, bilden die Gleichungen eine Entsprechung der Gleichung
+$\vec{F} = m \cdot \vec{a}$ mit dem Unterschied, dass keine Kraft auf
+einen einzelnen Körper berechnet wird, sondern auf einen ganzen
+Raumabschnitt (ein \PimiddyQuotes{Kontinuum}).
 
 Was die beiden Betrachtungsweisen verbindet, ist die
-\PimiddyBegriff{substantielle Ableitung}. Zur Herleitung dieser Ableitungsform
-betrachten wir zunächst eine beliebige Größe $q(\vec{x},t)$. Dies kann eine
-skalare Größe wie z.\,B. die Temperatur eines Gewässers sein oder eine Vektorgröße
-wie die Farbe des Wassers an einem Punkt. Sie ist eine Euler'sche Größe, ist
-also in jedem Punkt $\vec{x}$ und in jedem Zeitpunkt $t$ gegeben.
+\PimiddyBegriff{substantielle Ableitung}. Zur Herleitung dieser
+Ableitungsform betrachten wir zunächst eine beliebige Größe
+$q(\vec{x},t)$. Dies kann eine skalare Größe wie z.\,B.\ die Temperatur
+eines Gewässers sein oder eine Vektorgröße wie die Farbe des Wassers
+an einem Punkt. Da $q$ in jedem Punkt definiert ist, stellt die
+Funktion eine Euler'sche Größe dar.
 
-Zudem betrachten wir ein Partikel mit einer Bewegungsbahn durch das Fluid (z.\,B.
-einen Fisch im Wasser). Seine Position zum Zeitpunkt $t$ sei gegeben durch
-$\vec{p}(t)$. Dies entspricht einer Lagrange'schen Größe.
+Zudem betrachten wir ein Partikel mit einer Bewegungsbahn durch das
+Fluid (z.\,B.\  ein Ruderboot im Wasser). Seine Position zum Zeitpunkt
+$t$ sei gegeben durch $\vec{p}(t)$. Dies entspricht einer
+Lagrange'schen Größe.
 
-Setzen wir beide Größen zusammen, erhalten wir beispielsweise die Temperatur des
-Wassers auf der Bahn, die der Fisch im Wasser verfolgt:
+Setzen wir beide Größen zusammen, erhalten wir beispielsweise die
+Temperatur des Wassers auf der Bahn, die das Boot im Wasser verfolgt:
 
 \begin{equation}
 \PimiddyFormelText{Temperatur}(t) = q(\vec{p}(t),t)
 \end{equation}
 
-Wollen wir wissen, wie sich die Umgebungstemperatur des Fischs im Lauf der Zeit
-verändert, bilden wir die (totale) Ableitung dieser zusammengesetzten Größe:
+Wollen wir wissen, wie sich die Umgebungstemperatur des Bootes im Lauf
+der Zeit verändert, bilden wir die (totale) Ableitung dieser
+zusammengesetzten Größe:
 
 \begin{equation}
 \frac{
@@ -198,11 +222,13 @@ verändert, bilden wir die (totale) Ableitung dieser zusammengesetzten Größe:
 \end{equation}
 
 Die Summe auf der rechten Seite besteht aus zwei Teilen. Der erste Term,
-    $\frac{\partial q}{\partial t}$, gibt an, wie sich das Fluid unabhängig von
-    der betrachteten Position verändert. Bezogen auf den Fisch gibt dieser Term
-    an, wie sich die Temperatur des Gewässers über den Tag verteilt verändert.
-    Der zweite Term ergänzt die Temperaturveränderungen, die durch die Bahn des
-    Fischs verursacht werden.
+$\frac{\partial q}{\partial t}$, gibt an, wie sich das Fluid unabhängig von
+der betrachteten Position verändert. Bezogen auf das Boot gibt dieser
+Term an, wie sich die Temperatur des Gewässers über den Tag verteilt
+verändert, beispielsweise durch den Einfluss der Sonnenstrahlen. Der
+zweite Term ergänzt die globale Ableitung durch die lokale
+Temperaturveränderung, die durch die Bahn des Bootes verursacht
+wird.
 
 Statt eines beliebigen Pfades durch das Fluid nimmt man zur Definition der
 substantiellen Ableitung nun das Geschwindigkeitsfeld des Fluids zur Hilfe:
@@ -251,13 +277,10 @@ Die Impulsgleichung lässt sich mit Hilfe der substantiellen Ableitung so schrei
 \rho \frac{D\vec{u}}{Dt} = - \PimiddyGrad p + \PimiddyLaplace \vec{u} + \vec{f}
 \end{equation}
 
-Dies entspricht der klassischen Newton'schen Kraftformel, wobei die Masse $m$
-durch die Dichte $\rho$ ersetzt wird\PimiddyFootnote{Die Dichte ist eigentlich
-ebenfalls abhängig von Zeit und Position, also $\rho(\vec{x},t)$, wir
-beschränken uns allerdings ohne Einschränkungen auf ein einfacheres
-Modell.}. Auf der rechten Seite der Gleichung stehen die Kräfte, die das
-Fluid beeinflussen. Diese Kräfte sollen im Einzelnen näher beschrieben
-werden.
+Dies entspricht der klassischen Newton'schen Kraftformel, wobei die
+Masse $m$ durch die Dichte $\rho$ ersetzt wird. Auf der rechten Seite
+der Gleichung stehen die Kräfte, die das Fluid beeinflussen. Diese
+Kräfte sollen im Einzelnen näher beschrieben werden.
 
 \subsubsection{Die Kräfte in den Navier-Stokes-Gleichungen}
 
@@ -276,21 +299,25 @@ F_g =
 
 mit $g \cong 9.81 \frac{m}{s^2}$.
 
-Durch den Druck innerhalb des Fluids wird eine weitere Kraft $F_p$ ausgeübt.
-Allerdings erzeugt Druck allein keine Veränderung. Ist er über das Fluid
-konstant, ist die ausgeübte Kraft gleich 0. Stattdessen wirkt die Kraft $F_p$
-\PimiddyQuotes{ausgleichend}. Sie zeigt von Regionen hohen Drucks hin zu
-Regionen niedrigeren Drucks. Mathematisch gesehen ist sie also proportional zum
-negativen Gradient des Drucks (siehe
-\autoref{fig:navier_stokes_particle_system_wall_collision}):
+Durch den Druck $p$ des Fluids wird eine weitere Kraft $F_p$ ausgeübt.
+Allerdings erzeugt die Anwesenheit von Druck (also $p \neq 0$) allein
+keine Kraft. Ist der Druck beispielsweise im gesamten Fluid konstant,
+ist die ausgeübte Kraft gleich 0. Stattdessen wirkt die Kraft $F_p$
+\PimiddyQuotes{ausgleichend}. Sie zeigt von Regionen hohen Drucks hin
+zu Regionen niedrigeren Drucks. Mathematisch gesehen ist $F_p$ also
+proportional zum negativen Gradient des Drucks.
 
 \begin{equation}
 \label{eq:navier_stokes_f_p}
 F_p = -\PimiddyGrad p
 \end{equation}
 
-In den späteren Berechnungen spielt der Druck insbesondere eine Rolle, um das
-Fluid in seinem inkompressiblen Zustand zu halten und um das Hineinfließen in
+ In \autoref{fig:navier_stokes_particle_system_wall_collision}) ist
+dies intuitiv anhand eines Partikelsystems erläutert. Treffen die
+Partikel auf eine Wand, entsteht Druck, der tangential zur Wand wirkt
+und die Partikel in diese Richtung beschleunigt. In den späteren
+Berechnungen spielt der Druck insbesondere eine Rolle, um das Fluid in
+seinem inkompressiblen Zustand zu halten und um das Hineinfließen in
 Hindernisse zu verhindern.
 
 \begin{figure}[ht]
@@ -303,7 +330,7 @@ Die Viskosität des Fluids hat ebenfalls Einfluss auf das Fluid. Bei einem
 viskosen Fluid wird jeder Deformation ein Widerstand entgegengesetzt. Eine
 Flüssigkeit wie Honig, die um ein Hindernis herumfließt, bildet hinter dem
 Hindernis keine Verwirbelungen; die hohe Viskosität wirkt dem entgegen. Luft
-hingegen hat eine niedrige Viskosität, bildet also viele Wirbel.
+hingegen hat eine niedrige Viskosität, bildet also besonders viele Wirbel.
 
 \PimiddyTodo{Hier ein Bild von Honig vs. Luft (oder Wasser)}
 
@@ -316,8 +343,8 @@ daher proportional zum Laplace der Geschwindigkeit:
 F_v = \mu \cdot \PimiddyLaplace \vec{u}
 \end{equation}
 
-Die Konstante $\mu$ stellt die \PimiddyBegriff{dynamische Viskosität} des Fluids
-dar.
+Die Konstante $\mu$ stellt die \PimiddyBegriff{dynamische Viskosität}
+des Fluids dar.
 
 \subsection{Die Unkomprimierbarkeitsbedingung}
 \label{sec:mathematics_incompressibility_condition_section}
@@ -328,13 +355,14 @@ dar.
 \end{figure}
 
 Um die Unkomprimierbarkeitsbedingung zu motivieren, sei ein beliebiges Volumen
-$\Omega \subset \PimiddyReell^3$ gegeben, z.\,B. ein Würfel im Raum. Seine
+$\Omega \subset \PimiddyReell^3$ gegeben, z.\,B.\ ein Würfel im Raum. Seine
 Oberfläche sei $\partial \Omega$.
 
-Die Änderung des Würfelvolumens über die Zeit kann berechnet werden, indem man
-über die Normalenkomponente entlang seiner Oberfläche integriert \cite{Chorin1980}. Bildlich
-gesprochen summiert man auf diese Weise eingehende und ausgehende Strömungen an
-den Würfelseitenflächen:
+Die Änderung des Würfelvolumens über die Zeit kann berechnet werden,
+indem man über die Normalenkomponente entlang seiner Oberfläche
+integriert \cite{Chorin1980}. Bildlich gesprochen summiert man auf
+diese Weise eingehende und ausgehende Strömungen an den
+Würfelseitenflächen:
 
 \begin{equation}
 \frac{
@@ -347,7 +375,8 @@ den Würfelseitenflächen:
 \iint_{\partial \Omega} \vec{u} \cdot n
 \end{equation}
 
-Damit die Flüssigkeit unkomprimierbar ist, sollte dieses Integral verschwinden:
+Damit die Flüssigkeit unkomprimierbar ist -- sich das Volumen also
+nicht ändert -- sollte dieses Integral verschwinden:
 
 \begin{equation}
 \iint_{\partial \Omega} \vec{u} \cdot n = 0
@@ -360,6 +389,7 @@ umformen:
 \iiint_\Omega \PimiddyDiv \vec{u} = 0
 \end{equation}
 
-Da $\Omega$ beliebig gewählt war, folgt $\PimiddyDiv \vec{u} = 0$.
+Da $\Omega$ beliebig gewählt war, folgt die
+Unkomprimierbarkeitsbedingung $\PimiddyDiv \vec{u} = 0$.
 
 \PimiddyTodo{Hier noch etwas über Wirbelbildung sagen, vielleicht das Bild bringen, wo Wirbel durch den Projektionsoperator entstehen.}
