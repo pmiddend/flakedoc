@@ -24,9 +24,11 @@ set(
 	images/particle_system.pdf
 	images/vectorfield.eps
 	images/scalarfield.eps
-	images/boundary_with_normals.png
+	images/boundary_with_normals.eps
 	images/single_snow_crystal.png
-	images/drag_forces.png
+	images/drag_forces.eps
+	images/advection_bad.eps
+	images/snow_double_cone.eps
 	images/jacobi_times.eps
 	images/force_free_slip.eps
 	images/point_in_polygon.png
@@ -52,28 +54,29 @@ set(
 	images/right_neighborhood.eps
 	images/point_sprite_vs_billboard.png
 	images/aagaard_layer_model.png
-	images/aagaard_spheres.png
-	images/moist_air.png
+	images/aagaard_spheres.eps
+	images/moist_air.eps
 	images/boundary_types.eps
 	images/simulation_blowup.eps
 	images/swimmer_in_water.eps
 	images/schloss_grey.png
-	images/flat_3d_texture.png
+	images/flat_texture.eps
+	images/particle_cylinder.eps
 	images/schloss_grey_laplace.png
 	images/stam_loop.eps
-	images/snowflake_helix.png
-	images/vortex_shedding.png
+	images/snowflake_spiral.eps
+	images/vortex_shedding.eps
 	images/vortex_shedding_macroscopic.png
 	images/incompressibility_condition_example.eps
 	images/stam_loop_with_projection.eps
-	images/opencl_platform_model.png
+	images/opencl_platform_model.eps
+	images/opencl_memory_model.eps
 	images/particle_system_wall_collision.eps
 	images/vector_field_rotation.png
 	images/thermal_imaging.png
 	images/vector_field_rotation_arrows.png
-	images/advection_bad.eps
 	images/snowflake_size_graph.eps
-	images/snowflake_three_rectangles.png
+	images/snowflake_three_rectangles.eps
 	images/scalar_field_to_show_gradient.eps
 	images/gradient_of_scalar_field.eps
 	images/advection_good.eps

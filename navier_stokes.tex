@@ -1,4 +1,5 @@
 \section{Die Navier-Stokes-Gleichungen}
+\label{sec:navier_stokes}
 
 \subsection{Fluide}
 
@@ -48,12 +49,13 @@ Das Modell eines Fluids besteht mathematisch gesehen aus mehreren Feldern
 (Skalar- und Vektorfeldern), die den Zustand des Fluids zu einem
 \emph{Zeitpunkt} $t$ an einer \emph{Position} $\vec{x}$ angeben.
 
-In den \PimiddyBegriff{Navier-Stokes-Gleichungen}, benannt nach den
-Mathematikern \PimiddyName{Claude-Louis Navier} und
-\PimiddyName{George Gabriel Stokes}, die in
-\autoref{eq:navier_stokes_equation} dargestellt sind, werden
-zwei Felder betrachtet, die \emph{Bewegungsgeschwindigkeit}
-$\vec{u}(\vec{x},t)$ des Fluids und der \emph{Druck} $p(\vec{x},t)$.
+In den \PimiddyBegriff{Navier-Stokes-Gleichungen}, die in
+\autoref{eq:navier_stokes_equation} dargestellt sind, werden zwei
+Felder betrachtet, die \emph{Bewegungsgeschwindigkeit}
+$\vec{u}(\vec{x},t)$ des Fluids und der \emph{Druck}
+$p(\vec{x},t)$. Die Gleichungen wurden 1822 von
+\PimiddyName{Claude-Louis Navier} und 1845 von \PimiddyName{George
+Gabriel Stokes} formuliert\cite{Muller2003}.
 
 \begin{figure}
 \begin{align}
@@ -101,7 +103,7 @@ hier soll allerdings schon ein kurzer Überblick gegeben werden:
 	sie etwa $1000 \frac{kg}{m^3}$, für Luft etwa $1.3
         \frac{kg}{m^3}$ \cite{Bridson2007}.
 \item
-	Der \emph{Druck} spielt bei den späteren Berechnungen eine große Rolle.
+	Der \emph{Druck} $p$ spielt bei den späteren Berechnungen eine große Rolle.
 	Er ist dort besonders hoch, wo das Fluid auf Hindernisse
         trifft und diese umfließt.
 \item
@@ -164,7 +166,7 @@ mit Hilfe von Vektorfeldern und Skalarfeldern aber sehr gut mathematisch erfasse
 \begin{figure}[ht]
 \centering
 \includegraphics[width=8cm]{images/swimmer_in_water}
-\caption{Die Bahn eines Bootes im Wasser. Die Temperatur des Fluids ist hier durch Farben kodiert. Rot bedeutet warmes Wasser, blau bedeutet kaltes Wasser. Nicht dargestellt ist die Veränderung der Wassertemperatur über die Zeit und die Fließrichtung des Wassers. Die Geschwindigkeit des Gewässers wird ebenfalls außer Acht gelassen.}
+\caption{Die Bahn eines Bootes im Wasser. Die Temperatur des Fluids ist hier durch Farben kodiert. Rot bedeutet warmes Wasser, grün bedeutet kaltes Wasser. Nicht dargestellt ist die Veränderung der Wassertemperatur über die Zeit.}
 \end{figure}
 
 Sowohl die Euler'sche- als auch die Lagrang'sche Betrachtungsweise spiegeln sich
@@ -227,7 +229,7 @@ der betrachteten Position verändert. Bezogen auf das Boot gibt dieser
 Term an, wie sich die Temperatur des Gewässers über den Tag verteilt
 verändert, beispielsweise durch den Einfluss der Sonnenstrahlen. Der
 zweite Term ergänzt die globale Ableitung durch die lokale
-Temperaturveränderung, die durch die Bahn des Bootes verursacht
+Temperaturänderung, die durch die Bahn des Bootes verursacht
 wird.
 
 Statt eines beliebigen Pfades durch das Fluid nimmt man zur Definition der
@@ -302,9 +304,9 @@ mit $g \cong 9.81 \frac{m}{s^2}$.
 Durch den Druck $p$ des Fluids wird eine weitere Kraft $F_p$ ausgeübt.
 Allerdings erzeugt die Anwesenheit von Druck (also $p \neq 0$) allein
 keine Kraft. Ist der Druck beispielsweise im gesamten Fluid konstant,
-ist die ausgeübte Kraft gleich 0. Stattdessen wirkt die Kraft $F_p$
-\PimiddyQuotes{ausgleichend}. Sie zeigt von Regionen hohen Drucks hin
-zu Regionen niedrigeren Drucks. Mathematisch gesehen ist $F_p$ also
+ist die ausgeübte Kraft gleich 0. Stattdessen wirkt $F_p$
+\PimiddyQuotes{ausgleichend}. Sie zeigt von Bereichen hohen Drucks hin
+zu Bereichen niedrigeren Drucks. Mathematisch gesehen ist $F_p$ also
 proportional zum negativen Gradient des Drucks.
 
 \begin{equation}
@@ -317,12 +319,13 @@ dies intuitiv anhand eines Partikelsystems erläutert. Treffen die
 Partikel auf eine Wand, entsteht Druck, der tangential zur Wand wirkt
 und die Partikel in diese Richtung beschleunigt. In den späteren
 Berechnungen spielt der Druck insbesondere eine Rolle, um das Fluid in
-seinem inkompressiblen Zustand zu halten und um das Hineinfließen in
+seinem unkomprimierbaren Zustand zu halten und um das Hineinfließen in
 Hindernisse zu verhindern.
 
 \begin{figure}[ht]
+\centering
 \includegraphics[width=6cm]{images/particle_system_wall_collision}
-\caption{Partikelsystem, was auf ein Hindernis prallt. Der durchgezogene Pfeil deutet die Flussrichtung an, die gestrichelten Pfeile den negativen Gradienten des Drucks. Die Partikel erfahren also eine Kraft nach außen.}
+\caption{Partikelsystem, das auf ein Hindernis prallt. Der durchgezogene Pfeil deutet die Fließrichtung an, die gestrichelten Pfeile den negativen Gradienten des Drucks. Die Partikel erfahren also eine Kraft nach außen.}
 \label{fig:navier_stokes_particle_system_wall_collision}
 \end{figure}
 
@@ -331,8 +334,6 @@ viskosen Fluid wird jeder Deformation ein Widerstand entgegengesetzt. Eine
 Flüssigkeit wie Honig, die um ein Hindernis herumfließt, bildet hinter dem
 Hindernis keine Verwirbelungen; die hohe Viskosität wirkt dem entgegen. Luft
 hingegen hat eine niedrige Viskosität, bildet also besonders viele Wirbel.
-
-\PimiddyTodo{Hier ein Bild von Honig vs. Luft (oder Wasser)}
 
 Die Kraft, die durch die Viskosität ausgeübt wird, hat den Effekt,
 Geschwindigkeitsunterschiede innerhalb des Fluids auszugleichen. Sie ist
@@ -350,21 +351,24 @@ des Fluids dar.
 \label{sec:mathematics_incompressibility_condition_section}
 
 \begin{figure}[ht]
-\includegraphics[width=6cm]{images/incompressibility_condition_example}
-\caption{Fluss durch einen Würfel (Querschnitt)}
+\centering
+\includegraphics[width=10cm]{images/incompressibility_condition_example}
+\caption{Fluss durch ein Rechteck. Der große Pfeil deutet die Fließrichtung des Fluids an. Die Pfeile an den Rändern des Rechtecks zeigen in die dortige Fließgeschwindigkeit, über deren Normalenkomponente in \autoref{eq:navier_stokes_incompressibility_initial_integral} integriert wird.}
+\label{fig:navier_stokes_incompressibility_condition_example}
 \end{figure}
 
 Um die Unkomprimierbarkeitsbedingung zu motivieren, sei ein beliebiges Volumen
-$\Omega \subset \PimiddyReell^3$ gegeben, z.\,B.\ ein Würfel im Raum. Seine
+$\Omega \subset \PimiddyReell^3$ gegeben, \PimiddyzB ein Würfel im Raum. Seine
 Oberfläche sei $\partial \Omega$.
 
 Die Änderung des Würfelvolumens über die Zeit kann berechnet werden,
 indem man über die Normalenkomponente entlang seiner Oberfläche
 integriert \cite{Chorin1980}. Bildlich gesprochen summiert man auf
 diese Weise eingehende und ausgehende Strömungen an den
-Würfelseitenflächen:
-
+Würfelseitenflächen (\Pimiddyvgl
+\autoref{fig:navier_stokes_incompressibility_condition_example}):
 \begin{equation}
+\label{eq:navier_stokes_incompressibility_initial_integral}
 \frac{
 	\partial \PimiddyFormelText{Volumen}(\Omega)
 }
@@ -372,24 +376,17 @@ Würfelseitenflächen:
 	\partial t
 }
 =
-\iint_{\partial \Omega} \vec{u} \cdot n
+\iint_{\partial \Omega} \vec{u} \cdot \vec{n}
 \end{equation}
-
 Damit die Flüssigkeit unkomprimierbar ist -- sich das Volumen also
 nicht ändert -- sollte dieses Integral verschwinden:
-
 \begin{equation}
-\iint_{\partial \Omega} \vec{u} \cdot n = 0
+\iint_{\partial \Omega} \vec{u} \cdot \vec{n} = 0
 \end{equation}
-
 Mit Hilfe des Divergenzsatzes können wir dieses Integral in ein Volumenintegral
 umformen:
-
 \begin{equation}
 \iiint_\Omega \PimiddyDiv \vec{u} = 0
 \end{equation}
-
 Da $\Omega$ beliebig gewählt war, folgt die
 Unkomprimierbarkeitsbedingung $\PimiddyDiv \vec{u} = 0$.
-
-\PimiddyTodo{Hier noch etwas über Wirbelbildung sagen, vielleicht das Bild bringen, wo Wirbel durch den Projektionsoperator entstehen.}

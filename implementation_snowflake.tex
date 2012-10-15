@@ -1,4 +1,98 @@
 \section{Fallender Schnee}
+\label{sec:implementation_snowflake}
+
+\subsection{Schnee in interaktiven Anwendungen}
+
+Aktuelle interaktive Anwendungen wie Spiele simulieren typischerweise
+weder die Bildung einer Schneedecke noch den Fall von Schneeflocken in
+physikalisch motivierter Art und Weise.
+
+Für die Modellierung von Schneeflocken werden in Filmen und Spielen
+oft lokale Modelle verwendet, die nicht auf ein (globales) Windfeld
+zurückgreifen, sondern die Flocken lediglich in der Umgebung der Kamera
+unter Zuhilfenahme von Zufallsvariablen simulieren. Es folgen
+Beispiele der eingesetzten Verfahren:
+
+\begin{figure}[h]
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/snow_double_cone}
+                \caption{}
+		\label{fig:introduction_snow_double_cone}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.6\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/particle_cylinder}
+                \caption{}
+		\label{fig:introduction_particle_cylinder}
+	\end{subfigure}
+	\caption{(a) Schnee mittels Texturen, hier mit Hilfe eines Kegels um den Betrachter herum. Die Pfeile deuten an, dass die Texturen stetig nach unten gescrollt werden. (b) Ein lokales Modell für die Visualisierung von Schneeflocken. Außerhalb des gezeigten Zylinders werden keine Flocken erstellt.}
+\end{figure}
+
+\begin{enumerate}
+\item Es werden ein oder mehrere Texturen direkt vor dem Auge des
+Betrachters eingeblendet. Die Texturen stellen Bilder verschiedener
+Schneeflocken dar und werden stetig nach unten bewegt um den Eindruck
+zu erwecken, die Flocken fielen zu Boden.
+
+Die zu den Texturen gehörige Geometrie ist entweder ein Rechteck
+direkt vor dem Auge des Betrachters (eine texturierte
+\PimiddyQuotes{Glasscheibe}, die sich mit dem Betrachter mitbewegt),
+oder eine komplexere Form wie ein Kegel oder ein Doppelkegel (siehe
+\cite{Wang2004}). Dieser Ansatz ist extrem eingeschränkt, denn der
+Blickwinkel darf sich nicht signifikant von einem Horizontalen
+unterscheiden. Er bietet sich dort an, wo die synthetische Kamera
+ohnehin nicht frei ist, \PimiddyzB bei einem Flugsimulator.
+\item Es wird ein \PimiddyBegriff{Partikelsystem}
+verwendet\cite{Reeves:1983:PST:357318.357320}, also jede Schneeflocke
+einzeln modelliert und weiterbewegt, was physikalisch wesentlich
+akkurater ist. Dazu wird meist eine feste Anzahl an Schneeflocken
+vorgegeben. Die Anzahl richtet sich nach der Rechnerleistung und der
+Stärke des Schneefalls.
+
+Die Partikel haben Eigenschaften wie eine Position, eine Masse und
+eine Momentangeschwindigkeit, die am Anfang der Simulation zufällig
+festgelegt werden. Als Position wird allerdings kein beliebiger,
+zufälliger Punkt im Raum verwendet. Vielmehr wird ein Vektor
+generiert, der sich innerhalb eines eingeschränkten Bereiches um den
+Betrachter herum befindet, \PimiddyzB ein Punkt in einem Zylinder um
+den Betrachter (vgl. \autoref{fig:introduction_particle_cylinder}).
+
+Die Flocken werden auf Grund ihrer Geschwindigkeit
+weiterbewegt. Treffen sie auf dem Boden auf, werden sie neu in die
+Simulation gesetzt, wobei die Position wieder aus dem Zylinder gewählt
+wird. Die Geschwindigkeit wird anhand der Schwerkraft verändert.  Hat
+man zudem ein globales Schneemodell zur Verfügung, kann man die
+Flugbahn der Flocken im Zylinder der Windgeschwindigkeit anpassen.
+
+Problematisch ist die Behandlung von Hindernissen. Bewegt sich der
+Betrachter beispielsweise in ein Gebäude, sollte bei geschlossener
+Decke kein Schnee mehr um die Person generiert werden. Dies muss
+gesondert behandelt werden. Eine ähnliche Situation ergibt sich, wenn
+der Betrachter auf der windabgewandten Seite eines Gebäudes
+steht. Hier sollten ebenfalls keine Schneeflocken generiert werden
+(oder sehr wenige). Die ist nur sehr schwer umzusetzen, da der
+Zylinder in seiner Größe begrenzt ist und wenn sonst ad hoc keine
+Informationen über die Verteilung von Schnee in der Welt zur Verfügung
+stehen.
+
+Mit dieser Simulationsmethode lässt sich zudem keine Schneedecke
+generieren. Es ist zwar möglich, den Auftreffpunkt der Schneeflocken
+auf den Hindernissen weiterzuverarbeiten. Die so generierte
+Schneedecke existiert aber nur in einer Umgebung um den Bewegungspfad
+des Betrachters. Weiter entfernte Objekte sind stets frei von
+Schnee.
+\end{enumerate}
+
+Wegen der besseren physikalischen Modellierbarkeit und wegen des
+beliebig wählbaren Blickwinkels bei einer Ego-Perspektive wurde
+entschieden, ein \emph{globales} Partikelsystem umzusetzen. Die
+Flocken werden also anfänglich im gesamten Simulationsbereich
+verteilt. Ihre Geschwindigkeit wird aufgrund der Windgeschwindigkeit
+verändert. Das Auftreffen auf Hindernissen wird für die Schneedecke
+weiterverarbeitet und die Flocke wird wieder an einen beliebigen,
+zufälligen Ort gesetzt.
 
 \subsection{Hintergründe}
 
@@ -8,7 +102,7 @@ Schneeflocken eingegangen werden. Der Erklärungsansatz orientiert sich
 an \cite{wiki:Luftfeuchtigkeit}.
 
 Überall dort, wo sich eine freie Wasseroberfläche wie z.\,B.\ ein See befindet und
-die Temparatur einen bestimmten Wert übersteigt, lösen sich Moleküle der
+die Temperatur einen bestimmten Wert übersteigt, lösen sich Moleküle der
 Wasseroberfläche von ihrem Verbund und verdunsten in die Luft. Umgekehrt treffen
 verdunstete Wassermoleküle wieder auf die Wasseroberfläche und kondensieren
 dort. Die \emph{Kondensationsrate} und die
@@ -20,7 +114,7 @@ die Kondensationsrate anfangs 0, da keine Wassermoleküle in der Luft
 enthalten sind, die kondensieren können. Die Verdunstungsrate ist
 bei einer ausreichend hohen Temperatur allerdings ungleich 0. Mit der
 Zeit steigt so die Anzahl der Wassermoleküle in der Luft, die Luft
-\PimiddyQuotes{sättigt} sich mit Wasser. Dadurch steigt widerum die
+\PimiddyQuotes{sättigt} sich mit Wasser. Dadurch steigt wiederum die
 Kondensationsrate. Bei gleich bleibenden Bedingungen gleichen sich
 nach einiger Zeit die Kondensation und Verdunstung aneinander an.  Die
 in diesem Gleichgewichtszustand vorliegende Konzentration von
@@ -32,8 +126,8 @@ daher, warme Luft könne \PimiddyQuotes{mehr Wasser aufnehmen}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=10cm]{images/moist_air}
-\caption{Der exponentielle Zusammenhang zwischen Temperatur und Sättigungsmenge von Wasserdampf in der Luft. (Artikel Sättigung (Physik) in Wikipedia, das nochmal ggf. mit matlab nachplotten)}
+\includegraphics[width=15cm]{images/moist_air}
+\caption{Der exponentielle Zusammenhang zwischen Temperatur und Sättigungsmenge von Wasserdampf in der Luft\cite{wiki:Saettigung}}
 \label{fig:implementation_moist_air}
 \end{figure}
 
@@ -53,7 +147,7 @@ Eine Spezialform der eben beschriebenen Kondensationskerne sind die
 \emph{Kristallisationskerne}. Bei Temperaturen unter \PimiddyDegree{0}
 bilden sich an diesen Kernen keine Tropfen sondern \emph{Kristalle}.
 Bei starken Minustemperaturen (ab \PimiddyDegree{-40}) müssen sie
-jedoch nicht vorhanden sein, es bildet sich auch so Kristalle.
+jedoch nicht vorhanden sein, es bilden sich auch so Kristalle.
 
 Diese Kristalle sind anfangs noch sehr klein, sie wachsen erst während ihres
 Falles zu Boden weiter an. Dabei entstehen aufgrund spezieller
@@ -66,14 +160,15 @@ allerdings keine Symmetrie mehr aufweisen, siehe
 \autoref{fig:implementation_real_snowflakes}.
 
 \begin{figure}
-    \begin{subfigure}[b]{0.5\textwidth}
+\centering
+    \begin{subfigure}[t]{0.45\textwidth}
             \centering
             \includegraphics[width=\textwidth]{images/single_snow_crystal}
-            \caption{Ein einzelner \PimiddyQuotes{farn-artiger} Schneekristall\cite{Yanagi2011}.}
+            \caption{Ein einzelner \PimiddyQuotes{Farn-artiger} Schneekristall\cite{Yanagi2011}.}
             \label{fig:implementation_single_snow_crystal}
     \end{subfigure}
     ~
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[t]{0.45\textwidth}
             \centering
             \includegraphics[width=\textwidth]{images/real_snowflakes}
             \caption{Kameraaufnahmen einzelner Schneeflocken mit etwa 1-2cm Durchmesser\cite{Hanesch1966}.}
@@ -83,8 +178,8 @@ allerdings keine Symmetrie mehr aufweisen, siehe
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=8cm]{images/snowflake_size_graph}
-\caption{Der Zusammenhang von Schneeflockengröße und Temparatur nach \cite{Jun00}.}
+\includegraphics[width=14cm]{images/snowflake_size_graph}
+\caption{Der Zusammenhang von Schneeflockengröße und Temperatur nach \cite{Jun00}.}
 \label{fig:implementation_snowflake_size_graph}
 \end{figure}
 
@@ -100,7 +195,7 @@ möglich beeinträchtigen.
 
 Es sollen mindestens die zwei wichtigsten Eigenschaften einer
 Schneeflocke modelliert werden: die Größe und das Aussehen. Beide
-Eigenschaften hängen von der Umgebungstemparatur ab. Für den Durchmesser $D$
+Eigenschaften hängen von der Umgebungstemperatur ab. Für den Durchmesser $D$
 einer Schneeflocke in Abhängigkeit von der Temperatur $T$ wurde in
 \cite{Jun00} folgende Relation aufgestellt (siehe
 \autoref{fig:implementation_snowflake_size_graph}):
@@ -335,12 +430,13 @@ Bewegung erläutert werden. Dazu wird zuerst ein physikalisch
 motiviertes Modell eingeführt und danach die Implementierungsdetails
 des Partikelsystems erklärt.
 
-Physikalisch gesehen ist eine Schneeflocke ein \emph{Körper} mit einer
-sehr geringen Masse. Kennt man die aktuelle Geschwindigkeit $\vec{v}$
-des Körpers, sowie seine momentane Position $\vec{p}$ und hat man ein
-Zeitdelta $\Delta t$ gegeben, dann kann seine Bahn $\vec{s}$ in diesem
-Zeitschritt durch das \emph{Weg-Zeit-Gesetz} bestimmt werden, sofern
-man die momentane Beschleunigung $\vec{a}$ kennt:
+Physikalisch gesehen wird eine Schneeflocke als \emph{starrer Körper}
+mit einer sehr geringen Masse modelliert. Kennt man die aktuelle
+Geschwindigkeit $\vec{v}$ des Körpers, sowie seine momentane Position
+$\vec{p}$ und hat man ein Zeitdelta $\Delta t$ gegeben, dann kann
+seine Bahn $\vec{s}$ in diesem Zeitschritt durch das
+\emph{Weg-Zeit-Gesetz} bestimmt werden, sofern man die momentane
+Beschleunigung $\vec{a}$ kennt:
 
 \begin{equation}
 \label{eq:implementation_snowflake_path_time_law}
@@ -362,7 +458,7 @@ bietet sich manchmal auch an, eine Kraft nicht als Beschleunigung zu
 modellieren, sondern sie in
 \autoref{eq:implementation_snowflake_path_time_law} direkt auf die
 Geschwindigkeit zu addieren (die Geschwindigkeit der Schneeflocke also
-unangetastet zu lassen). Im Folgenden sollen die einzelnen Kräfte
+nicht zu verändern). Im Folgenden sollen die einzelnen Kräfte
 näher beleuchtet werden.
 
 In \cite{Aagaard2004} wurden vier Kräfte zusammengetragen, welche
@@ -373,51 +469,59 @@ zusammen die Bewegung einer Schneeflocke beeinflussen:
 -- genau wie beim Windfeld -- in negativer $y$-Richtung wirkt.
 \item Der Wind übt eine Kraft $\vec{F}_\PimiddyFormelText{w}$
 auf die Schneeflocke aus, die den \PimiddyBegriff{Luftwiderstand}
-widerspiegelt. Aufgrund der niedrigen Dichte ist dies die Kraft,
-welche die Flocke am meisten in ihrer Bahn beeinflusst.
+widerspiegelt. Aufgrund der geringen Masse der Flocken ist dies die
+Kraft, welche die Flocke am meisten in ihrer Bahn beeinflusst.
 \item Die aerodynamische Form der Flocke führt dazu, dass sie selbst bei
-Windstille keine direkte Bahn nach unten verfolgt, sondern in kleinen
+Windstille keine direkte Bahn zum Boden verfolgt, sondern in kleinen
 Spiralbahnen zur Erde fällt. Dieser Effekt wird
 \PimiddyBegriff{dynamischer Auftrieb} genannt. Er wird jedoch nicht
-als Kraft modelliert, sondern direkt als Geschwindkeit (siehe unten).
+als Kraft modelliert, sondern direkt als Geschwindigkeitsänderung (siehe unten).
 \item Auch Schneeflocken haben einen gewissen \emph{statischen
 Auftrieb} $F_{\PimiddyFormelText{Auftrieb}}$ innerhalb der umgebenden
 Luft.
 \end{enumerate}
 
-Diese Kräfte werden nun einzeln besprochen.
+Diese Kräfte werden nun einzeln besprochen. Es werden
+OpenCL-C-Funktionen aufgestellt, die die Kräfte abhängig von den
+Eigenschaften einer Schneeflocke umsetzen. Diese Funktionen werden
+schließlich in dem Kernel, der die Schneeflocken weiterbewegt,
+benutzt.
 
 \subsubsection{Luftwiderstand}
 
 Die Methode von Stam liefert ein dreidimensionales Vektorfeld von
-Geschwindigkeiten. Das bedeutet, man kann in jedem Punkt innerhalb der
+Windgeschwindigkeiten. Das bedeutet, man kann in jedem Punkt innerhalb der
 Simulationsgrenzen eine Windgeschwindigkeit angeben (wenn der Punkt
 nicht auf dem Gitter liegt, wird stattdessen ein Geschwindigkeitswert
-interpoliert). Es ist aber noch nicht klar, welchen Einfluss die
-Windgeschwindigkeit auf die Geschwindigkeit der Flocke ausübt, welche
-Kraft also aus der Geschwindigkeit resultiert. Im Folgenden wird eine
-einzelne Schneeflocke an Position $\vec{p}_f$ mit Geschwindigkeit
-$\vec{v}_{f}$ betrachtet. Mit $\vec{v}_w$ sei die Geschwindigkeit des
-Windes an Position $\vec{p}_f$ bezeichnet.
+interpoliert).
+
+Es ist aber noch nicht klar, welchen Einfluss die Windgeschwindigkeit
+auf die Geschwindigkeit der Flocke ausübt, welche Kraft also aus der
+Windgeschwindigkeit resultiert. Im Folgenden wird eine einzelne
+Schneeflocke an Position $\vec{p}_f$ mit Geschwindigkeit $\vec{v}_{f}$
+betrachtet. Mit $\vec{v}_w$ sei die Geschwindigkeit des Windes an
+Position $\vec{p}_f$ bezeichnet.
 
 Der Luftwiderstand -- oder allgemeiner der
 \PimiddyBegriff{Strömungswiderstand} in Fluiden -- bezeichnet eine
 Kraft, die ein Fluid der Bewegung eines Körpers entgegensetzt. Bei der
 Berechnung dieser Kraft kommt es auf die \emph{Relativgeschwindigkeit}
-von Schneeflocke und Wind an. Herrscht Windstille (ist also $\vec{v}_w
-= 0$), sorgt die Schwerkraft für eine konstante Beschleunigung nach
-unten, die Flocke fällt mit immer schneller zu Boden. Der
-Luftwiderstand wirkt dieser Beschleunigung entgegen, und das umso
+von Schneeflocke und Wind an. Herrscht beispielsweise Windstille (ist
+also $\vec{v}_w = 0$), sorgt die Schwerkraft für eine konstante
+Beschleunigung nach unten, die Flocke fällt immer schneller zu Boden.
+
+Der Luftwiderstand wirkt dieser Beschleunigung entgegen, und das umso
 stärker, je schneller die Flocke ist. Dadurch stellt sich irgendwann
 ein Gleichgewicht zwischen Schwerkraft und Luftwiderstand ein und die
 Flocke erreicht ihre \PimiddyBegriff{Endgeschwindigkeit}
 $v_{y,\PimiddyFormelText{max}}$. Im Vakuum hingegen könnte eine
-Schneeflocke theoretisch beliebig schnell fallen. $\vec{v}_r$
-bezeichne die Relativgeschwindigkeit von Flocke und Wind:
-
-\begin{equation}
-\vec{v}_r = \vec{v}_w - \vec{v}_f
-\end{equation}
+Schneeflocke theoretisch beliebig schnell fallen.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/drag_forces}
+    \caption{Der Zusammenhang von Druck- und Reibungswiderstand in Abhängigkeit der Form des umströmten Objekts.}
+    \label{fig:implementation_snowflake_drag_forces}
+\end{figure}
 
 Streng genommen ist der Luftwiderstand aufgeteilt in
 \PimiddyBegriff{Druckwiderstand} und
@@ -428,38 +532,36 @@ der Reibungswiderstand, siehe
 \autoref{fig:implementation_snowflake_drag_forces}. Die Unterscheidung
 spielt hier aber keine Rolle.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{images/drag_forces}
-    \caption{Der Zusammenhang von Druck- und Reibungswiderstand in Abhängigkeit der Form des umströmten Objekts.}
-    \label{fig:implementation_snowflake_drag_forces}
-\end{figure}
-
-Der Luftwiderstand kann für Fluide mit einer relativ hohen
-Geschwindigkeit (die Windgeschwindigkeit fällt in diese Kategorie) mit
-der folgenden Luftwiderstandsformel angegeben werden, die auf \PimiddyName{Rayleigh}
+$\vec{v}_r$ bezeichne die Relativgeschwindigkeit von Flocke und Wind:
+\begin{equation}
+\vec{v}_r = \vec{v}_w - \vec{v}_f
+\end{equation}
+Der Luftwiderstand kann für Fluide mit hohen Geschwindigkeiten (die
+Windgeschwindigkeit fällt in diese Kategorie) mit der folgenden
+Luftwiderstandsformel angegeben werden, die auf \PimiddyName{Rayleigh}
 zurückgeht:
 
 \begin{equation}
 \label{eq:implementation_snowflake_drag_equation}
-\vec{F}_w = \frac{1}{2} \rho \vec{v}_r^2 C_d A
+\vec{F}_w = \frac{1}{2} \rho_{\PimiddyFormelText{Luft}} \vec{v_r^2} C_d A
 \end{equation}
 
-In der Formel bezeichnet $\rho$ die Dichte der Luft, die bei
-\PimiddyDegree{0} etwa $1.293\frac{kg}{m^3}$ beträgt. $A$ bezeichnet
-die \emph{Bezugsfläche} des Körpers, den man betrachtet. Nähert man
-die Schneeflocke als Kugel mit Radius $r$ an, so kann $A$ als $\pi
-r^2$ gewählt werden, wenn man die Projektion der Kugel auf die Ebene
-als Referenz wählt, oder $2\pi r^2$, wenn man die
-\PimiddyQuotes{Vorderfläche} der Kugel als Refenz wählt. $C_d$
+In der Formel bezeichnet $\rho_{\PimiddyFormelText{Luft}}$ die Dichte
+der Luft, die bei \PimiddyDegree{0} etwa $1.293\frac{kg}{m^3}$
+beträgt. $A$ bezeichnet die \emph{Bezugsfläche} des Körpers, den man
+betrachtet. Nähert man die Schneeflocke als Kugel mit Radius $r$ an,
+so kann $A$ als $\pi r^2$ gewählt werden, wenn man die Projektion der
+Kugel auf die Ebene als Referenz wählt, oder $2\pi r^2$, wenn man die
+\PimiddyQuotes{Vorderfläche} der Kugel als Referenz wählt. $C_d$
 bezeichnet den dimensionslosen
-\PimiddyBegriff{Strömungswiderstandkoeffizienten}. Der Luftwiderstand
-wächst sich also quadratisch zur Geschwindigkeit des Objekts. Dadurch,
-dass die Relativgeschwindigkeit $\vec{v}_r$ in die Formel eingesetzt
-wurde, entsteht auch bei Windstille eine zur Geschwindigkeit der
-Flocke entgegengesetzte Kraft.
+\PimiddyBegriff{Strömungswiderstandkoeffizienten}.
 
-Die Größe $C_d$ ist noch unbekannt. Sie wird normalerweise
+Der Luftwiderstand wächst also quadratisch zur Geschwindigkeit des
+Objekts. Dadurch, dass die Relativgeschwindigkeit $\vec{v}_r$ in die
+Formel eingesetzt wurde, entsteht auch bei Windstille eine zur
+Geschwindigkeit der Flocke entgegengesetzte Kraft.
+
+Die Größen $C_d$ ist noch unbekannt. Sie wird normalerweise
 experimentell ermittelt. Da zu diesem Thema jedoch keine Ergebnisse zu
 finden sind, muss ein anderer Weg gewählt werden, um den Koeffizienten
 abschätzen zu können.
@@ -468,14 +570,11 @@ Angenommen eine Schneeflocke fällt mit ihrer Endgeschwindigkeit
 $v_{y,\PimiddyFormelText{max}}$ grade nach unten. Dann
 entspricht die Kraft, die durch den Luftwiderstand hervorgerufen wird,
 genau der Schwerkraft:
-
 \begin{align}
 \PimiddyBetrag{\vec{F}_g} &= \PimiddyBetrag{\vec{F}_w} \\
 m \cdot \PimiddyBetrag{\vec{g}} &= \frac{1}{2} \rho v_{y,\PimiddyFormelText{max}}^2 C_d A
 \end{align}
-
 Löst man die untere Gleichung nach $C_d$ auf erhält man:
-
 \begin{equation}
 C_d
 =
@@ -487,44 +586,69 @@ C_d
   \rho \cdot v_{y,\PimiddyFormelText{max}}^2 \cdot A
 }
 \end{equation}
-
 Dies eingesetzt in die Luftwiderstandsformel
 \ref{eq:implementation_snowflake_drag_equation} ergibt:
-
 \begin{equation}
 \vec{F}_w =
 \frac
 {
-  \vec{v}_w^2 \cdot m \cdot \vec{g}
+  \vec{v_w^2} \cdot m \cdot \PimiddyBetrag{\vec{g}}
 }
 {
   v_{y,\PimiddyFormelText{max}}^2
 }
 \end{equation}
-
 Die Formel hängt nur noch von $v_{y,\PimiddyFormelText{max}}^2$
 ab. Diese Größe ist -- im Gegensatz zu $C_d$ -- gut bestimmt worden,
 z.B.\ in \cite{Hanesch1966} für Temperaturen zwischen \PimiddyDegree{-2}
 und \PimiddyDegree{0}. Dabei wurde festgestellt,
 dass die Größe der Schneeflocke kaum Einfluss auf die
-Fallgeschwindigkeit hat. Es wurden Geschwindigkeiten im Bereich \PimiddyDegree{0.5}
-bis \PimiddyDegree{2.0} gemessen. In
+Fallgeschwindigkeit hat. Es wurden Geschwindigkeiten im Bereich $0.5m/s$
+bis $2.0m/s$ gemessen. In
 \cite{Centre1998} wurde festgestellt, dass zwischen feuchtem und
 trockenen Schnee ein Faktor 2 bezüglich der Geschwindigkeit
-besteht. Aaagaard wählt in \cite{Aagaard2004} daher die folgenden
+besteht. Aagaard wählt in \cite{Aagaard2004} daher die folgenden
 Endgeschwindigkeiten:
-
 \begin{align}
 0.5 \frac{m}{s} \leq v_{y,\PimiddyFormelText{max},\PimiddyFormelText{trocken}} \leq 1.5 \frac{m}{s} \\
 1 \frac{m}{s} \leq v_{y,\PimiddyFormelText{max},\PimiddyFormelText{feucht}} \leq 2 \frac{m}{s}
 \end{align}
+Um $\vec{F}_w$ zu bestimmen, muss nun lediglich die Masse $m$ der
+Schneeflocke untersucht werden. In \cite{Centre1998} wurde
+festgestellt, dass sich die \emph{Dichte} einer Schneeflocke etwa
+umgekehrt proportional zu ihrem Durchmesser verhält:
+\begin{align}
+\rho_{\PimiddyFormelText{Flocke}} = \frac{1}{D}
+\end{align}
+Der Durchmesser einer Flocke wurde bereits behandelt. Zwischen
+Dichte und Masse besteht die Beziehung $\rho = m \cdot V$, wobei $V$
+das Volumen des betrachteten Körpers ist. Es wird daher $\rho = m$
+gesetzt.
 
-Mit Hilfe dieser Formeln lässt ich die Kraft $\vec{F}_w$ für eine
-Flocke nun vollständig bestimmen. Wie später erläutert wird, werden
-für den Querschnitt $A$ der Flocken, sowie für
+Damit lässt sich $\vec{F}_w$ nun vollständig bestimmen. Wie später
+erläutert wird, werden für den Querschnitt $A$ der Flocken, sowie für
 $v_{y,\PimiddyFormelText{max}}$ zufällige Werte bestimmt, um ein
 natürlicheres Muster zu erzeugen und um die Annäherung der Flocken
-durch Kugeln auszugleichen.
+durch Kugeln auszugleichen. Die folgende Funktion setzt den Kernel die
+Kraft um, die durch den Luftwiderstand erzeugt wird:
+
+\begin{minted}[frame=lines]{c}
+float3 drag_force(
+    float3 terminal_velocity,
+    float diameter,
+    float3 wind_velocity,
+    float3 flake_velocity,
+    float gravity)
+{
+    return
+        // Quadrierte Relativgeschwindigkeit
+        pow(wind_velocity - flake_velocity,2.0f) *
+        // Annaeherung fuer die Masse
+        (1.0f / diameter) *
+        gravity /
+        pow(terminal_velocity,2.0f);
+}
+\end{minted}
 
 \subsubsection{Dynamischer Auftrieb}
 
@@ -535,7 +659,7 @@ eher \PimiddyQuotes{Zick-Zack-Bewegungen} machen, siehe
 
 \begin{figure}[ht]
     \centering
-    \includegraphics{images/snowflake_helix}
+    \includegraphics{images/snowflake_spiral}
     \caption{Die ungefähre Bahn eine Schneeflocke ohne den Einfluss von Wind.}
     \label{fig:implementation_snowflake_helix}
 \end{figure}
@@ -552,7 +676,7 @@ Phänomen tritt auch makroskopisch in der Atmosphäre auf, siehe
 \begin{figure}[ht]
     \centering
     \includegraphics{images/vortex_shedding}
-    \caption{Hinter der Schneeflocke bilden sich während des Flugs Wirbel.}
+    \caption{Hinter der Schneeflocke bilden sich während des Flugs Wirbel, die eine Kraft seitwärts ausüben.}
     \label{fig:implementation_snowflake_vortex_shedding}
 \end{figure}
 
@@ -618,17 +742,36 @@ aber für diese Größen folgende Einschränkungen:
 0 \leq r \leq 2
 \end{gather}
 
-Auch diese Größen werden also randomisiert.
+Auch diese Größen werden also randomisiert. Die folgende Funktion gibt
+die Geschwindigkeitskorrektur durch den dynamischen Auftrieb an:
+
+\begin{minted}[frame=lines]{c}
+float3 lift_force(
+    float3 wind_velocity,
+    float3 flake_velocity,
+    float angular_velocity,
+    float radius,
+    float t)
+{
+    return
+        length(wind_velocity - flake_velocity) / length(flake_velocity) *
+        angular_velocity * radius *
+        (float3)(
+            -sin(angular_velocity * t),
+            0.0f,
+            cos(angular_velocity * t));
+}
+\end{minted}
 
 \subsubsection{Statische Auftrieb}
 
-Wie bereits in \autoref{sec:stam_buoyancy} beschrieben, bezeichnet
-Auftrieb eine Kraft, die der Schwerkraft entgegengesetzt ist, wirkt
-also in Richtung $(0,1,0)$. Sie entsteht durch die Verdrängung des
-Fluids durch einen Körper und sie ist indirekt abhängig von der
-Luftdichte. Sei daher $\rho_{\PimiddyFormelText{Luft}}(x,y,z)$ das
-Vektorfeld der Dichte in jedem Punkt. Es ergibt sich bei $(x,y,z)$ der
-folgende (betragsmäßige) Auftrieb:
+Auftrieb bezeichnet eine Kraft, die der Schwerkraft entgegengesetzt
+ist. Sie wirkt also in Richtung $(0,1,0)$. Sie entsteht durch die
+Verdrängung des Fluids durch einen Körper und sie ist indirekt
+abhängig von der Luftdichte. Sei daher
+$\rho_{\PimiddyFormelText{Luft}}(x,y,z)$ das Vektorfeld der Dichte in
+jedem Punkt. Es ergibt sich bei $(x,y,z)$ der folgende (betragsmäßige)
+Auftrieb:
 
 \begin{equation}
 |F_A| = \rho_{\PimiddyFormelText{Luft}}(x,y,z) \cdot V \cdot g
@@ -717,18 +860,21 @@ beim Erstellen des Buffers auf dem Host gesetzt werden und bleiben
 dann konstant, sofern die Außentemperatur $T$ nicht verändert
 wird. Dynamisch sind einzig die Eigenschaften Position und
 Geschwindigkeit. Für jede Eigenschaft wird ein Buffer auf der
-Grafikkarte rserviert.
+Grafikkarte reserviert.
 
 Die Bewegung der Schneeflocken ist in zwei Teile geteilt, den
-\emph{Bewegungsteil} und den \emph{Kollisionsteil}. Der Kernel für die
-Bewegung der Flocken bekommt als weitere Eingabe das Vektorfeld der
-Geschwindigkeitspfeile. Daraus wird die Geschwindigkeit des Fluids an
-der Position der Flocke interpoliert. Weiterhin wird ein fortlaufender
-Zeitparameter \PimiddyInlineCode{t} zusätzlich zum Zeitdelta
-\PimiddyInlineCode{dt} an den Kernel gegeben. Mit
-\PimiddyInlineCode{t} wird die Rotation der Flocke berechnet.
+\emph{Bewegungsteil} und den \emph{Kollisionsteil}, die allerdings aus
+Performancegründen später in einem einzigen Kernel umgesetzt sind.
 
-Nach Ausführung des Bewegungskernels kann es allerdings vorkommen,
+Die Methode für die Bewegung der Flocken bekommt als weitere Eingabe
+das Vektorfeld der Geschwindigkeitspfeile. Daraus wird die
+Geschwindigkeit des Fluids an der Position der Flocke
+interpoliert. Weiterhin wird ein fortlaufender Zeitparameter
+\PimiddyInlineCode{t} zusätzlich zum Zeitdelta \PimiddyInlineCode{dt}
+an den Kernel gegeben. Mit \PimiddyInlineCode{t} wird die Rotation der
+Flocke berechnet.
+
+Nach Ausführung der Bewegungsmethode kann es allerdings vorkommen,
 dass eine Flocke entweder in einem Hindernis oder außerhalb des
 Simulationsbereiches landet. In diesem Fall muss eine neue Position
 für die Schneeflocke gefunden werden. Hier ergeben sich zwei
@@ -773,32 +919,47 @@ die Bit-Operatoren \PimiddyInlineCode{\&} und \PimiddyInlineCode{|}
 auszunutzen.
 
 Diese Funktion kann man jetzt nutzen, um gegeben der alten Position
-der Schneeflocke eine neue Position zu finden:
+der Schneeflocke eine neue Position zu finden. Der folgende Code
+enthält die Funktion, um eine neue Position zu berechnen sowie um eine
+gegebene Flocke zurückzusetzen.
 
 \begin{minted}[frame=lines]{c}
-float4
+float3
 random_position(
-	int4 bounding_rect,
-	float4 f)
+    int4 bounding_rect,
+    float3 f)
 {
-	float4 result;
+    float3 result;
 
-	result.x =
-		random_float_value(
-                    (f.x + f.z) / f.y);
-	result.z =
-		random_float_value(
-                    f.x / f.z + f.y);
-	result.y =
-		result.x +
-                (1.0f - result.x) *
-                random_float_value(
-                    f.x - f.z - f.y);
+    result.x =
+        random_float_value(
+            (f.x + f.z) / f.y);
+    result.z =
+        random_float_value(
+            f.x / f.z + f.y);
+    result.y =
+        result.x +
+        (1.0f - result.x) *
+        random_float_value(
+            f.x - f.z - f.y);
 
-	return
-		result *
-                convert_float4(
-                    bounding_rect);
+    return
+        result *
+        convert_float3(
+            bounding_rect);
+}
+
+void
+reset_flake(
+    global float3 *positions,
+    global float3 *velocities,
+    global float *terminal_velocities,
+    int3 bounding_volume,
+    size_t my_id)
+{
+      positions[my_id] = random_position(bounding_volume,positions[my_id]);
+      velocities[my_id] = (float3)(0.0f,-terminal_velocities[my_id],0.0f);
+      return;
 }
 \end{minted}
 
@@ -807,12 +968,130 @@ Daten wie seine Geschwindigkeit in die Berechnungen einfließen lassen.
 
 Durch diese Funktion ist allerdings nicht sichergestellt, dass die
 resultierende Position außerhalb eines Hindernisses liegt. Dies ist
-ebenfalls umsetzbar, zum Beispiel indem man einen neuen Buffer erstellt,
-der nur die Indizes der Gitterzellen enthält, die nicht von einem Hindernis
-ausgefüllt sind. Es wird dann zuerst ein zufälliges Element aus dem
-Indexbuffer ausgewählt und dann eine Position innerhalb der so gewählten
-Zelle. Da der Effekt einer fehlplatzierten Flocke allerdings
-vernachlässigbar ist wurde dieses Verfahren nicht
-umgesetzt.\PimiddyTodo{Das hier ruhig noch etwas näher beschreiben.}
+ebenfalls umsetzbar, zum Beispiel mit folgendem Verfahren
 
-lol\PimiddyTodo{Hier muss jetzt noch der Code kommen.}
+\begin{enumerate}
+\item Erstelle Hindernisfeld (dies wird in
+\ref{sec:implementation_wind_boundaries} beschrieben).
+\item Erstelle zusätzlichen Buffer
+\PimiddyInlineCode{boundary\_indices} bestehend aus dreidimensionalen
+Vektoren. Dieser Buffer enthält die Positionen aller Zellen, die von
+einem Hindernis belegt sind.
+\item Beim Reset einer Flocke, wähle ein zufälliges Element aus
+\PimiddyInlineCode{boundary\_indices} und generiere einen zufälligen
+Vektor innerhalb der so gewählten Zelle.
+\end{enumerate}
+
+Da der Effekt einer fehlplatzierten Flocke allerdings vernachlässigbar
+ist wurde dieses Verfahren nicht umgesetzt.
+
+Der folgende Kernel benutzt alle eben definierten Funktionen und nutzt
+sie, um die Flockenpositionen und die Geschwindigkeiten
+zu updaten.
+
+\begin{minted}[frame=lines]{c}
+bool out_of_bounds(int3 position,int3 size)
+{
+  return any(position < (int3)(0)) || any(position > size);
+}
+
+float3 interpolated_wind_velocity(
+    global float3 *wind_velocity,
+    float3 position,
+    int3 discrete_position,
+    int3 bounding_volume)
+{
+    return interpolate_neighbors(
+        neighbors_for_pos(
+            wind_velocity,
+            discrete_position,
+            bounding_volume),
+        fract(
+            position));
+}
+
+float3 gravity_force(
+    float gravity,
+    float diameter)
+{
+    return
+        float3(
+            0.0f,
+            -gravity * diameter),
+            0.0f);
+}
+
+kernel void move_flakes(
+    global float3 *positions,
+    global float3 *velocities,
+    global float3 *wind_velocity,
+    global float *boundary,
+    global float *diameters,
+    global float *rotation_radiuses,
+    global float *angular_velocities,
+    global float *terminal_velocities,
+    float gravity,
+    float dt,
+    float t,
+    int3 bounding_volume)
+{
+    size_t my_id = get_global_id(0);
+    float3 const current_position = positions[my_id];
+    int3 const discrete_position = convert_int3(current_position);
+    uint index = i4p(discrete_position,size);
+    if(out_of_bounds(discrete_position,bounding_volume) || boundary[index] > 0.5f)
+    {
+        reset_flake(
+            positions,
+            velocities,
+            terminal_velocities,
+            bounding_volume,
+            my_id);
+        return;
+    }
+
+    float3 wind_velocity = interpolated_wind_velocity(
+        wind_velocity,
+        current_position,
+        discrete_position,
+        bounding_volume);
+
+    float3 current_forces =
+        gravity_force(gravity,diameters[my_id]) +
+        drag_force(
+            terminal_velocities[my_id],
+            diameters[my_id],
+            wind_velocity,
+            velocities[my_id],
+            gravity);
+
+    velocities[my_id] +=
+        dt * current_forces +
+        lift_force(
+            wind_velocity,
+            velocities[my_id],
+            angular_velocities[my_id],
+            rotation_radiuses[my_id],
+            t);
+
+    positions[my_id] += dt * velocities[my_id];
+}
+\end{minted}
+
+Die Funktion \PimiddyInlineCode{out\_of\_bounds} erhält eine diskrete
+Gitterposition und die Gittergröße und gibt zurück, ob die Position
+innerhalb des Gitters liegt.
+
+\PimiddyInlineCode{interpolated\_wind\_velocity} arbeitet nach
+demselben Prinzip wie die Advektionsroutine aus
+\autoref{sec:implementation_wind_advection}.
+
+Der Kernel testet zuerst, ob sich die Flocke außerhalb des Gitters
+befindet oder in ein Hindernis geflogen ist. Ist dies der Fall, wird
+sie mittels \PimiddyInlineCode{reset\_flake} neu gesetzt. Ansonsten
+werden erst die Gravitation und der Luftwiderstand berechnet. Das
+Ergebnis wird verwendet, um die Geschwindigkeit der Flocke zu
+verändern. Hier geht auch \PimiddyInlineCode{lift\_force} ein.
+
+Schließlich wird die Position neu gesetzt. Das Weg-Zeit-Gesetz wird
+also in indirekter Form umgesetzt.

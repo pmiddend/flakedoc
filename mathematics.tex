@@ -1,14 +1,15 @@
 \section{Mathematische Grundlagen}
+\label{sec:mathematics}
 
 Die Berechnungen in dieser Arbeit finden alle im reellen Raum statt, also in den
 Vektorräumen $\PimiddyReell^n, n \in \{1,2,3\}$. Die Gleichungen der
 Strömungsmechanik benutzen \PimiddyBegriff{Vektorfelder} und
-\PimiddyBegriff{Skalarfelder}, daher sollen diese Begriffe und die zugehörigen
-Operationen hier eingeführt werden.
+\PimiddyBegriff{Skalarfelder}, daher werden diese Begriffe und die zugehörigen
+Operationen zunächst eingeführt.
 
 Die später betrachteten Gleichungen sind allerdings meist gar nicht oder nur sehr
 schwer analytisch zu lösen, daher greift man auf numerische Verfahren zurück.
-Dafür ist es notwendig, die Operationen wie den Gradienten oder die
+Dafür ist es notwendig, Operationen wie den Gradienten oder die
 Divergenz zu \emph{diskretisieren}. Im letzten Teil des Abschnitts
 werden verschiedene Arten der Diskretisierung erläutert.
 
@@ -28,11 +29,13 @@ Ein \PimiddyBegriff{Vektorfeld} $\vec{u}$ ist eine Abbildung
 \vec{u} \colon \PimiddyReell^n \to \PimiddyReell^n,
 \end{equation*}
 
-die einem Punkt im Raum einen Pfeil zuordnet. So kann \PimiddyzB jedem
+die einem Punkt im Raum einen Pfeil zuordnet. So kann \PimiddyzB{}jedem
 Punkt im Raum die Windgeschwindigkeit an diesem Punkt zugeordnet
 werden. \autoref{fig:mathematics_vectorfield} zeigt ein solches
-Vektorfeld. $\PimiddyVectorfields(\PimiddyReell^n)$ bezeichne die
-Menge aller Vektorfelder. In dieser Arbeit sind alle Vektorfelder
+Vektorfeld.
+
+$\PimiddyVectorfields(\PimiddyReell^n)$ bezeichne die Menge aller
+Vektorfelder. In dieser Arbeit betrachtete Vektorfelder sind stets
 differenzierbar.
 
 Analog ist ein \PimiddyBegriff{Skalarfeld} $p$ eine Abbildung
@@ -68,12 +71,14 @@ differenzierbar.
 Sei $p$ ein dreidimensionales Skalarfeld, dann ist der \PimiddyBegriff{Gradient}
 $\PimiddyGrad p$ definiert als:
 
-\begin{gather}
+\begin{equation}
+\begin{aligned}
 \PimiddyGrad \colon \PimiddyScalarfields \to \PimiddyVectorfields \\
 \PimiddyGrad p
 =
 \left( \frac{\partial p}{\partial x},\frac{\partial p}{\partial y},\frac{\partial p}{\partial z} \right)
-\end{gather}
+\end{aligned}
+\end{equation}
 
 \begin{figure}[ht]
         \captionsetup{singlelinecheck=off}
@@ -107,19 +112,21 @@ ein simples Beispiel für den Gradienten.
 Für differenzierbare Vektorfelder $\vec{u}$ ist die
 \PimiddyBegriff{Divergenz} auf dem Feld definiert als
 
-\begin{gather}
+\begin{equation}
+\begin{aligned}
 \PimiddyDiv \colon \PimiddyVectorfields \to \PimiddyScalarfields \\
 \PimiddyDiv \vec{u}
 =
 \frac{\partial u^x}{\partial x} +
 \frac{\partial u^y}{\partial y} +
 \frac{\partial u^z}{\partial z}
-\end{gather}
+\end{aligned}
+\end{equation}
 
-Hier sind $u^x,u^y,u^z$ die einzelnen Komponenten des Vektorfeldes. Die
+Hier sind $u^x,u^y,u^z$ die einzelnen Komponenten des Vektorfelds. Die
 Divergenz eines Vektorfelds ist also ein Skalarfeld. Dieses Skalarfeld kann
 gedeutet werden als \PimiddyQuotes{Quellendichte} des ursprünglichen
-Vektorfeldes\PimiddyTodo{Hier muss noch ein Bild hin.}. Ein Feld
+Vektorfelds\PimiddyTodo{Hier muss noch ein Bild hin.}. Ein Feld
 $\vec{u}$, welches $\PimiddyDiv \vec{u}=0$ erfüllt, heißt folglich
 \PimiddyBegriff{quellenfrei}.
 
@@ -131,7 +138,8 @@ angewendet wird, wechselt es die Bedeutung.
 Auf Vektorfeldern ist schließlich die \PimiddyBegriff{Rotation}
 definiert als:
 
-\begin{gather}
+\begin{equation}
+\begin{aligned}
 \PimiddyRot \colon \PimiddyVectorfields \to \PimiddyVectorfields \\
 \PimiddyRot \vec{u}
 =
@@ -142,10 +150,11 @@ definiert als:
 		\frac{\partial u^y}{\partial x} - \frac{\partial u^x}{\partial y}
 	\end{array}
 \right)
-\end{gather}
+\end{aligned}
+\end{equation}
 
 Wie der Name schon andeutet gibt sie für jeden Punkt des
-ursprünglichen Vektorfeldes an, wie stark und in welche Richtung das
+ursprünglichen Vektorfelds an, wie stark und in welche Richtung das
 Feld in diesem Punkt rotiert. Im Zweidimensionalen ist die Rotation
 auch definiert, hier ergibt sich für jeden Punkt im Raum allerdings
 nur ein Skalar, kein Vektor. Die Rotationsachse ist immer die
@@ -171,10 +180,12 @@ erfüllt, heißt \PimiddyBegriff{rotationsfrei}.
 Schaltet man $\PimiddyGrad$ und $\PimiddyDiv$ hintereinander, erhält man den
 \PimiddyBegriff{Laplace-Operator}:
 
-\begin{gather}
+\begin{equation}
+\begin{aligned}
 \PimiddyLaplace \colon \PimiddyScalarfields \to \PimiddyScalarfields \\
 \PimiddyLaplace p = \PimiddyDiv \PimiddyGrad p
-\end{gather}
+\end{aligned}
+\end{equation}
 
 Manchmal wird auch das Symbol $\nabla^2$ für den Laplace-Operator benutzt. Im Dreidimensionalen ergibt sich:
 

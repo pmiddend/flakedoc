@@ -1,0 +1,217 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      7869,        207]
+NotebookOptionsPosition[      7559,        191]
+NotebookOutlinePosition[      7896,        206]
+CellTagsIndexPosition[      7853,        203]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "4.84843"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "6.79642"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"10", ",", "9.39658"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"15", ",", "12.8232"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"20", ",", "17.2848"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"25", ",", "23.0283"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"30", ",", "30.3424"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"35", ",", "39.5623"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"40", ",", "51.0726"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"45", ",", "65.3114"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"50", ",", "82.7730"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"55", ",", "104.011"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"60", ",", "129.642"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"65", ",", "160.344"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"70", ",", "196.863"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"75", ",", "240.011"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"80", ",", "290.669"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"85", ",", "349.782"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"90", ",", "418.369"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"95", ",", "497.511"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"100", ",", "588.359"}], "}"}]}], "\[IndentingNewLine]", "}"}], 
+   ",", "\[IndentingNewLine]", 
+   RowBox[{"Filling", "\[Rule]", "Axis"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Temperatur in \[Degree]C\>\"", ",", 
+      "\"\<Wassergehalt in g/\!\(\*SuperscriptBox[\(m\), \(3\)]\)\>\""}], 
+     "}"}]}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotMarkers", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"Automatic", ",", "Medium"}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"LabelStyle", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"FontFamily", "\[Rule]", 
+       RowBox[{"{", "\"\<sans\>\"", "}"}]}], ",", 
+      RowBox[{"FontSize", "\[Rule]", "15"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5570448607393103`*^9, 3.557045301526359*^9}, {
+  3.557045357073221*^9, 3.557045357277223*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[GraphicsComplexBox[CompressedData["
+1:eJxTTMoPSmViYGCwB2IQDQPfj1dfPZUi7ADhiTgUt5bv7NCXhvJVHC7ULeng
+Oa0E5es5ZCjlVFQt1YTyTRxmP5Nd/sLDEMq3dBCoMlttx24O5ds5NKodalse
+bgfhNzg6WLq6F/087gyVd3FwvfHhi1enJ1TezSH2n/Ovt8EBUHlPh22f/16p
+2BgClfd2SBKIsNzCEAWV93Nga5zq3G2SAOE7BDjE7fLkYeJOgaoPdAjj0900
+d3YGhH8gyMGQY41MFEMeVH8IxDytIqj+UIfe6XlCzXdKofrDHKY5d+c8V62C
+6g93kGQBmihRD9Uf6SAblWJ9P6nJgQErEEETV0Hj66HxTdD4lmh8O1Q+MDxR
+5V3Q5N3Q5D3R5L3R5P1Q+Q4BqHxgeKLwgeGJqj8ETX8omv4wNP3haPoj0fij
+6ZNa6RMAxbC2/Q==
+   "], {{{}, {}, {}, {}, 
+     {Hue[0.67, 0.6, 0.6], Opacity[0.2], LineBox[{22, 1}], LineBox[{23, 2}], 
+      LineBox[{24, 3}], LineBox[{25, 4}], LineBox[{26, 5}], LineBox[{27, 6}], 
+      LineBox[{28, 7}], LineBox[{29, 8}], LineBox[{30, 9}], LineBox[{31, 10}],
+       LineBox[{32, 11}], LineBox[{33, 12}], LineBox[{34, 13}], 
+      LineBox[{35, 14}], LineBox[{36, 15}], LineBox[{37, 16}], 
+      LineBox[{38, 17}], LineBox[{39, 18}], LineBox[{40, 19}], 
+      LineBox[{41, 20}], LineBox[{42, 21}]}}, {
+     {Hue[0.67, 0.6, 0.6], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 43], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 44], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 45], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 46], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 47], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 48], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 49], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 50], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 51], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 52], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 53], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 54], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 55], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 56], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 57], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 58], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 59], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 60], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 61], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 62], InsetBox[
+       StyleBox["\<\"\[FilledCircle]\"\>",
+        StripOnInput->False,
+        FontSize->Medium], 63]}, {}}}],
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Temperatur in \[Degree]C\"", TraditionalForm], 
+    FormBox[
+    "\"Wassergehalt in g/\\!\\(\\*SuperscriptBox[\\(m\\), \\(3\\)]\\)\"", 
+     TraditionalForm]},
+  AxesOrigin->{0, 0},
+  ImageSize->{857., Automatic},
+  LabelStyle->{FontFamily -> {"sans"}, FontSize -> 15},
+  PlotRange->{{0., 100.}, {0., 588.359}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{{3.557045276319167*^9, 3.557045302115562*^9}, 
+   3.557045357818509*^9}]
+}, Open  ]]
+},
+WindowSize->{1916, 1041},
+WindowMargins->{{0, Automatic}, {Automatic, 18}},
+FrontEndVersion->"8.0 for Linux x86 (64-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 2913, 66, 549, "Input"],
+Cell[3495, 90, 4048, 98, 471, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

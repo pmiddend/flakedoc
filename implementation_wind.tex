@@ -1,4 +1,5 @@
 \section{Windsimulation}
+\label{sec:implementation_wind}
 
 \subsection{Einleitung}
 
@@ -10,7 +11,7 @@ knüpft direkt an \autoref{sec:stam} an.
 Zuerst wird die Wahl der Datenstrukturen besprochen. Es kommt hier
 darauf an, eine möglichst performante Struktur zu wählen, die optimale
 Zugriffszeiten liefert. Danach wird das Verfahren von Stam in
-OpenCL-Code übertragen, dessen Bestandteile detailiert erläutert
+OpenCL-Code übertragen, dessen Bestandteile detailliert erläutert
 werden.
 
 Schließlich wird besprochen, wie die Hindernisse in die
@@ -39,7 +40,7 @@ Voxeln in einer Nachbarschaft linear \emph{interpoliert}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=10cm]{images/flat_3d_texture}
+\includegraphics[width=14cm]{images/flat_texture}
 \caption{Veranschaulichung einer Flat-3D-Textur}
 \label{fig:implementation_flat_3d_texture}
 \end{figure}
@@ -54,7 +55,7 @@ Hilfsmaßnahme greift man hier üblicherweise zu sogenannten
 \PimiddyBegriff{Flat-3D-Texturen} \cite{Harris2003}. Hier werden die
 einzelnen \PimiddyQuotes{Scheiben} der dreidimensionalen Struktur
 nebeneinander in eine zweidimensionale Textur geschrieben, siehe
-\autoref{fig:implementation_flat_3d_texture}. Für die Umrechung
+\autoref{fig:implementation_flat_3d_texture}. Für die Umrechnung
 zwischen 3D- und 2D-Koordinaten ist etwas Rechenaufwand
 nötig. 2D-Texturen erlauben außerdem natürlicherweise nur
 zweidimensionale Interpolation zwischen den Zellen. Benötigt man
@@ -133,7 +134,7 @@ Veränderungen im Windfeld führen.
 \end{itemize}
 
 Die meisten Kernel werden mit einer dreidimensionalen Arbeitsgröße
-initialisiert, die der Größe des Gitters enstpricht. Ein Work-Item
+initialisiert, die der Größe des Gitters entspricht. Ein Work-Item
 erhält also einen dreidimensionalen Vektor als globale ID, welcher die
 Gitterposition angibt, die das Work-Item bearbeiten soll.
 

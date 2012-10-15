@@ -3,22 +3,50 @@
 
 \subsection{Einleitung}
 
-In diesem Abschnitt wird die Erzeugung der Schneedecke
-besprochen. Diese stellt eine Erweiterung der Kollisionscodes für die
-Schneeflocken dar. Statt nur die Position der Flocke neu zu setzen,
-wird der Punkt des Auftreffens weiter verarbeitet.
+In \autoref{sec:implementation_snowflake} wurden Techniken
+vorgestellt, um die Bewegungen einer großen Anzahl Schneeflocken zu
+simulieren und diese Flocken auf dem Bildschirm darzustellen. Es wird
+ein realistischer Eindruck von fallendem Schnee geschaffen, der auf
+physikalischen Ansätzen beruht, statt -- wie sonst üblich -- nur den
+visuellen Eindruck nachzubauen. Treffen die Flocken auf dem Boden oder
+einem Hindernis auf, werden sie an eine neue, zufällige Position
+zurückgesetzt. In der Realität würde sich allerdings (bei kaltem
+Untergrund) nach und nach eine \emph{Schneedecke} bilden. Dieser
+Aspekt wurde bisher noch nicht behandelt, das Schneemodell ist also
+noch unvollständig.
 
-Für die Schneedecke wurden wurden insgesamt zwei Ansätze
-umgesetzt. Zuerst ein auf Texturen basierender, der allerdings keine
-Schneegeometrie erlaubt -- also Schneehügel, die sich auftürmen.
+An welchen Stellen wie viel Schnee liegenbleibt, lässt sich nicht
+allein aus dem Windfeld und der Hindernisgeometrie bestimmen. Es ist
+auch abhängig von der Anzahl der Schneeflocken, sowie deren
+Flugeigenschaften, welche wiederum aufgrund von Temperaturparametern
+und Zufallsvariablen variieren. Da die Schneeflocken als
+Partikelsystem modelliert werden, also jede Flocke einzeln betrachtet
+wird, kann man einen statistischen Ansatz verwenden, um die
+Schneemenge abzuschätzen: Man erweitert den Code, der beim Auftreffen
+einer Schneeflocke auf einem Hindernis ausgeführt wird. Statt an
+dieser Stelle nur Position und Geschwindigkeit der Flocke
+zurückzusetzen, erhöht man die Schneemenge am Auftreffpunkt.
+
+In diesem Abschnitt werden zwei Ansätze besprochen, um mit Hilfe
+dieses Mechanismus eine Schneedecke zu erzeugen. Der erste Ansatz
+basiert darauf, die Oberfläche der Objekte an den Stellen mit einer
+Schneetextur einzufärben, an denen die Schneeflocken auftreffen. Er
+erlaubt keine \PimiddyQuotes{Schneegeometrie} -- also Schneehügel, die
+sich auftürmen. Dafür trägt jede Schneeflocke sichtbar zur Schneedecke
+bei.
 
 Wegen gravierender Nachteile dieses Verfahrens wurde danach ein
-anderer Ansatz verfolgt, der mit Hilfe des Marching Cubes-Algorithmus
-ein \emph{Mesh} für den Schnee erzeugt. Dieses Verfahren wurde zuerst
-auf der GPU und später auf der CPU implementiert. Es sollen die
-Unterschiede in den Implementierungen herausgestellt werden.
+anderer Ansatz verfolgt, der ein dreidimensionales Gitter
+verwaltet. In den Zellen des Gitters ist die dortige Schneemenge
+gespeichert. beim Auftreffen einer Schneeflocke auf einem Hindernis
+wird die Schneemenge an der Flockenposition erhöht. Mit Hilfe des
+Marching Cubes-Algorithmus wird daraus ein \emph{Mesh} für den Schnee
+erzeugt. Dieses Verfahren wurde zuerst auf der GPU und später auf der
+CPU implementiert. Es sollen die Unterschiede in den Implementierungen
+herausgestellt werden.
 
 \subsection{Schneedecke mit Texturen}
+\label{sec:fallen_snow_with_textures}
 
 Die moderne Computergrafik nutzt für die realistische Einfärbung von
 Oberflächen \PimiddyBegriff{Texture Mapping}, also das Projizieren
@@ -201,7 +229,7 @@ Algorithmus wird später um Normalen und Texturkoordinaten erweitert.
 Das Eingabefeld wird zellenweise bearbeitet. Für jede Zelle $n_1$
 werden die unmittelbaren Nachbarzellen $n_2,\ldots,n_8$ bestimmt,
 genau wie das in \autoref{sec:implementation_wind_advection} geschehen
-ist. Der Dichtewert an jeder Ecke des durch die $n_i$ beschriebnen
+ist. Der Dichtewert an jeder Ecke des durch die $n_i$ beschriebenen
 Würfels wird mit dem vorgegebenen Isowert verglichen. Es entsteht eine
 1, wenn der Wert über dem Isowert liegt, ansonsten eine 0. Als Ausgabe
 für eine Zelle erhält man auf diese Weise eine 8-Bit-Zahl und
@@ -276,7 +304,7 @@ benötigt keine weiteren Daten außer den Eckpunkten der Dreiecke. Der
 zweite wird als \PimiddyBegriff{triplanare Texturierung} bezeichnet
 und benötigt die Flächennormalen der Dreiecke. Die Technik wurde unter
 anderem in \cite{Nguyen:2007:GG:1407436} vorgestellt und liefert
-visuall ansprechende Ergebnisse.
+visuell ansprechende Ergebnisse.
 
 Hat man nur die Positionen der Dreieckspunkte zur Verfügung und will
 Farben bestimmen, sodass die Oberfläche der einer Schneedecke ähnelt,
@@ -478,7 +506,7 @@ Simulation dadurch nicht sichtbar ins Stocken gerät.
 Die MC-Implementierung aus \cite{marching_cubes_jgt} konnte direkt
 übernommen werden, da sie bereits interpolierte Normalen ausgibt und
 beliebig große Felder zulässt. Die Implementierung verwendet einen
-leicht modifzierten Algorithmus, der stärkere topologische Garantien
+leicht modifizierten Algorithmus, der stärkere topologische Garantien
 liefert und so im Allgemeinen glattere Meshes erzeugt. Intern wird
 kein Multithreading genutzt, sondern eine sequentielle Schleife über
 alle Gitterzellen.
@@ -511,8 +539,43 @@ existiert. \autoref{fig:implementation_fallen_snow_producer_consumer} verdeutlic
 \label{fig:implementation_fallen_snow_producer_consumer}
 \end{figure}
 
-\section{Andere Visualisierungsmöglichkeiten}
+\subsection{Vergleich}
 
-\begin{itemize}
-\item Rauch
-\end{itemize}
+Die Arbeit von Manuel Schwarz (\cite{Schwarz2012}) befasst sich
+ebenfalls mit der Generierung und Anzeige einer Schneedecke. In der
+Arbeit werden zwei Ansätze vorgeschlagen. Der erste basiert auf
+sogenannten \emph{Displacement-Maps}. Damit bezeichnet man Texturen,
+welche die Geometrie des Meshes verändern, zu dem sie gehören. Mit
+dieser Methode können sich auch ohne ein separates Mesh Schneehügel
+bilden.
+
+Der zweite Ansatz, der in der Arbeit vorgestellt wird, entspricht dem
+MC-Ansatz, der auch hier erläutert wird. Es sind allerdings
+einige Unterschiede herauszustellen:
+
+\begin{enumerate}
+\item Schwarz lässt ebenfalls beliebige Hindernisse zu, indem er sie
+aus Modeldateien einliest und in eine Gitterstruktur verwandelt (siehe
+\autoref{sec:implementation_wind_boundaries}). Dadurch, dass relativ
+kleine Gitter (kleiner als $32 \times 32 \times 32$) verwendet, ist er
+aber in der Lage, den Punkt-in-Polygon-Algorithmus zu verwenden, der
+für die vorliegende Arbeit zu zeitaufwändig ist. Schwarz ist also
+nicht auf ein Programm wie binvox angewiesen.
+\item Da der Fokus bei Schwarz' Arbeit nicht auf der realistischen
+Visualisierung des Schnees selber liegt, verwendet er keine
+Texturen. Die Schneedecke wird lediglich mit Vertexnormalen versehen
+und beleuchtet.
+\item Beide Arbeiten ermöglichen die Bildung von
+Schneeanhäufungen. Mit dem vorliegenden, einfachen Modell kann es
+jedoch passieren, dass diese Anhäufungen unnatürliche Formen
+annehmen. Schnee, der mit einer gewissen horizontalen Geschwindigkeit
+auf eine Wand prallt, erzeugt einen \PimiddyQuotes{Klecks} auf der
+Wand, der dort verharrt. In Wirklichkeit würde dieser Klecks wegen
+seines Eigengewichts zu Boden fallen. Um dies zu erzwingen, enthält
+die Arbeit von Schwarz Ansätze und Implementierungen für sogenannte
+\PimiddyBegriff{Stabilitätsbedingungen}. Es ergibt sich also eine weit
+realistischere Schneedecke bei starkem Schneefall.
+
+Stabilitätsbedingungen wurden wegen der hohen Rechenkomplexität bei
+größeren Gittern in dieser Arbeit nicht weiter verfolgt.
+\end{enumerate}

@@ -1,46 +1,98 @@
 \section{Einleitung}
 
-Die Arbeit befasst sich mit der Modellierung und Entwicklung einer Methode zur
-Simulation von Wind, sowie einem Partikelsystem für Schneeflocken. Zu Anfang
-soll ein Überblick über die Zielsetzung gegeben werden. Danach folgt eine kurze
-Zusammenfassung vorhandener Simulationsmethoden. Hier wird die Entscheidung für
-eine der Methoden begründet vorgestellt. Schließlich folgt ein Überblick über
-den Aufbau der Arbeit.
-
 \subsection{Motivation}
 
-...
+Die Idee, Schneefall zu modellieren, entstand im Rahmen der
+Masterprojektgruppe \PimiddyQuotes{virtueller Campus} an der
+Universität Osnabrück im Wintersemester 2011/12. Die Projekgruppe
+befasste sich mit dem Nachbau des Campus am Westerberg der Universität
+Osnabrück unter Anwendung aktueller Methoden der Computergrafik.
 
-\subsection{Zielsetzung}
+Die Zielsetzung der Projektgruppe enthielt auch die Visualisierung von
+natürlichen Phänomenen wie einem dynamischen Wechsel von Tag und
+Nacht, sowie wechselnde Wetterverhältnisse. In diesem Zusammenhang
+entstand die Idee, die Modellierung von Schneefall auszulagern und
+separat von der Projektgruppe zu entwickeln. Daraus entstanden zwei
+Arbeiten: die vorliegende und die Bachelorarbeit von Manuel Schwarz
+(\cite{Schwarz2012}).
 
-...
+Die Arbeit von Schwarz befasst sich mit den verschiedenen Arten, eine
+dynamisch wachsende und schrumpfende, dreidimensionale Schneedecke zu
+modellieren. Als Resultat wurde ein Mesh-basiertes Verfahren
+implementiert, das realistische Ergebnisse mit Stabilitätsbedingungen
+für den Schnee liefert. Die Visualisierung der Schneedecke stand in
+dieser Arbeit allerdings nicht im Vordergrund.
+
+Das Ziel der vorliegenden Arbeit ist die Modellierung von fallendem
+Schnee, also der Bewegung von Schneeflocken im Wind. In heutigen
+interaktiven Anwendungen wird meist nur der optische Eindruck von
+Schneeflocken und Schneefall angenähert. In dieser Arbeit soll im
+Gegensatz dazu ein Ansatz vorgestellt werden, der darauf basiert, den
+Wind an sich in in Echtzeit zu modellieren und die Flocken dann anhand
+des Feldes fortzutragen.
+
+Es stellte sich die Frage, ob dies überhaupt in Echtzeit möglich sei,
+oder ob die Berechnungen eher verzögert im Hintergrund ablaufen
+sollten. Allerdings stellte sich heraus, dass mit der Hilfe moderner
+Grafikkarten (GPUs) durchaus Echtzeitframeraten zu erreichen sind. Das
+Ziel bestand darin, die entsprechenden Verfahren umzusetzen und darauf
+aufbauend ein Modell für die Bewegung von Schneeflocken zu entwickeln,
+welches auf das berechnete Windfeld zurückgreift.
+
+Im Laufe der Implementierung wurde als weiteres Ziel die Integration
+der Ergebnisse von \cite{Schwarz2012} hinzugefügt, um die gefallenen
+Schneeflocken in die Bildung der Schneedecke einfließen zu lassen.
+
 
 \subsection{Aufbau}
 
-Obacht, was folgt ist aus dem eigentlich geplanten Kapitel
-``Implementierung'' entnommen, daher fehlt noch was am Grundaufbau.
+Da sowohl die Berechnungen für die Bewegung der Schneeflocken als auch
+die strömungsmechanischen Gleichungen gewisse mathematische
+Grundkenntnisse voraussetzen, werden im \autoref{sec:mathematics}
+einige Mathematische Definitionen und Verfahren eingeführt. Diese
+Arbeit setzt aber ansonsten keine höheren mathematischen Vorkenntnisse
+voraus und sollte auch ohne Vorkenntnisse aus der Strömungsmechanik
+verständlich sein.
 
-In diesem Kapitel soll auf die Details der Implementierung eingegangen werden. Es
-wird zunächst OpenGL eingeführt, was zur Visualisierung eingesetzt wird. Danach
-wird OpenCL eingeführt, was für die eigentlichen Berechnungen zuständig ist.
+Aufgrund der hohen Komplexität und dem Umfang des Themas ist die
+Behandlung der strömungsmechanischen Zusammenhänge in drei Abschnitte
+aufgeteilt. \autoref{sec:navier_stokes} gibt zunächst eine Einführung
+in die Navier-Stokes-Gleichungen. Diese Gleichungen sind sehr
+allgemein gefasst und beschreiben jegliche Art von Strömungen. Um die
+Erklärung nicht zu kompliziert zu gestalten wird eine einfachere Form
+der Gleichungen vorgestellt. Zudem werden nur die Teile näher
+beleuchtet, die für die Modellierung von Wind eine Rolle spielen. Der
+Abschnitt soll vor allem ein intuitives Verständnis der einzelnen
+Bestandteile geben, welches für das Verständnis der Algorithmen auch
+ausreichend ist.
 
-Danach das Verfahren von Stam mittels OpenCL umgesetzt. Als Ausgabe erhält man
-ein Schnee-Vektorfeld, was dann weiterverwendet werden kann. Hier wird auch auf
-Hindernisse wie Gebäude eingegangen. Dazu gehört das Laden der Hindernisse aus
-obj-Dateien sowie die Anzeige mittels OpenGL, sowie die Einspeisung in die
-Simulation.
+\autoref{sec:stam} stellt das Verfahren von Stam vor. Es wird zunächst
+erklärt, inwiefern sich das Verfahren von bisherigen Verfahren
+unterscheidet und was es auszeichnet. Danach folgt ein allgemeiner
+Überblick über die Bestandteile. Die darauf folgenden Abschnitte
+erklären diese Einzelteile, wobei aber noch wenig auf eine
+Implementierung eingegangen wird. Am Ende des Abschnitts sollte die
+Arbeitsweise des Verfahrens klar sein, sodass es theoretisch in einer
+beliebigen Programmiersprache umsetzbar wäre.
 
-Anschließend wird der fallende Schnee modelliert. Hierzu soll zunächst die
-Entstehung von Schnee in der Natur erläutert werden, sowie physikalische
-Hindergründe bezüglich fallendem Schnee.
+\autoref{sec:opencl} erklärt die Funktionsweise von OpenCL, wobei die
+Teile nur angeschnitten werden, die für die Implementierung der
+Algorithmen keine Rolle spielen. Am Ende des Abschnittes findet sich
+ein simples, aber vollständiges OpenCL-Programm, welches den Ablauf
+und die Interaktion zwischen GPU und CPU verdeutlicht.
 
-Diese idealen physikalischen Gegebenheiten werden dann in ein einfacheres
-Modell transformiert, welches für das Partikelsystem verwendet wird. Zu diesem
-Partikelsystem gehört neben der Simulation auch die Visualisierung, für die in
-dieser Arbeit Pointsprites verwendet werden.
+In \autoref{sec:implementation_wind} wird schließlich OpenCL
+eingesetzt, um das Verfahren von Stam auf die Grafikkarte zu
+übertragen. Es wird viel auf \autoref{sec:stam} verwiesen und stärker
+auf die Schwierigkeiten in der Implementierung eingegangen als die
+Erläuterung der prinzipiellen Funktionsweise. Auch einige
+Performanceoptimierungen werden angesprochen.
 
-Im letzten Abschnitt wird schließlich auf die Modellierung der Schneedecke
-eingegangen, wobei die Ergebnisse von Manuel Schwarz \cite{Schwarz2012} eine
-tragende Rolle spielen. Außerdem werden noch einige weitere
-Anwendungsmöglichkeiten der Fluidsimulation wie die Simulation von Rauch
-angesprochen.
+\autoref{sec:implementation_snowflake} widmet sich dem fallenden
+Schnee. Es zunächst auf die physikalischen Ursachen für die
+Entsteheung von Schnee eingangen. Danach wird die Visualisierung mit
+OpenGL angesprochen. Der Rest des Abschnitts befasst sich mit den
+physikalischen Besonderheiten von Schneeflocken. Als Ergebnis wird ein
+OpenCL-Programm erstellt, was ein Schnee-Partikelsystem umsetzt.
+
+\autoref{sec:fallen_snow} behandelt die Modellierung von gefallenem Schnee.

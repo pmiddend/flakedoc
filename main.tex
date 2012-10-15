@@ -1,4 +1,5 @@
 \documentclass[ngerman,a4paper,11pt]{article}
+\usepackage[gray]{xcolor}
 
 \usepackage{a4wide}
 
@@ -23,7 +24,7 @@
 % Für Subfigures und Figures (alle)
 \usepackage{graphicx}
 \usepackage[footnotesize,bf]{caption}
-\usepackage{subcaption}
+\usepackage[subrefformat=parens,labelformat=parens]{subcaption}
 % Links (und autoref)
 \usepackage[pdfborder={0 0 0},breaklinks=true]{hyperref}
 
@@ -58,6 +59,8 @@
 \newcommand{\PimiddyzB}{z.\,B.\ }
 \newcommand{\Pimiddydh}{d.\,h.\ }
 \newcommand{\Pimiddyvgl}{vgl.\ }
+\newcommand{\Pimiddyengl}{engl.\ }
+\newcommand{\Pimiddyetal}{et.\ al.\ }
 \newcommand{\Pimiddyggf}{ggf.\ }
 \newcommand{\Pimiddybzw}{bzw.\ }
 \newcommand{\Pimiddyca}{ca.\ }
@@ -66,6 +69,7 @@
 \newcommand{\PimiddyEnglBegriff}[1]{#1}
 \newcommand{\PimiddyQuotes}[1]{\enquote{#1}}
 \newcommand{\PimiddyFormelText}[1]{\textnormal{#1}}
+\newcommand{\PimiddyAufrunden}[1]{\lceil{} #1 \rceil{}}
 \newcommand{\PimiddyReell}{\ensuremath{\mathbb{R}}}
 \newcommand{\PimiddyGanz}{\ensuremath{\mathbb{Z}}}
 \newcommand{\PimiddyNorm}[2]{\left\|#2\right\|_{#1}}
@@ -101,7 +105,6 @@
 % Also for latex+inkscape
 % Also for general colors, dvipsnames adds more colors
 %\usepackage[usenames,dvipsnames]{xcolor}
-\usepackage{xcolor}
 
 \usepackage{listings}
 
@@ -113,17 +116,14 @@
 
 % This is a package nagging about deprecated stuff
 \usepackage{nag}
-%\includeonly{implementation_fallen_snow}
+%\includeonly{implementation_snowflake}
+
+\usepackage{cleveref}
 
 \begin{document}
-
-
-
-%\include{preamble}
-
 \tableofcontents
-
-%\include{introduction}
+\include{preamble}
+\include{introduction}
 \include{mathematics}
 \include{navier_stokes}
 \include{stam}
@@ -132,8 +132,6 @@
 \include{implementation_wind}
 \include{implementation_snowflake}
 \include{implementation_fallen_snow}
-
 \bibliographystyle{plain}
 \bibliography{mendeley_bibliography,other_sources}
-
 \end{document}
