@@ -6,7 +6,7 @@
 In diesem Abschnitt wird die Umsetzung der Windsimulation
 vorgestellt. Da dieser Teil der Implementierung nicht mit der
 Darstellung zusammenhängt, wird nur OpenCL verwendet. Der Abschnitt
-knüpft direkt an \autoref{sec:stam} an.
+knüpft direkt an \cref{sec:stam} an.
 
 Zuerst wird die Wahl der Datenstrukturen besprochen. Es kommt hier
 darauf an, eine möglichst performante Struktur zu wählen, die optimale
@@ -19,10 +19,9 @@ Simulation eingespeist werden.
 
 \subsection{Allgemeines}
 
-Für die Simulation des Winds ist es wichtig, eine möglichst optimale
-Datenstruktur zur Speicherung der verwendeten Felder zu verwenden, um
-die Speicherzugriffszeiten zu minimieren und die maximale Performance zu
-erreichen.
+Für die Simulation des Winds ist es wichtig, eine gute Datenstruktur
+zur Speicherung der verwendeten Felder zu verwenden, um die
+Speicherzugriffszeiten zu minimieren.
 
 Wie bereits angesprochen bietet OpenCL zur Speicherung die Wahl
 zwischen buffer objects und image objects (sofern image objects auf der
@@ -36,7 +35,7 @@ In vielen Kerneln ist man daran interessiert, den Wert für die
 Nachbarzellen zu bestimmen. Der \PimiddyQuotes{Wert} kann je nach
 betrachtetem Feldtyp entweder Druck, Geschwindigkeit oder etwas
 anderes bedeuten. Bei der Advektion wird außerdem linear zwischen den
-Voxeln in einer Nachbarschaft linear \emph{interpoliert}.
+Voxeln in einer Nachbarschaft \emph{interpoliert}.
 
 \begin{figure}[h]
 \centering
@@ -52,10 +51,10 @@ strömungsmechanischen Verfahren nutzen in der Tat image objects (wenn auch
 oft aus historischen Gründen). Allerdings ist das Schreiben von
 3D-Texturen in OpenCL-1.1 nur mit einer Extension möglich. Als
 Hilfsmaßnahme greift man hier üblicherweise zu sogenannten
-\PimiddyBegriff{Flat-3D-Texturen} \cite{Harris2003}. Hier werden die
+\PimiddyBegriff{Flat-3D-Texturen} (\cite{Harris2003}). Hier werden die
 einzelnen \PimiddyQuotes{Scheiben} der dreidimensionalen Struktur
 nebeneinander in eine zweidimensionale Textur geschrieben, siehe
-\autoref{fig:implementation_flat_3d_texture}. Für die Umrechnung
+\cref{fig:implementation_flat_3d_texture}. Für die Umrechnung
 zwischen 3D- und 2D-Koordinaten ist etwas Rechenaufwand
 nötig. 2D-Texturen erlauben außerdem natürlicherweise nur
 zweidimensionale Interpolation zwischen den Zellen. Benötigt man
@@ -63,14 +62,13 @@ hingegen dreidimensionale Interpolation, ist auch hier etwas
 Mehraufwand zu verrechnen.
 
 Image objects werden in einer optimierten Weise gespeichert, sodass
-Leseoperationen beschleunigt werden. Diese optimierte Speicherung
-führt aber dazu, dass das Schreiben in Texturen relativ langsam
-ist. Selbst durchgeführte Benchmarks\PimiddyTodo{diese noch ergänzen?
-Dazu einfach das Jacobiverfahren mit Texturen umsetzen und direkt
-vergleichen (alles in 2D)} zeigen, dass buffer objects sogar im
-Zweidimensionalen schneller sind als image objects. Daher wurden image objects
-als mögliche Speicherform verworfen und es wurden einzig Buffer
-verwendet. Diese erweisen sich außerdem als kompatibler, denn
+Leseoperationen beschleunigt werden
+(\cite{Pharr:2005:GGP:1062395}). Diese optimierte Speicherung führt
+aber dazu, dass das Schreiben in Texturen relativ langsam ist. Selbst
+durchgeführte Benchmarks zeigen, dass buffer objects sogar im
+Zweidimensionalen schneller sind als image objects. Daher wurden image
+objects als mögliche Speicherform verworfen und es wurden einzig
+Buffer verwendet. Diese erweisen sich außerdem als kompatibler, denn
 OpenCL-Implementierungen müssen image objects nicht unterstützen.
 
 Da Buffer eindimensional sind, muss zwischen drei- und
@@ -106,7 +104,7 @@ soll hier nicht in Gänze erarbeitet werden. Stattdessen soll deutlich
 werden, in welcher Reihenfolge die Kernel aufgerufen werden und welche
 Daten beim Aufruf gelesen und geschrieben werden. Aus
 Einrückungsgründen werden einige Bezeichner abgekürzt, aber immer so,
-dass aus der Erläuterung \Pimiddybzw den Kommentaren noch hervorgeht, was
+dass aus der Erläuterung \Pimiddybzw{} den Kommentaren noch hervorgeht, was
 sich dahinter verbirgt.
 
 Die Simulation benötigt einige persistente Daten, also solche, die
@@ -118,12 +116,12 @@ temporär für Berechnungen verwendet werden:
 \PimiddyInlineCode{float}, der 1.0 enthält, wenn die zugehörige
 Gitterzelle ein Hindernis enthält und 0.0 wenn nicht. Das Befüllen
 dieses Buffers wird in
-\autoref{sec:implementation_wind_boundaries} beschrieben.
+\cref{sec:implementation_wind_boundaries} beschrieben.
 \item ein Buffer \PimiddyInlineCode{velocity} vom Typ
 \PimiddyInlineCode{float3}, der das aktuelle Geschwindigkeitsfeld enthält.
 Dieses Feld wird anfangs auf $(0,0,0)$ gesetzt. Der Wind wird manuell von
 einer Seite in die Simulation gespeist (siehe
-\autoref{sec:implementaion_wind_in_outflow}) und breitet sich dann
+\cref{sec:implementaion_wind_in_outflow}) und breitet sich dann
 aus.
 \item Viele der Algorithmen benötigen außerdem das aktuelle
 \PimiddyQuotes{Zeitdelta} \PimiddyInlineCode{float dt}. Es gibt die
@@ -167,7 +165,7 @@ uint i4p(uint3 p,uint3 s)
 \end{minted}
 
 Für die Indextransformation wurde
-\autoref{eq:implementation_wind_3d_to_2d} verwendet.  Die
+\cref{eq:implementation_wind_3d_to_2d} verwendet.  Die
 Standardbibliotheksfunktion \PimiddyInlineCode{clamp} stellt sicher,
 dass ein Wert innerhalb eines Intervalls bleibt:
 \begin{align}
@@ -182,32 +180,32 @@ dass ein Wert innerhalb eines Intervalls bleibt:
 		\centering
 		\includegraphics[width=\textwidth]{images/right_neighborhood}
                 \caption{Veranschaulichung der Nachbarschaftsstruktur \PimiddyInlineCode{neighbors}.}
-                \label{fig:implementation_right_neighbors}
+\label{fig:implementation_right_neighbors}
 	\end{subfigure}
-	~
+    ~
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/ndinterpolation}
 		\caption{Dreidimensionale Interpolation mit dem Beispielvektor $(0.55,0.6,0.0.5)$}
-		\label{fig:implementation_wind_interpolation}
+\label{fig:implementation_wind_interpolation}
 	\end{subfigure}
 	\caption{Die dreidimensionale Nachbarschaft \PimiddyInlineCode{neighbors}}
 \end{figure}
 
 Der erste Schritt im Verfahren von Stam ist die Advektion des
 Vektorfeldes \PimiddyInlineCode{velocity}
-(\Pimiddyvgl \autoref{sec:stam_advection}). Der dazugehörige Kernel ist in
+(\Pimiddyvgl{} \cref{sec:stam_advection}). Der dazugehörige Kernel ist in
 mehrere Funktionen und Strukturen aufgeteilt, die nun im einzelnen
 erklärt werden.
 
-Vom aktuellen Voxel aus verfolgt man den Geschwindigkeitspfeil in
-\PimiddyInlineCode{velocity} zurück und landet dabei -- weil der
-Geschwindigkeitspfeil eben ein \PimiddyInlineCode{float3} ist -- im
-Allgemeinen zwischen 8 Gitterzellen. Diese 8 Zellen nutzt man für eine
-lineare Interpolation, um die neue Geschwindigkeit zu finden. Es
-bietet sich an, zunächst eine Struktur zu definieren, um einen
-Geschwindigkeitswert sowie die direkten Nachbarn zu speichern (siehe
-\autoref{fig:implementation_right_neighbors}).
+Vom aktuellen Voxel aus verfolgt man den Geschwindigkeitsvektor in
+\PimiddyInlineCode{velocity} zurück und landet dabei, weil der
+Vektor aus Fließkommawerten besteht, im Allgemeinen zwischen 8
+Gitterzellen. Diese 8 Zellen nutzt man für eine lineare Interpolation,
+um die neue Geschwindigkeit zu finden. Es bietet sich an, zunächst
+eine Struktur zu definieren, um einen Geschwindigkeitswert sowie die
+direkten Nachbarn zu speichern (siehe
+\cref{fig:implementation_right_neighbors}).
 
 \begin{minted}[frame=lines]{c}
 typedef struct
@@ -246,7 +244,7 @@ neighbors neighbors_for_pos(
 \end{minted}
 
 Mit Hilfe einer Instanz von \PimiddyInlineCode{neighbors} und einem
-beliebigen Vektor im Einheitsintervall $[0,1]^3$ soll ein
+beliebigen Vektor im Einheitsintervall ${[0,1]}^3$ soll ein
 interpolierter Vektor erzeugt werden. Hier hilft die OpenCL-C-Funktion
 \PimiddyInlineCode{mix}, die linear zwischen zwei Werten anhand eines
 dritten Wertes interpoliert:
@@ -284,11 +282,13 @@ float3 interpolate_neighbors(
 \end{minted}
 
 Das Funktionsprinzip ist am Beispiel in
-\autoref{fig:implementation_wind_interpolation} verdeutlicht. Es wird
+\cref{fig:implementation_wind_interpolation} verdeutlicht. Es wird
 erst vier mal auf der $x$-Achse interpoliert, dann zwei mal auf der
 $y$-Achse und schließlich einmal auf der $z$-Achse.
 
-Der eigentliche Advektionskernel hat schließlich folgende Form:
+Der eigentliche Advektionskernel erhält als Eingabe ein quellenfreies
+Geschwindigkeitsfeld \PimiddyInlineCode{input} und schreibt die
+Ausgabe in das Feld \PimiddyInlineCode{output}:
 
 \begin{minted}[frame=lines]{c}
 kernel void advection(
@@ -300,7 +300,7 @@ kernel void advection(
     // Gibt die Gittergroesse an
     uint3 size)
 {
-    uint3 position = (int3)(
+    uint3 position = (uint3)(
         get_global_id(0),
         get_global_id(1),
         get_global_id(2));
@@ -336,7 +336,7 @@ kernel void advection(
 \label{sec:implementaion_wind_in_outflow}
 
 Nach der Advektion werden die In- und Outflowboundaries behandelt
-(\Pimiddyvgl \autoref{sec:stam_boundaries}). Im Gegensatz zu den anderen
+(\Pimiddyvgl{} \cref{sec:stam_boundaries}). Im Gegensatz zu den anderen
 Kerneln wird hier nicht das gesamte Feld als globale Arbeitsgröße
 gewählt, sondern nur eine Teilmenge des Gitters. Die Kernel sind so
 einfach gehalten, dass sie hier nur erläutert, aber nicht im Code
@@ -352,7 +352,7 @@ Bei den Outflow-Boundaries werden die 6 Randseiten des Würfels separat
 behandelt. Jede Seite wird in die jeweils benachbarte
 \PimiddyQuotes{Scheibe} kopiert; für die linke Seite in die Scheibe
 rechts daneben, die Oberseite in die Scheibe einen drunter, und so
-weiter\PimiddyTodo{Hier noch ein Bild von?}.
+weiter.
 
 \subsubsection{Projektion}
 \label{sec:implementation_wind_projection}
@@ -366,7 +366,7 @@ weiter\PimiddyTodo{Hier noch ein Bild von?}.
 
 Nach der Advektion ist das Vektorfeld $\vec{u}$ nicht mehr quellenfrei
 und der Projektionsoperator muss angewendet werden
-(\Pimiddyvgl \autoref{sec:stam_projection}). Dazu bestimmt man zuerst die
+(\Pimiddyvgl{} \cref{sec:stam_projection}). Dazu bestimmt man zuerst die
 Divergenz $\PimiddyDiv \vec{u}$ des Vektorfeldes und löst dann das
 Gleichungssystem $\PimiddyLaplace x = \PimiddyDiv \vec{u}$ nach $x$
 mit Hilfe des Jacobiverfahrens. Der Gradient von $x$ wird schließlich
@@ -375,7 +375,7 @@ von $\vec{u}$ subtrahiert und das Feld ist wieder quellenfrei.
 Man benötigt also zunächst die Divergenz des Vektorfeldes. Analog zur
 Advektion wird eine Struktur definiert, um die Von
 Neumann-Nachbarschaft eines Gitterpunktes zu speichern (siehe
-\autoref{fig:implementation_wind_von_neumann_neighbors}):
+\cref{fig:implementation_wind_von_neumann_neighbors}):
 
 \begin{minted}[frame=lines]{c}
 typedef struct vn_neighbors
@@ -439,7 +439,7 @@ kernel void divergence(
     global float *boundary,
     uint3 size)
 {
-    uint4 position = (int3)(
+    uint3 position = (uint3)(
         get_global_id(0),
         get_global_id(1),
         get_global_id(2));
@@ -488,7 +488,7 @@ Jacobi-Kernels füllt \PimiddyInlineCode{s2} mit der ersten Iteration
 des Verfahrens. Diese wird zur Eingabe der nächsten Iteration, die
 \PimiddyInlineCode{s1} überschreibt, und so weiter. Nach gerade vielen
 Iterationsschritten enthält \PimiddyInlineCode{s1} die endgültige
-Lösung. \autoref{alg:implementation_wind_ping_ping} zeigt das
+Lösung. \Cref{alg:implementation_wind_ping_ping} zeigt das
 Verfahren im Pseudocode.
 
 \begin{algorithm}
@@ -528,7 +528,7 @@ kernel void jacobi(
     global float *output,
     uint3 size)
 {
-    uint4 position = (int3)(
+    uint3 position = (uint3)(
         get_global_id(0),
         get_global_id(1),
         get_global_id(2));
@@ -565,15 +565,7 @@ $\frac{1}{3}$, der sich als günstig herausgestellt hat.
 Die Zahl der Iterationen kann von der Leistung der Grafikkarte
 abhängig gemacht werden. Sie sollte jedoch mindestens 20
 betragen. Gute Ergebnisse werden bei 40 Iterationen
-erzielt. \autoref{fig:implementation_wind_jacobi_times} zeigt die
-Laufzeit für verschiedene Iterationszahlen.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=13cm]{images/jacobi_times}
-\caption{Die Laufzeit für verschiedene Jacobi-Iterationszahlen. Es ergibt sich ein linearer Zusammenhang. Die entsprechende Ausgleichsgerade ist ebenfalls eingezeichnet.}
-\label{fig:implementation_wind_jacobi_times}
-\end{figure}
+erzielt.
 
 Die Berechnung des Gradienten von $x$ und die darauf folgende
 Subtraktion von $\vec{u}$ lässt sich (auch aus Performancegründen) in
@@ -600,7 +592,7 @@ In Schritt 3 wird für jede Koordinatenachse gespeichert, ob sich in
 der Von Neumann-Nachbarschaft auf der Achse ein Hindernis
 befindet. Ist dies der Fall, wird die Geschwindigkeitskomponente auf
 dieser Achse auf 0
-gesetzt. \autoref{fig:implementation_wind_enforce_free_slip}
+gesetzt. \Cref{fig:implementation_wind_enforce_free_slip}
 verdeutlicht das Prinzip. Der Koeffizient, der die entsprechende
 Komponente entweder behält oder gleich 0 setzt, kann als Funktion der
 beiden Randwerte auf der Achse ausgedrückt werden:
@@ -621,7 +613,7 @@ kernel void subtract_pressure_gradient(
     uint3 size)
 {
     // Schritt 1: Bestimmte Gradient des Druckfeldes
-    uint4 position = (int3)(
+    uint3 position = (uint3)(
         get_global_id(0),
         get_global_id(1),
         get_global_id(2));
@@ -675,150 +667,3 @@ kernel void subtract_pressure_gradient(
 
 Das so erzeugte \PimiddyInlineCode{velocity}-Feld kann in der nächsten
 Iteration wieder in die Advektionsroutine gegeben werden.
-
-\subsection{Hindernisse in der Simulation}
-\label{sec:implementation_wind_boundaries}
-
-Bisher wurde das Hindernisfeld \PimiddyInlineCode{boundary} als
-gegeben angenommen. Nun sollen Möglichkeiten vorgestellt werden, das
-Feld mit Hinderniswerten zu füllen. Es wird zuerst ein Ansatz
-beschrieben, bei dem Hindernisse aus primitiven Formen zusammengesetzt
-werden. Danach werden Verfahren vorgestellt, um direkt aus einer
-Meshdatei ein Hindernisfeld zu erzeugen.
-
-\subsubsection{Einfacher Ansatz}
-
-Oft ist die Geometrie von Hindernissen relativ einfach gestaltet, oder
-sie wird speziell für die Simulation vereinfacht. Das angezeigte Mesh
-hat dann gegebenenfalls wesentlich mehr Details als das diskretisierte
-Hindernisfeld. Bewegen sich die Partikel schnell genug \Pimiddybzw
-löscht man die Partikel erst eine gewisse Zeit nach der Kollision mit
-den Hindernissen, ist der Detailunterschied nicht zu merken.
-
-Es bietet sich daher an, die Hindernisse aus einfachen geometrischen
-Formen wie Kugeln oder Quadern zusammenzusetzen. Diese Formen lassen
-sich sehr einfach diskretisieren, was im folgenden besprochen werden soll.
-
-Gegeben einer Menge von geometrischen Formen und einem Anfangs mit $0$
-gefüllten Hindernisfeld, kann das endgültige Hindernisfeld
-inkrementell konstruiert werden, indem immer weiter einzelne
-Hindernisse hinzugefügt werden (sprich, Werte auf $1$ gesetzt
-werden). Für jedes Primitiv benötigt man einen Kernel, der die
-geometrischen Eigenschaften (\PimiddyzB Ausdehnung) sowie
-\PimiddyInlineCode{boundary} erhält.
-
-Für einen Quader $Q$, gegeben durch die drei Intervalle
-$[x_1,x_2],[y_1,y_2],[z_1,z_2]$, ist dieser Kernel sehr einfach
-gestaltet. Für jeden Voxel muss er testen, ob dessen Position
-innerhalb des Quaders ist.
-
-Für eine Kugel, gegeben durch einen Radius $r$ und eine Position
-$(x,y,z)$ muss für jeden Voxel mit Position $(v_x,v_y,v_z)$ die
-Kugelungleichung ausgewertet werden:
-
-\begin{align}
-(x-v_x)^2 + (y-v_y)^2 + (z-v_z)^2 \leq r^2
-\end{align}
-
-Ist sie wahr, wird der Voxel auf 1 gesetzt. Ähnlich einfach lässt sich
-ein Ellipsoid behandeln, welcher durch drei Radien $r_x,r_y,r_z$ und eine
-Position $(x,y,z)$ gegeben ist. Seine Ungleichung lautet:
-
-\begin{align}
-\frac{(x-v_x)^2}{r_x} + \frac{(y-v_y)^2}{r_y} + \frac{(z-v_z)^2}{r_z} \leq 1
-\end{align}
-
-Diese Art, Hindernisse einzubringen, ist allerdings sehr
-zeitaufwändig, da stets zwei Modelle zu erstellen sind -- eins zur
-Anzeige, bestehend aus einer Menge von Dreiecken, und eins für die
-Simulation, bestehend aus geometrischen Formen. Die Konvertierung dieser
-Formen zu Dreiecksnetzen ist zwar ohne Probleme möglich, es ist jedoch
-ein sehr unnatürlicher Arbeitsablauf und es existieren keine Tools,
-die dies vereinfachen könnten.
-
-\subsubsection{Komplexe Hindernisse}
-
-Es wäre günstiger, aus dem Mesh, was später angezeigt wird, das
-Hindernisfeld zu gewinnen -- oder notfalls aus einem leicht
-vereinfachten Mesh, welches rein visuell interessante Objekte nicht
-enthält. Diesen Vorgang nennt man \PimiddyBegriff{Voxelization}. Im
-Weiteren wird ein simpler Algorithmus vorgeschlagen, um diese Aufgabe
-zu lösen. Für größere Felder ist dieser Algorithmus allerdings
-ungeeignet, daher werden Alternativen besprochen.
-\begin{figure}[h]
-\centering
-\includegraphics[width=10cm]{images/point_in_polygon}
-\caption{Der einfache Test, ob ein Punkt in einem Körper enthalten ist, hier in zwei Dimensionen. $P_1$ hat 3 Schnittpunkte und ist innerhalb, $P_2$ hat 4 und ist somit außerhalb.}
-\label{fig:implementation_wind_point_in_polygon}
-\end{figure}
-Gegeben sei eine Menge von Dreiecken, gegeben durch ihre Eckpunkte
-(weitere Eigenschaften wie Normalen und Texturkoordinaten sind für die
-Umwandlung nicht interessant). Die Menge von Dreiecken soll einen
-geschlossenen Körper bilden, Löcher oder Überschneidungen sind nicht
-erlaubt. Unter diesen Voraussetzungen lässt ich für jeden Gitterpunkt
-in \PimiddyInlineCode{boundary} entscheiden, ob dieser innerhalb des
-Körpers ist oder außerhalb: Man betrachtet eine Halbgerade vom
-Gitterpunkt aus und zählt die Schnittpunkte der Geraden mit allen
-Dreiecken des Körpers. Bei einer geraden Anzahl von Schnittpunkten ist
-der Punkt außerhalb, sonst innerhalb (siehe
-\autoref{fig:implementation_wind_point_in_polygon}).
-
-Der Test ist arithmetisch sehr einfach gestaltet und
-performant. Allerdings ist seine Laufzeit immernoch $O(n^3 \cdot k)$,
-wobei $n$ die Größe des Gitters angibt und $k$ die Anzahl an
-Dreiecken. Bei einem $64^3$ großen Feld und einem hinreichend
-komplexen Modell mit $3.000$ Dreiecken kommt man bereits auf
-786.432.000 Tests.
-
-Die Implementierung eines effizienteren Verfahrens übersteigt den
-Rahmen dieser Arbeit allerdings deutlich, daher wurde auf das Tool
-\emph{binvox} zurückgegriffen\cite{binvox2012}. Es verwendet den
-Algorithmus aus \cite{Nooruddin2003}, der auf \PimiddyQuotes{Ray
-Stabbing} basiert, einer Abwandlung des eben beschriebenen
-Verfahrens. Das Tool arbeitet parallel auf der GPU und liefert in
-Sekunden Ergebnisse. Als Eingabe erhält es die Modeldatei im
-obj-Dateiformat, welche vom Programm auch direkt zur Anzeige verwendet
-wird. Die Ausgabe erfolgt in einem eigens geschrieben Dateiformat, dem
-binvox-Format\cite{binvoxfileformat2012}. Eine
-\PimiddyInlineCode{.binvox}-Datei hat den folgenden, einfachen Aufbau:
-
-\begin{minted}{java}
-#binvox 1
-dim 128 128 128
-translate -0.120158 -0.481158 -0.863158
-scale 7.24632
-data
-...
-\end{minted}
-
-Die erste Zeile gibt die Version des Dateiformats an. Zum jetzigen
-Zeitpunkt gibt es nur Version 1. Die nächste Zeile gibt die
-Dimensionen des Gitters an. Die Werte für
-\PimiddyInlineCode{translate} und \PimiddyInlineCode{scale} geben an,
-wie das Gitter verschoben und skaliert werden muss, um mit dem
-vorgegebene Model übereinzustimmen.
-
-Danach folgen die eigentlichen Daten als rohe Bytes. Um Platz bei
-großen Gittern zu sparen, sind sie \emph{lauflängenkodiert}. Das
-Datensegment enthält eine Folge von Byte-Paaren. Das erste Byte in
-einem Paar gibt an, ob eine Folge von Nullen oder Einsen folgt. Das
-zweite Byte gibt an, wie viele Nullen oder Einsen folgen.
-
-Die lineare Folge von Gitterpunkten wird mit der Festlegung zum
-dreidimensionalen Gitter, dass sich die $y$-Koordinate am schnellsten
-verändert, dann die $x$-Koordinate, dann die $z$-Koordinate.
-
-\begin{figure}
-	\begin{subfigure}[t]{0.5\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{images/lamp_obj}
-		\caption{Das Modell einer Lampe}
-	\end{subfigure}
-	~
-	\begin{subfigure}[t]{0.5\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{images/lamp_discrete}
-		\caption{Die von binvox diskretisierte Version der Lampe}
-	\end{subfigure}
-	\caption{Das Tool binvox bei der Arbeit.}
-\end{figure}

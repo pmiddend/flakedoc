@@ -1,43 +1,46 @@
+% This is a package nagging about deprecated stuff. We use
+% RequirePackage instead of usepackage here because we want nagging
+% for stuff that happens inside the \documentclass command.
+% Note that currently (15.10.2012 16:12), nag has a bug with
+% subcaption and complains about labels in a float before the caption.
+\RequirePackage[l2tabu,orthodox]{nag}
+
 \documentclass[ngerman,a4paper,11pt]{article}
+
+% This (I mean [gray]) makes the minted source code grayscale. Has to
+% be at the top here because other packages include xcolor, too
 \usepackage[gray]{xcolor}
 
-\usepackage{a4wide}
+% This losely emulates the old \usepackage{a4wide}.
+\usepackage{geometry}
+\geometry{
+  includeheadfoot,
+  margin=2.8cm
+}
 
 % Packages
-% Was macht das hier?
+% This has to do with German Umlauts in pdf documents
 \usepackage[T1]{fontenc}
-% Encoding der Datei (um Umlaute so zu nutzen)
+% File encoding
 \usepackage[utf8]{inputenc}
-% Silbentrennung
+% Hyphenation, internationalization of labels.
 \usepackage[ngerman]{babel}
-% Für \begin{align} und Konsorten
+% For \begin{align}
 \usepackage{amsmath}
-% Für Sätze
+% For theorems
 \usepackage{amsthm}
-% Für \mathbb und Konsorten
+% For \mathbb
 \usepackage{amssymb}
-% Um im PDF geile Links zu erzeugen
-% Weniger unnütze Fehlermeldungen/Warnungen hoffentlich
+% Hopefully produces less noisy output
 \usepackage{silence}
-% Für internationalisierte Quotes
+% For internationalized quotes (of all kinds)
 \usepackage{csquotes}
-% Für Subfigures und Figures (alle)
+% For subfigures and figures (alle)
 \usepackage{graphicx}
 \usepackage[footnotesize,bf]{caption}
 \usepackage[subrefformat=parens,labelformat=parens]{subcaption}
-% Links (und autoref)
+% For pdf Links. The pdfborder removes the box around links
 \usepackage[pdfborder={0 0 0},breaklinks=true]{hyperref}
-
-
-\addto\extrasngerman{
-  \def\subsectionautorefname{Abschnitt}
-  \def\subsubsectionautorefname{Abschnitt}
-}
-
-%\def\algorithmautorefname{Algorithmus}
-\addto\extrasngerman{
-	  \def\algorithmautorefname{Algorithmus}
-}
 
 % Beide für Tabellen
 \usepackage{array}
@@ -56,6 +59,9 @@
 
 % Macros
 \newcommand{\PimiddyName}[1]{\emph{#1}}
+% Abbreviations need special care when it comes to whitespace both
+% inbetween the letters and at the end. The macros below wrap the most
+% common abbreviations.
 \newcommand{\PimiddyzB}{z.\,B.\ }
 \newcommand{\Pimiddydh}{d.\,h.\ }
 \newcommand{\Pimiddyvgl}{vgl.\ }
@@ -64,6 +70,8 @@
 \newcommand{\Pimiddyggf}{ggf.\ }
 \newcommand{\Pimiddybzw}{bzw.\ }
 \newcommand{\Pimiddyca}{ca.\ }
+
+% Other Macros
 \newcommand{\PimiddyBegriff}[1]{\textbf{#1}}
 \newcommand{\PimiddyBetrag}[1]{\left|#1\right|}
 \newcommand{\PimiddyEnglBegriff}[1]{#1}
@@ -74,10 +82,9 @@
 \newcommand{\PimiddyGanz}{\ensuremath{\mathbb{Z}}}
 \newcommand{\PimiddyNorm}[2]{\left\|#2\right\|_{#1}}
 \newcommand{\PimiddyFootnote}[1]{\footnote{#1}}
-\newcommand{\PimiddyTodo}[1]{{\footnote{\textbf{TODO: #1}}}}
+\newcommand{\PimiddyTodo}[1]{{\footnote{\textbf{TODO\@: #1}}}}
 \newcommand{\PimiddyEnglisch}[1]{{engl. \emph{#1}}}
 \newcommand{\PimiddyTableHeading}[1]{{\textbf{#1}}}
-\newcommand{\PimiddyListingRef}[1]{Programm~\autoref{#1}}
 \newcommand{\PimiddyInlineCode}[1]{{\texttt{#1}}}
 \newcommand{\PimiddyModulo}{\bmod}
 \newcommand{\PimiddyDegree}[1]{\ensuremath{{#1}^{\circ}C}}
@@ -114,12 +121,14 @@
 %\usepackage[scale=0.9]{beramono}
 \usepackage{pxfonts}
 
-% This is a package nagging about deprecated stuff
-\usepackage{nag}
-%\includeonly{implementation_snowflake}
+%\includeonly{stam}
 
-\usepackage{cleveref}
+\usepackage[nameinlink]{cleveref}
 
+% With this, we can use @online to cite websites in a bibtex file
+\usepackage[backend=bibtex]{biblatex}
+
+\bibliography{mendeley_bibliography,other_sources}
 \begin{document}
 \tableofcontents
 \include{preamble}
@@ -132,6 +141,7 @@
 \include{implementation_wind}
 \include{implementation_snowflake}
 \include{implementation_fallen_snow}
-\bibliographystyle{plain}
-\bibliography{mendeley_bibliography,other_sources}
+\include{implementation_boundaries}
+%\bibliographystyle{plain}
+\printbibliography{}
 \end{document}

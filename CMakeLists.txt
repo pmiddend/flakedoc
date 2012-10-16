@@ -99,6 +99,7 @@ set(
 	opengl.tex
 	implementation_wind.tex
 	implementation_snowflake.tex
+	implementation_boundaries.tex
 	implementation_fallen_snow.tex
 	${FLAKE_INKSCAPE_IMAGES_TEX})
 

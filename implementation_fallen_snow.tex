@@ -3,11 +3,11 @@
 
 \subsection{Einleitung}
 
-In \autoref{sec:implementation_snowflake} wurden Techniken
+In \cref{sec:implementation_snowflake} wurden Techniken
 vorgestellt, um die Bewegungen einer großen Anzahl Schneeflocken zu
 simulieren und diese Flocken auf dem Bildschirm darzustellen. Es wird
 ein realistischer Eindruck von fallendem Schnee geschaffen, der auf
-physikalischen Ansätzen beruht, statt -- wie sonst üblich -- nur den
+physikalischen Ansätzen beruht, statt --- wie sonst üblich --- nur den
 visuellen Eindruck nachzubauen. Treffen die Flocken auf dem Boden oder
 einem Hindernis auf, werden sie an eine neue, zufällige Position
 zurückgesetzt. In der Realität würde sich allerdings (bei kaltem
@@ -31,14 +31,14 @@ In diesem Abschnitt werden zwei Ansätze besprochen, um mit Hilfe
 dieses Mechanismus eine Schneedecke zu erzeugen. Der erste Ansatz
 basiert darauf, die Oberfläche der Objekte an den Stellen mit einer
 Schneetextur einzufärben, an denen die Schneeflocken auftreffen. Er
-erlaubt keine \PimiddyQuotes{Schneegeometrie} -- also Schneehügel, die
+erlaubt keine \PimiddyQuotes{Schneegeometrie} --- also Schneehügel, die
 sich auftürmen. Dafür trägt jede Schneeflocke sichtbar zur Schneedecke
 bei.
 
 Wegen gravierender Nachteile dieses Verfahrens wurde danach ein
 anderer Ansatz verfolgt, der ein dreidimensionales Gitter
 verwaltet. In den Zellen des Gitters ist die dortige Schneemenge
-gespeichert. beim Auftreffen einer Schneeflocke auf einem Hindernis
+gespeichert. Beim Auftreffen einer Schneeflocke auf einem Hindernis
 wird die Schneemenge an der Flockenposition erhöht. Mit Hilfe des
 Marching Cubes-Algorithmus wird daraus ein \emph{Mesh} für den Schnee
 erzeugt. Dieses Verfahren wurde zuerst auf der GPU und später auf der
@@ -61,8 +61,7 @@ annimmt, wenn Flocken auf der Oberfläche auftreffen.
 Es ist aus OpenCL heraus möglich, in (zweidimensionale) Texturen zu
 schreiben. Daher kann man im Kernel, der die Bewegung der
 Schneeflocken durchführt, folgendes Verfahren für die Generierung
-einer Schneedecke umsetzen (\Pimiddyvgl
-\autoref{fig:implementation_fallen_snow_textures_principle}):
+einer Schneedecke umsetzen (\Pimiddyvgl\ \cref{fig:implementation_fallen_snow_textures_principle}):
 
 \begin{enumerate}
 \item Reserviere für jede Oberfläche jedes Objekts neben der
@@ -115,7 +114,7 @@ nicht einfach zu integrieren.
 
 Aufgrund dieser Nachteile wurde lediglich eine Form des Verfahrens
 umgesetzt, die für den Boden der Simulation eine Schneedecke
-erzeugt. \autoref{fig:implementation_fallen_snow_textures} zeigt das
+erzeugt. \Cref{fig:implementation_fallen_snow_textures} zeigt das
 Ergebnis.
 
 \subsection{Schneedecke als Mesh}
@@ -170,7 +169,7 @@ Zur Lösung diese Probleme wird ein weiteres Skalarfeld eingeführt, das
 \PimiddyBegriff{Aktivitätsfeld} \PimiddyInlineCode{activity}. Dieses
 Feld wird im Kollisionscode der Schneeflocken statt
 \PimiddyInlineCode{boundary} verwendet. Es ist also ebenfalls ein
-binäres Feld -- ein Voxel kann nur die Werte $0$ oder $1$ annehmen.
+binäres Feld --- ein Voxel kann nur die Werte $0$ oder $1$ annehmen.
 
 Das Aktivitätsfeld wird in jedem Simulationsdurchlauf abgeleitet aus
 den Feldern \PimiddyInlineCode{boundary} und
@@ -216,7 +215,7 @@ natürlich nur um eine Annäherung, die stark von der Qualität der
 Punktwolke abhängt.
 
 Als Eingabe erhält der Algorithmus in dieser Arbeit statt einer
-Punktwolke ein regelmäßiges Gitter mit skalaren Werten -- \PimiddyzB
+Punktwolke ein regelmäßiges Gitter mit skalaren Werten --- \PimiddyzB
 die Schneedichte --, sowie einen \PimiddyBegriff{Isowert}, der angibt,
 ab wann eine Gitterzelle als \PimiddyQuotes{fest} angesehen wird.
 Benachbarte, feste Zellen werden vom Algorithmus in ein
@@ -228,7 +227,7 @@ Algorithmus wird später um Normalen und Texturkoordinaten erweitert.
 
 Das Eingabefeld wird zellenweise bearbeitet. Für jede Zelle $n_1$
 werden die unmittelbaren Nachbarzellen $n_2,\ldots,n_8$ bestimmt,
-genau wie das in \autoref{sec:implementation_wind_advection} geschehen
+genau wie das in \cref{sec:implementation_wind_advection} geschehen
 ist. Der Dichtewert an jeder Ecke des durch die $n_i$ beschriebenen
 Würfels wird mit dem vorgegebenen Isowert verglichen. Es entsteht eine
 1, wenn der Wert über dem Isowert liegt, ansonsten eine 0. Als Ausgabe
@@ -238,7 +237,7 @@ $2^8=256$ mögliche Kombinationen von Werten für einen Würfel.
 Die 8-Bit-Zahl wird als Index für eine Lookuptabelle verwendet, in der
 die \emph{Dreiecke} stehen, die zu dieser Kombination von Isowerten
 gehören (siehe
-\autoref{fig:implementation_fallen_snow_marching_cubes_combinations}). Diese
+\cref{fig:implementation_fallen_snow_marching_cubes_combinations}). Diese
 Liste ist leer für den Fall, dass keiner der Werte über dem Isowert
 liegt. Ansonsten werden die Dreiecke zur Ausgabe hinzugefügt und die
 nächste Zelle wird betrachtet.
@@ -283,7 +282,7 @@ $\vec{p}_1,\vec{p}_2,\vec{p}_3$ eine Flächennormale mit Hilfe des Kreuzprodukts
 Dies ist ohne Weiteres umsetzbar, es ermöglicht allerdings nur
 \PimiddyBegriff{Flat Shading} als Beleuchtungsmodell, also keine
 sanften Übergänge zwischen benachbarten Flächen (siehe
-\autoref{fig:implementation_fallen_snow_shading_comparison}).
+\cref{fig:implementation_fallen_snow_shading_comparison}).
 
 Um zwischen den Flächen interpolierte Normalen zu erhalten könnte man
 für jeden Punkt jeder Fläche alle benachbarten Flächen suchen und
@@ -295,8 +294,8 @@ Stattdessen benutzt man nicht die \emph{Ausgabe} des Algorithmus,
 sondern das \emph{Eingabefeld}, um die Normalen zu berechnen. Es wird
 der \emph{Gradient} des Eingabefeldes als Quelle für die Normalen
 verwendet. Dies fällt besonders einfach aus, da der Code zum Berechnen
-des Gradienten schon existiert -- er wird in
-\autoref{sec:implementation_wind_projection} besprochen.
+des Gradienten schon existiert --- er wird in
+\cref{sec:implementation_wind_projection} besprochen.
 
 Um das Mesh zu texturieren wurden zwei Ansätze verfolgt, die beide
 erläutert werden. Der erste basiert auf Noise aus 3D-Texturen und
@@ -319,14 +318,14 @@ Frage, woher man diese Textur bekommt und wie groß sie sein muss.
 		\centering
 		\includegraphics[width=\textwidth]{images/perlin_noise_snow}
 		\caption{Eine mit Perlin-Noise generierte Schneedecke}
-		\label{fig:implementation_fallen_snow_perlin_noise_snow}
+\label{fig:implementation_fallen_snow_perlin_noise_snow}
 	\end{subfigure}
-	~
+~
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/noise_texture_artifact}
 		\caption{Artefakte, die bei einer nichtkachelbaren 3D-Texture auftreten}
-		\label{fig:implementation_fallen_snow_perlin_noise_artifact}
+\label{fig:implementation_fallen_snow_perlin_noise_artifact}
 	\end{subfigure}
         \caption{Generierung der Schneetextur aus Perlin-Noise}
 \end{figure}
@@ -347,7 +346,7 @@ Bei zweidimensionalen Texturen reicht es oft, Fotos der entsprechenden
 Oberfläche zu machen und in eine Textur zu konvertieren. Bei
 Volumendaten hingegen greift man häufig auf prozedurale Generierung
 zurück, also der algorithmischen Erstellung von
-Farbwerten. \autoref{fig:implementation_fallen_snow_perlin_noise_snow}
+Farbwerten. \Cref{fig:implementation_fallen_snow_perlin_noise_snow}
 zeigt beispielsweise eine 2D-Textur für eine Schneedecke, die
 algorithmisch mittels Perlin-Noise\cite{Perlin:2002:IN:566654.566636}
 generiert wurde.
@@ -356,8 +355,7 @@ Die Generierung von dreidimensionalem Noise ist jedoch an sich schon
 sehr aufwändig. Die Anforderung, dass die Textur kachelbar sein muss,
 erhöht den Konstruktionsaufwand weiter immens. Der Ansatz wurde daher
 nur mit nichtkachelbaren Texturen umgesetzt, was zu deutlichen
-Bildfehlern führte (\Pimiddyvgl
-\autoref{implementation_fallen_snow_perlin_noise_artifact}).
+Bildfehlern führte (\Pimiddyvgl\ \cref{fig:implementation_fallen_snow_perlin_noise_artifact}).
 
 In der finalen Implementierung wurde stattdessen triplanare
 Texturierung verwendet. Diese Methode ist im Vergleich sehr
@@ -530,7 +528,7 @@ aktuelle Schneedichte von der GPU heruntergeladen und an den MC-Thread
 
 Dies ist ein \PimiddyBegriff{Producer-Consumer-Problem}, wobei nur ein
 Producer (der MC-Thread) und ein Consumer (der Hauptthread)
-existiert. \autoref{fig:implementation_fallen_snow_producer_consumer} verdeutlicht den Ablauf.
+existiert. \cref{fig:implementation_fallen_snow_producer_consumer} verdeutlicht den Ablauf.
 
 \begin{figure}[h]
 \centering
@@ -556,7 +554,7 @@ einige Unterschiede herauszustellen:
 \begin{enumerate}
 \item Schwarz lässt ebenfalls beliebige Hindernisse zu, indem er sie
 aus Modeldateien einliest und in eine Gitterstruktur verwandelt (siehe
-\autoref{sec:implementation_wind_boundaries}). Dadurch, dass relativ
+\cref{sec:implementation_boundaries}). Dadurch, dass relativ
 kleine Gitter (kleiner als $32 \times 32 \times 32$) verwendet, ist er
 aber in der Lage, den Punkt-in-Polygon-Algorithmus zu verwenden, der
 für die vorliegende Arbeit zu zeitaufwändig ist. Schwarz ist also

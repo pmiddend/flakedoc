@@ -3,33 +3,33 @@
 
 \subsection{Fluiddynamik in interaktiven Anwendungen}
 
-Numerische Strömungsmechanik (\Pimiddyengl \PimiddyEnglBegriff{computational
+Numerische Strömungsmechanik (\Pimiddyengl{}\PimiddyEnglBegriff{computational
 fluid dynamics} oder CFD) war ursprünglich ein Problem, das nur mit
 leistungsfähigen Rechenclustern angegangen werden konnte. Diese
-benötigten mehrere Minuten bis mehreren Tage, um ein Ergebnis zu
+benötigten mehrere Minuten bis mehrere Tage, um ein Ergebnis zu
 liefern.
 
-Deshalb wurden Probleme, die auf CFD zurückzuführen sind, wie die
-Simulation von Rauch, Wolken oder eben Wind, nicht physikalisch
-modelliert, sondern die Effekte nur visuell
+Deshalb wurden Probleme, die auf CFD zurückzuführen sind (wie die
+Simulation von Rauch, Wolken oder eben Wind) nicht physikalisch
+modelliert, sondern nur visuell
 angenähert. \cite{Sims:1990:PAR:97880.97923} beschreibt beispielsweise
 ein Partikelsystem, bei dem die Partikel sich um
 \PimiddyQuotes{Wirbelpunkte} bewegen, die entweder zufällig generiert
 oder vom Designer erstellt wurden. Dadurch werden die ansonsten schwer
 zu berechnenden Geschwindigkeitsfelder approximiert. Mit Hilfe dieser
 Technik entstand der Film \PimiddyQuotes{Particle
-Dreams}\cite{ParticleDreams}, in dem auch ein Schneesturm modelliert
+Dreams} (\cite{ParticleDreams}), in dem auch ein Schneesturm modelliert
 wurde.
 
 Ein erstes auf die Computergrafik angepasstes, physikalisches Modell,
 stellten \PimiddyName{Foster} und \PimiddyName{Metaxas} 1997 in \cite{Foster1997} vor. Es war
 allerdings numerisch nicht stabil und daher schlecht für
 Echtzeitanwendungen geeignet. Ein Simulationsschritt benötigte damals
-außerdem noch \Pimiddyca 15 Sekunden zur Berechnung. 1999 erschien \PimiddyName{Stams}
-wegweisendes Paper \PimiddyQuotes{Stable Fluids}\cite{Stam1999},
+außerdem noch \Pimiddyca{} 15 Sekunden zur Berechnung. 1999 erschien \PimiddyName{Stams}
+wegweisendes Paper \PimiddyQuotes{Stable Fluids} (\cite{Stam1999}),
 welches zum ersten Mal ein numerisch stabiles Verfahren enthielt
 (daher \PimiddyQuotes{stable}), das (nach eigenen Angaben)
-Echtzeitsimulationen ermöglichte, wenn auch nur für zweidimensionale
+Echtzeitsimulationen ermöglicht, wenn auch nur für zweidimensionale
 Felder. Das Verfahren wird im Folgenden mit SF abgekürzt.
 
 Etwa zur gleichen Zeit wurden zwei weitere Ansätze für die schnelle
@@ -38,37 +38,37 @@ nicht weiter vertieft werden sollen:
 \begin{itemize}
 \item Basierend auf zellulären Automaten wurde das
 \PimiddyBegriff{Lattice-Bolzmann-Verfahren} (LBM) für die Simulation
-eingesetzt, welches -- ähnlich Stams Ansatz -- datenparallel
+eingesetzt, welches --- ähnlich Stams Ansatz --- datenparallel
 formuliert ist und komplexe Hindernisse innerhalb der Simulation
 zulässt. Es wird sowohl für Gase als auch für Flüssigkeiten
-eingesetzt\cite{Chen1998}.
+eingesetzt (\cite{Chen1998}).
 \item Basierend auf Partikelsystemen wurde das ursprünglich in der
 Astronomie entwickelte Verfahren \PimiddyBegriff{Smoothed Particle
 Hydrodynamics} (SPH) vor allem für die Simulation von Flüssigkeiten
-eingesetzt\cite{Muller2003}.
+eingesetzt (\cite{Muller2003}).
 \end{itemize}
-Im Jahr 2003 übertrugen \PimiddyName{Krüger \Pimiddyetal} in
+Im Jahr 2003 übertrugen \PimiddyName{Krüger \Pimiddyetal}in
 \cite{Kruger2005} einige algebraische Operatoren auf die GPU und
 nutzten sie unter anderem, um SF auf der GPU umzusetzen, allerdings
 vorerst nur im Zweidimensionalen. Sie erreichten bei einem Feld der
 Größe $1024 \times 1024$ Wiederholraten von etwa 9 Bildern pro
-Sekunde. Im selben Jahr implementierten \PimiddyName{Harris \Pimiddyetal} das Verfahren
+Sekunde. Im selben Jahr implementierten \PimiddyName{Harris \Pimiddyetal}das Verfahren
 auf der GPU im Dreidimensionalen und erreichten bei einem Feld der
 Größe $32^3$ schon Wiederholraten um 27 Bilder pro
 Sekunde. Strömungsmechanik in Echtzeit war zu diesem Zeitpunkt also
 auf Desktop-PCs möglich.
 
-Die GPU-Implementierungen nutzten allerdings bis dato die
-Hardware-Grafikpipeline, die in \autoref{sec:opengl} näher beschrieben
+Die GPU-Implementierungen nutzten allerdings die
+Hardware-Grafikpipeline, die in \cref{sec:opengl} näher beschrieben
 wird. Statt Daten aus Arrays einzulesen und mittels einer universellen
 Programmiersprache wie C zu verarbeiten, waren von der Hardware einige
 Einschränkungen vorgegeben. Als Datenstruktur standen beispielsweise
 nur zweidimensionale Texturen zur Verfügung. Die Berechnungen mussten
 zudem in einer Shadersprache wie GLSL verfasst werden, in der
-Anweisungen zum Kontrollfluss wie \PimiddyzB Schleifen oft nur
+Anweisungen zum Kontrollfluss wie \PimiddyzB{} Schleifen oft nur
 eingeschränkt benutzbar waren. Das Spiel \PimiddyQuotes{Hellgate:
 London} nutzte so erstmals die GPU, um dynamisch Rauch zu simulieren
-und zu visualisieren\cite{Crane2007}.
+und zu visualisieren (\cite{Crane2007}).
 
 Die Grafikhardware entwickelte sich allerdings schnell und konnte
 immer komplexere Berechnungen durchführen. Um allgemeine (also nicht
@@ -77,11 +77,11 @@ veröffentlichte NVidia 2006 die erste Version des CUDA-Frameworks. Mit
 CUDA kann reiner C++-Code mit Abschnitten versehen werden, die dann
 auf der Grafikkarte ausgeführt werden. Ein Jahr später veröffentlichte
 \PimiddyName{Goodnight} eine Implementierung von SF mit Hilfe von
-CUDA\cite{Goodnight2007}.
+CUDA (\cite{Goodnight2007}).
 
 CUDA-Programme laufen allerdings nur auf NVidia-Grafikkarten. Andere
 Hersteller wie AMD veröffentlichten ihrerseits Frameworks für die
-eigene Hardware. Es existierte jedoch nichts Übergreifendes, bis Ende
+eigene Hardware. Es existierte jedoch kein übergreifendes System, bis Ende
 2008 die erste OpenCL-Spezifikation veröffentlicht wurde. Viele
 Hersteller implementierten daraufhin diesen Standard und
 GPU-Programmierung wurde hardwareübergreifend.
@@ -97,7 +97,7 @@ Bewegung der Schneeflocken zu verwenden.
 Die Methode zur approximativen Lösung der Navier-Stokes-Gleichungen,
 die im Folgenden erklärt wird, wurde von \PimiddyName{Jos Stam} im
 Jahr 1999 entwickelt und in dem Paper \PimiddyQuotes{Stable Fluids}
-vorgestellt \cite{Stam1999}. Das Verfahren wurde speziell für die
+vorgestellt (\cite{Stam1999}). Das Verfahren wurde speziell für die
 Computergrafik entwickelt, wobei auf einige Besonderheiten eingegangen
 wurde:
 
@@ -105,24 +105,23 @@ wurde:
 \item
 Im Gegensatz zu wissenschaftlichen Simulationen ist man in der
 Computergrafik an einer Lösung interessiert, die in möglichst kurzen
-Abständen Ergebnisse produziert. Zum Beispiel möchte man die
-Strömungssimulation jedes Frame um einen Zeitschritt weiterbewegen. Um
-eine flüssige Simulation zu erhalten, ist die Laufzeit des
-Lösungsalgorithmus also auf 16 Millisekunden (für 60 Bilder pro Sekunde)
-\Pimiddybzw 33 Millisekunden (für 30 Bilder pro Sekunde) beschränkt. Die
-Navier-Stokes-Gleichungen bilden als System von nichtlinearen
-Differentialgleichungen hier eine besondere Herausforderung.
+Abständen Ergebnisse produziert. Um eine flüssige Simulation zu
+erhalten, ist die Laufzeit des Lösungsalgorithmus auf 16 Millisekunden
+(für 60 Bilder pro Sekunde) \Pimiddybzw{} 33 Millisekunden (für 30
+Bilder pro Sekunde) beschränkt. Die Navier-Stokes-Gleichungen bilden
+als System von nichtlinearen Differentialgleichungen hier eine
+besondere Herausforderung.
 \item
-Bisherige Ansätze zur Strömungsmechanik kamen aus dem
-wissenschaftlichen Bereich, wo meist Exaktheit eine große Rolle
+Bisherige Ansätze zur Strömungsmechanik kamen aus einem
+wissenschaftlichen Bereich, in dem Exaktheit eine große Rolle
 spielte. In der Computergrafik allgemein und auch bei der
 Aufgabenstellung dieser Arbeit ist man allerdings nicht unbedingt an
-einer an einer exakten Lösung interessiert.  Ein physikalisch
-annähernd korrektes Ergebnis genügt.
+einer exakten Lösung interessiert.  Ein physikalisch annähernd
+korrektes Ergebnis genügt.
 \item
-Bisherige Verfahren (wie \PimiddyzB die finiten Differenzen in
+Bisherige Verfahren (wie \PimiddyzB{} die finiten Differenzen in
 \cite{Foster1997}) waren numerisch \emph{instabil} für große
-Zeitschritte. Das bedeutet, die Simulation kann immer nur nur einen
+Zeitschritte. Das bedeutet, die Simulation kann immer nur einen
 bestimmten, kleinen Zeitabschnitt $\delta$ voranschreiten.
 Echtzeitanwendungen wie Spiele oder Animationssoftware können
 allerdings keine minimale Bildwiederholrate garantieren, da sie mit
@@ -130,16 +129,16 @@ verschiedenen Umgebungen und Hardwarekonfigurationen ausgeführt werden
 können. Man hat im Allgemeinen also eine Simulationsschrittweite von
 $\Delta$ gegeben, die auch größer sein kann als $\delta$.
 
-Als Ausweg muss man einen großen Zeitschritt entweder ignorieren --
-was die Simulation unrealistisch macht -- oder ihn in
+Als Ausweg muss man einen großen Zeitschritt entweder ignorieren ---
+was die Simulation unrealistisch macht --- oder ihn in
 $\PimiddyAufrunden{\Delta / \delta}$ kleinere Zeitschritte
 unterteilen. Die Zeit, die benötigt wird, um die Simulation ein
 $\delta$ weiterzubewegen, ist aber konstant. Dies führt dazu, dass das
 nächste Frame erneut viel Rechenzeit benötigt und wieder entsprechend
 lang wird.
 
-Dieser Effekt ist eventuell sogar nicht mehr aufzuhalten und die
-Simulation \PimiddyQuotes{explodiert}.
+Dieser Effekt ist eventuell nicht mehr aufzuhalten, was eine
+\PimiddyQuotes{Explosion} der Simulation zur Folge hat.
 \item Bisherige approximative Verfahren waren auf Hilfe des Designers
 angewiesen, um Teile der Simulation möglichst realistisch zu
 modellieren. Bestimmte natürlich vorkommende Turbulenzen mussten
@@ -152,15 +151,14 @@ des Fluids (wie Dichte und Viskosität) vorgeben.
 SF ist also auf Geschwindigkeit ausgelegt, basiert aber
 nichtsdestotrotz auf den Navier-Stokes-Gleichungen und erzielt
 akkurate Simulationsergebnisse. Anfängliche Schwachstellen des
-Verfahrens wie die zu starke Dämpfung von Wirbeln wurden in weiteren
-Arbeiten ausgebessert \cite{Foster}. Diese Verbesserungen sind
-teilweise auch in diese Arbeit eingeflossen.
+Verfahrens, wie die zu starke Dämpfung von Wirbeln, wurden in weiteren
+Arbeiten ausgebessert (\cite{Foster}). Diese Verbesserungen sind
+teilweise in diese Arbeit eingeflossen.
 
 Wegen der numerischen Stabilität und sehr guten Parallelisierbarkeit
 wird Stams Verfahren bereits in einigen Spielen eingesetzt (siehe
-\cite{Crane2007}, \cite{Peschel2009}). Hier beschrieben wird eine
-leicht abgewandelte Fassung, bei der andere Randbedingungen verwendet
-werden.
+\cite{Crane2007, Peschel2009}). Hier wird eine leicht abgewandelte
+Fassung beschrieben, bei der andere Randbedingungen verwendet werden.
 
 \subsection{Überblick über das Verfahren}
 
@@ -173,7 +171,7 @@ Die Fluidsimulation findet auf einem endlichen Gitter, also einer
 Teilmenge von $\PimiddyGanz^n$ statt. Gegeben sei das
 Geschwindigkeitsfeld zum Zeitpunkt $t$:
 $\vec{u}^{\PimiddyFormelText{ }t}$. Als Anfangszustand
-könnten zum Zeitpunkt $t=0$ \PimiddyzB alle Zellen auf eine vorgegebene
+könnten zum Zeitpunkt $t=0$ \PimiddyzB{} alle Zellen auf eine vorgegebene
 \PimiddyQuotes{Windrichtung} gesetzt sein.  Gegeben sei außerdem ein
 Zeitdelta $\Delta t$ (nicht zu verwechseln mit dem
 Laplaceoperator). Ziel ist es, unter Zuhilfenahme der
@@ -182,11 +180,11 @@ $\vec{u}^{\PimiddyFormelText{ }t+\Delta t}$ zu berechnen.
 
 Außerdem berechnet man einmalig ein \emph{Hindernisfeld}
 $b$. Ist $b_{i,j,k} = 1$, dann ist diese Zelle mit einem
-Hindernis ausgefüllt. Ist $b_{i,j,k} = 0$, ist die Zelle frei. Im
-Implementierungsteil wird erklärt, wie dieses Hindernisfeld gefüllt
-wird.
+Hindernis ausgefüllt. Ist $b_{i,j,k} = 0$, ist die Zelle frei. In
+\cref{sec:implementation_boundaries} wird erklärt, wie dieses
+Hindernisfeld gefüllt wird.
 
-Die rechte Seite der Impulsgleichung \ref{eq:navier_stokes_momentum_equation} besteht
+Die rechte Seite der \cref{eq:navier_stokes_momentum_equation} besteht
 aus mehreren Summanden:
 
 \begin{equation}
@@ -205,8 +203,9 @@ aus mehreren Summanden:
 In Stams Verfahren wird jeder dieser Summanden als eine Operation betrachtet,
 die ein Geschwindigkeitsfeld sowie eventuell weitere Eingabegrößen wie $\Delta
 t$ erhält, und die ein neues Geschwindigkeitsfeld zurückgibt. Das so berechnete
-neue Feld wird zur Eingabe der darauffolgenden Operation. So wird die Lösung der
-Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden können:
+neue Feld wird zur Eingabe der darauffolgenden Operation verwendet. So
+wird die Lösung der Impulsgleichung in kleinere Teile zerlegt, die für
+sich behandelt werden können:
 
 \begin{itemize}
 \item
@@ -228,15 +227,16 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
 
 	Dieser Term kann in SF ignoriert werden. Diffusion entsteht
 	ohnehin \PimiddyQuotes{zufällig} durch Genauigkeitsfehler während der
-	Advektion (siehe unten). So kann die Performance erhöht werden, denn die
-	Lösung dieses Terms ist sehr aufwändig.
+	Advektion (siehe unten). Durchdas Vernachlässigen kann die
+Performance erhöht werden, denn die Lösung dieses Terms ist sehr
+aufwändig.
 \item
-	Der Term $\vec{g}$ umfasst schlicht das Aufsummieren aller äußeren
+	Der Term $\vec{g}$ umfasst schlicht die Summe aller äußeren
 	Kräfte, die auf das Fluid wirken. Hierzu gehört sowohl die Schwerkraft
 	als auch der von außen eingeführte Wind. Die Operation bekommt als
 	Eingabe das Geschwindigkeitsfeld sowie das Zeitdelta (bei größerem
 	Zeitunterschied zum letzten Simulationsschritt sollen die Kräfte
-	stärker wirken). Sie sei im folgenden mit
+	stärker wirken). Sie sei im Folgenden mit
 	\PimiddyInlineCode{externalForces}$(\vec{u},\Delta t)$ bezeichnet.
 \item
 	Der \emph{Druck} des Fluids wird in dem Term
@@ -247,12 +247,12 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
         dient am Ende unter anderem dazu, die Randbedingungen und die
         Un"-komp"-ri"-mier"-bar"-keit zu erzwingen. Die Berechnung des
         Druckfeldes $p$ aus dem Geschwindigkeitsfeld $u$ sei mit
-        \PimiddyInlineCode{calculatePressure}$(\vec{u})$ bezeichnet.
+        \PimiddyInlineCode{calcPressure}$(\vec{u})$ bezeichnet.
 \item
 	Wie bei Differentialgleichungen üblich, müssen wir noch die
 	\emph{Rand- und Anfangsbedingungen} behandeln. Dadurch wird
 	einerseits sichergestellt, dass das Fluid nicht in Hindernisse
-	eindringt, andererseits an den Rändern der Simulation frei hinausfließen
+	eindringt und andererseits an den Rändern der Simulation frei hinausfließen
 	kann. Diese Operation wird im Folgenden als
 	\PimiddyInlineCode{boundaries}$(\vec{u})$ bezeichnet und wird noch vor der
 	Berechnung des Drucks durchgeführt.
@@ -266,7 +266,7 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
 	\State $\vec{u}'$ = advection($\vec{u}$,$\Delta t$)
 	\State $\vec{u}''$ = externalForces($\vec{u}'$,$\Delta t$)
 	\State $\vec{u}'''$ = boundaries($\vec{u}''$)
-	\State $p$ = calculatePressure($\vec{u}$)
+	\State $p$ = calcPressure($\vec{u}$)
 	\State \Return $\vec{u}''' - \PimiddyGrad p$
 \EndFunction
 \end{algorithmic}
@@ -275,14 +275,14 @@ Impulsgleichung in kleinere Teile zerlegt, die für sich behandelt werden könne
 \begin{figure}[h]
 \centering
 \includegraphics[width=12cm]{images/stam_loop_with_projection}
-\caption{Die Simulationsschleife. Projektion bezeichnet die Berechnung des Druckgradienten und das Abziehen des Gradienten vom Geschwindigkeitsfeld. Es entsteht ein quellenfreies Vektorfeld, was wieder in den Advektionsalgorithmus gespeist werden kann. Dieses Feld wird zudem für die Beeinflussung der Schneepartikel verwendet.}
+\caption{Die Simulationsschleife. Projektion bezeichnet die Berechnung des Druckgradienten und die Subtraktion des Gradienten vom Geschwindigkeitsfeld. Es entsteht ein quellenfreies Vektorfeld, welches wieder in den Advektionsalgorithmus gespeist werden kann. Dieses Feld wird zudem für die Beeinflussung der Schneepartikel verwendet.}
 \label{fig:stam_loop_with_projection}
 \end{figure}
 
 Für jede Operation wird im Folgenden ein Lösungsalgorithmus
 vorgestellt, insgesamt erhält man aus der Impulsgleichung den Pseudocode in
-\autoref{alg:stam_first_algorithm}. Eine grafische Darstellung findet
-sich in \autoref{fig:stam_loop_with_projection}.
+\cref{alg:stam_first_algorithm}. Eine grafische Darstellung findet
+sich in \cref{fig:stam_loop_with_projection}.
 
 \subsection{Advektion}
 \label{sec:stam_advection}
@@ -302,14 +302,14 @@ werden, um Temperaturwerte oder die Dichte des Rauchs an einer Stelle
 entlang des Vektorfelds weiterzubewegen. Als Ausgabe erhalten wir ein
 neues Feld $q^{t+\Delta t}$.
 
-Um die Advektion durchzuführen gibt es mehrere Ansätze. Der gängigste arbeitet
-mit der Methode der finiten Differenzen und wurde unter anderem in
-\cite{Foster} benutzt. Finite Differenzen führen aber zu einem numerisch
-instabilen Algorithmus, wie in der Einleitung bereits erwähnt. Hier
-soll zunächst ein intuitiver Ansatz erläutert werden, der auch
-numerisch instabil ist und somit nicht ohne große Einschränkungen
-verwendbar ist. Dieser Ansatz wird danach aber leicht modifiziert, um
-Stabilität zu erreichen.
+Um die Advektion durchzuführen gibt es mehrere Ansätze. Der gängigste
+arbeitet mit der Methode der finiten Differenzen und wurde unter
+anderem in~\cite{Foster} benutzt. Finite Differenzen führen allerdings
+zu einem numerisch instabilen Algorithmus, wie in der Einleitung
+bereits erwähnt. Daher wird eine andere Vorgehensweise gewählt. Ein
+ebenfalls numerisch instabiler Ansatz wird leicht modifiziert, um
+Stabilität zu erreichen und ihn ohne Einschränkungen verwenden zu
+können.
 
 \begin{figure}[h]
 \centering
@@ -321,7 +321,7 @@ Stabilität zu erreichen.
 \end{figure}
 
 Das zu berechnende neue Feld $q^{t+\Delta t}$ sei anfangs
-überall 0 (\Pimiddybzw $(0,0,0)$, falls es ein Vektorfeld ist). Man stelle
+überall 0 (\Pimiddybzw{} $(0,0,0)$, falls es ein Vektorfeld ist). Man stelle
 sich nun an jedem Gitterpunkt $(i,j,k)$ ein Partikel mit
 \PimiddyQuotes{Ladung} $q_{i,j,k}$ vor, welches im Fluid treibt. Das
 Partikel wird durch das Fluid beschleunigt und dadurch um $\Delta t
@@ -334,8 +334,8 @@ Zeitschritt bei
 Somit liegt es im Allgemeinen nicht mehr \emph{exakt} auf einem
 Gitterpunkt, sondern zwischen 8 Nachbarpunkten $n_i \in
 \PimiddyGanz^3, i \in \{1,\ldots,8\}$ (siehe
-\autoref{fig:stam_numerically_unstable_advection}). Zu jedem dieser
-Nachbarpunkte kann man den Abstand zum Partikel bestimmen:
+\cref{fig:stam_numerically_unstable_advection}). Zu jedem dieser
+Nachbarpunkte kann man den Abstand $d_i$ zum Partikel bestimmen:
 
 \begin{equation}
 d_i = \PimiddyNorm{2}{\vec{p} - n_i}, i \in \{1,\ldots,8\}
@@ -349,8 +349,7 @@ q_{n_i}' \leftarrow q_{n_i}' + d_i \cdot q_{i,j,k}
 \end{equation}
 
 Dieses Verfahren ist intuitiv und einfach zu implementieren. Aber es ist
-numerisch nicht stabil und führt zu Oszillationen (für eine genaue Betrachtung
-sei auf die Literatur verwiesen).
+numerisch nicht stabil und führt zu Oszillationen.
 
 Stam wählte einen anderen Ansatz, die sogenannte \emph{Methode der
 Charakteristika}. Die Idee ist ähnlich zu der gerade vorgestellten, funktioniert
@@ -370,35 +369,38 @@ $\vec{u}_{i,j,k}^{\PimiddyFormelText{ }t}$.
 
 Rechnet man auf der Zeitachse um $\Delta t$ zurück, erhält man die
 \PimiddyQuotes{vorherige} Position des Partikels, nämlich $(i,j,k) -
-\Delta t \cdot \vec{u}_{i,j,k}^{\PimiddyFormelText{ }t}$ \PimiddyFootnote{Hier wird nur ein
+\Delta t \cdot \vec{u}_{i,j,k}^{\PimiddyFormelText{ }t}$. Es ergibt
+sich dasselbe Problem wie bei dem vorher beschriebenen Ansatz: Die
+Position liegt nicht genau auf dem Gitter, sondern dazwischen (siehe
+\cref{fig:stam_good_advection})\PimiddyFootnote{Hier wird nur ein
 Schritt der Partikelflugbahn zurückverfolgt. Es besteht die
-Möglichkeit, mehrere Schritte zurückzuverfolgen, die ist aber
-aufwändiger zu implementieren.}. Es ergibt sich dasselbe Problem wie bei
-dem vorher beschriebenen Ansatz: Diese Position liegt nicht genau auf
-dem Gitter, sondern dazwischen (siehe
-\autoref{fig:stam_good_advection}).
+Möglichkeit, mehrere Schritte zurückzuverfolgen, die aber
+aufwändiger zu implementieren ist.}.
 
 Als Lösung \emph{interpolieren} wir zwischen den 8 Nachbarwerten des
 verschobenen Partikels und schreiben den resultierenden Wert in die Zelle
 $\vec{u}_{i,j,k}^{\PimiddyFormelText{ }t+\Delta t}$. Dies ist eine Operation, auf die Grafikkarten stark
-optimiert sind, und bei denen traditionell Texturen hohe Performance erreichen
+optimiert sind, und bei denen Texturen hohe Performance erreichen
 können.
 
 Allerdings liegt hier auch eine Fehlerquelle des Verfahrens. Interpolation ist
 eine glättende Operation, sie liefert nur eine \emph{Approximation} des Wertes,
 der zwischen den Gitterzellen angenommen würde. Ähnlich wie bei der
-Herleitung der diskreten Ableitung in \autoref{sec:mathematics_discretization}
+Herleitung der diskreten Ableitung in \cref{sec:mathematics_discretization}
 muss man in der Implementierung einen Kompromiss eingehen und ein
 Interpolationsverfahren wählen, welches Genauigkeit und Rechenleistung verbindet.
 
-Auch für große Zeitschritte liefert das Verfahren ein Vektorfeld als Ausgabe,
+Auch für große Zeitschritte liefert das Verfahren ein Vektorfeld,
 welches in seinem Wertebereich beschränkt ist, denn die Interpolation liefert nie einen
 Wert zurück, der betragsmäßig größer ist als die Ausgangswerte. Das Verfahren
-ist deshalb stabil. Allerdings sollte $\Delta t$ nicht zu groß gewählt werden.
+ist deshalb stabil.
+
+Allerdings sollte $\Delta t$ nicht zu groß gewählt werden.
 \cite{Foster} gibt hier als Richtlinie etwa $5\times$ die Gittergröße
 an. Diese Art der Advektion wird auch
-\PimiddyBegriff{semilagrange'sche Advektion} genannt, da hier erneut
-die Sichtweise mit Partikeln und mit Feldern verknüpft wird.
+\PimiddyBegriff{semilagrange'sche Advektion} genannt, da zwar ein
+diskretes Gitter verwendet wird, aber die Flugbahn von Partikeln das
+Verfahren motiviert.
 
 \begin{figure}[ht]
 \centering
@@ -411,15 +413,15 @@ Natürlich kann es passieren, dass man über den Rand des Simulationsbereiches
 \PimiddyQuotes{hinausläuft}. Es gibt mehrere Möglichkeiten, dies zu behandeln.
 Beispielsweise könnte man auf die gegenüberliegenden Seite des
 Simulationsbereiches umbrechen (periodische Randbedingung), welches in
-Stams Originalarbeit getan wurde. Allerdings erhält man hier auf ein
-Windfeld bezogen unrealistische Ergebnisse.
+Stams Originalarbeit getan wurde. Allerdings erhält man hier in Bezug
+auf ein Windfeld unrealistische Ergebnisse.
 
 Alternativ kann man die Gerade betrachten, die durch den Mittelpunkt
 der aktuellen Zelle geht und als Richtungsvektor den
 Geschwindigkeitspfeil des Fluids besitzt. Diese Gerade schneidet man
 mit den Rändern der Simulation. Man wählt dann den Schnittpunkt auf
 dem Rand als Basis für die Interpolation (siehe
-\autoref{fig:stam_clamping_borders}). Dies wurde in der Arbeit
+\cref{fig:stam_clamping_borders}). Dieser Ansatz wurde in der Arbeit
 implementiert.
 
 \begin{figure}[ht]
@@ -429,14 +431,14 @@ implementiert.
 \label{fig:stam_clamping_borders}
 \end{figure}
 
-Weiterhin kann der zurückberechnete Vektor $(i,j,k) - \Delta t \cdot
-u_{i,j,k}^t$ in einem Hindernis landen, was auch behandelt werden
-muss. Man kann in diesem Fall einen Geschwindigkeitswert von $(0,0,0)$
-annehmen, was einem stationären Hindernis wie einem Gebäude
-entspricht. Es ist aber auch möglich, ein weiteres Vektorfeld
-$\vec{u}_{\PimiddyFormelText{boundary}}$ zu verwalten, wo für jede
+Weiterhin muss auch der Fall, dass der zurückberechnete Vektor
+$(i,j,k) - \Delta t \cdot u_{i,j,k}^t$ in einem Hindernis landet,
+behandelt werden. Hierfür kann man einen Geschwindigkeitswert
+von $(0,0,0)$ annehmen, was einem stationären Hindernis wie einem
+Gebäude entspricht. Es ist aber auch möglich, ein weiteres Vektorfeld
+$\vec{u}_{\PimiddyFormelText{boundary}}$ zu verwalten, in dem für jede
 Gitterzelle die \emph{Geschwindigkeit} des dort vorhandenen
-Hindernisses notiert ist. Dies wurde in \cite{Crane2007}
+Hindernisses notiert ist. Dies wurde in~\cite{Crane2007}
 umgesetzt. Für die Simulation in dieser Arbeit wurde von unbeweglichen
 Hindernissen ausgegangen.
 
@@ -444,8 +446,8 @@ Hindernissen ausgegangen.
 
 Die äußeren Kräfte werden in dem Term $g$ zusammengefasst und schlicht
 auf die Geschwindigkeit addiert. In diesem Term lassen sich mehrere
-interessante Effekte umsetzen, wie Auftrieb oder die Schwerkraft. Es
-werden in diesem Abschnitt zwei dieser Effekte vorgestellt.
+interessante Effekte umsetzen, wie Auftrieb oder die Schwerkraft. In
+diesem Abschnitt werden zwei dieser Effekte vorgestellt.
 
 \subsubsection{Gravitation}
 
@@ -467,15 +469,16 @@ treten nicht mehr so stark in Erscheinung.
 
 Um dies auszugleichen, gibt es mehrere Ansätze. MacCormack hat ein
 Advektionsverfahren entwickelt, was nicht mehr unbedingt stabil ist, aber eine
-bessere Fehlerabschätzung liefert \cite{Selle2008}\cite{Crane2007}. Dadurch
-entstehen mehr Wirbelphänomene, allerdings bietet diese Methode keinen Einfluss
-darauf, wie stark die Wirbel auftreten sollen.
+bessere Fehlerabschätzung liefert (\cite{Selle2008, Crane2007}). Dadurch
+entstehen mehr Wirbelphänomene, allerdings bietet diese Methode keine
+Möglichkeit, Einfluss auf die Wirbelstärke zu nehmen.
 
-Statt des MacCormack-Verfahrens wurde hier eine Technik namens
+Daher wurde statt des MacCormack-Verfahrens eine Technik namens
 \PimiddyBegriff{Wirbelstärkenerhaltung} (\PimiddyEnglisch{vorticity
-confinement}) umgesetzt. Sie ist einfach zu implementieren, schnell und
-erlaubt, die Stärke zu variieren. Entwickelt wurde sie, um die komplexen
-Turbulenzen in der Umgebung von Helikoptern zu modellieren\cite{Steinhoff1994}.
+confinement}) umgesetzt. Sie ist einfach zu implementieren, schnell
+und erlaubt, die Stärke zu variieren. Entwickelt wurde sie, um die
+komplexen Turbulenzen in der Umgebung von Helikoptern zu
+modellieren (\cite{Steinhoff1994}).
 
 Die Idee ist, Wirbel zu identifizieren und an den \PimiddyQuotes{richtigen}
 Stellen zu verstärken. Dazu wird zuerst die Rotation des Geschwindigkeitsfeldes,
@@ -505,16 +508,15 @@ Um die Wirbel zu verstärken, bildet man eine Kraft, die senkrecht zum
 \right)
 \end{equation}
 
-Die Konstante $\varepsilon$ in \autoref{eq:stam_vorticity_confinement} gibt die
-Stärke der Kraft an.
+Die Konstante $\varepsilon$ gibt die Stärke der Kraft an.
 
 \subsection{Projektion}
 \label{sec:stam_projection}
 
 \subsubsection{Einleitung}
 
-Die bisher vorgestellten Al"-go"-rith"-men be"-rück"-sich"-ti"-gen die
-Un"-komp"-ri"-mier"-bar"-keit des Flu"-ids nicht, sondern behandeln einzig
+Die bisher vorgestellten Al"-go"-rith"-men vernachlässigen die
+Un"-komp"-ri"-mier"-bar"-keit des Flu"-ids, sondern behandeln einzig
 die Impulsgleichung. Nach der Advektion und der Addition der äußeren
 Kräfte kann die zweite Bedingung
 \ref{eq:navier_stokes_incompressibility_condition} in den
@@ -523,15 +525,15 @@ nicht mehr physikalisch korrekt. Außerdem sind die Randbedingungen
 eventuell verletzt worden. Beispielsweise wurde bei der Advektion
 nicht beachtet, dass das Fluid um Hindernisse herumströmen sollte. Für
 beide Fälle kommt der Druck $p$ als Korrekturterm ins Spiel. In diesem
-Abschnitt wird $p$ näher erläutert und ein Algorithmus vorgestellt, um
-ihn zu bestimmen. Danach werden die Randbedingungen der Simulation
-näher betrachtet.
+Abschnitt wird $p$ näher erläutert und ein Algorithmus zu dessen
+Bestimmung vorgestellt. Danach werden die Randbedingungen der
+Simulation näher betrachtet.
 
 Gegeben sei ein beliebiges Vektorfeld $\vec{u}$, zum Beispiel das
 Geschwindigkeitsfeld nach der Advektion und nach Anwendung der äußeren
 Kräfte. Da $\vec{u}$ nicht mehr quellenfrei ist, ist eine Funktion
 $\PimiddyProjection$ gesucht, die $\vec{u}$ auf ein quellenfreies
-Vektorfeld abbildet, also eins mit $\PimiddyDiv \vec{u} = 0$. Hierzu
+Vektorfeld abbildet ($\PimiddyDiv \vec{u} = 0$). Hierzu
 bedient man sich eines Ergebnisses aus der Vektoranalysis:
 
 \begin{PimiddySatz}[Helmholtz-Zerlegung]
@@ -546,14 +548,12 @@ eines Skalarfeldes $p$:
 \end{equation}
 \end{PimiddySatz}
 
-\autoref{eq:stam_helmholtz_equation} soll nach $\vec{w}$ aufgelöst
+\Cref{eq:stam_helmholtz_equation} soll nach $\vec{w}$ aufgelöst
 werden, denn dieses Feld ist quellenfrei. Das Feld $p$ ist aber
 ebenfalls eine Unbekannte in der Gleichung. Um die Gleichung
 aufzulösen, wendet man die Divergenz auf beide Seiten der Gleichung an
-und nutzt aus, dass der Operator \emph{linear} ist. Es gilt also
-\begin{equation}
-\PimiddyDiv (\vec{u} + \vec{v}) = \PimiddyDiv \vec{u} + \PimiddyDiv \vec{v}
-\end{equation}
+und nutzt aus, dass der Operator \emph{linear} ist ($\PimiddyDiv
+(\vec{u} + \vec{v}) = \PimiddyDiv \vec{u} + \PimiddyDiv \vec{v}$).
 Als Ergebnis erhalten wir:
 \begin{equation}
 \label{eq:stam_poisson_equation}
@@ -562,51 +562,53 @@ Als Ergebnis erhalten wir:
 Hier wurde ausgenutzt, dass $\PimiddyDiv \vec{w} = 0$ gilt. Es
 entsteht eine sogenannte \PimiddyBegriff{Poissongleichung}. Ihre
 Lösung ist ein Standardproblem in der Physik, und im Folgenden wird
-ein Verfahren vorgestellt, was \autoref{eq:stam_poisson_equation} nach
+ein Verfahren vorgestellt, welches \cref{eq:stam_poisson_equation} nach
 $p$ auflösen kann. Mit $p$ kann man dann durch Umstellen und Bildung
 des Gradienten $\vec{w}$ bestimmen:
 \begin{equation}
 \vec{w} = \vec{u} - \PimiddyGrad p
 \end{equation}
-Darauf aufbauend kann man dann den Operator $\PimiddyProjection$ definieren
+Darauf aufbauend kann man dann den Operator $\PimiddyProjection$ als
+die Funktion, die ein Vektorfeld auf den quellenfreien Anteil der
+Helmholtz-Zerlegung abbildet, definieren:
 \begin{equation}
 \PimiddyProjection \colon \PimiddyReell^n \to \PimiddyReell^n
 \end{equation}
-als die Funktion, die ein Vektorfeld auf den quellenfreien Anteil der
-Helmholtz-Zerlegung abbildet (ein Vektorfeld also quellenfrei
-\PimiddyQuotes{macht}). Diese Funktion wird in der Literatur auch oft
-\PimiddyBegriff{Projektion} genannt. Führt man $\PimiddyProjection$ am Ende des
-Verfahrens aus, erhält man ein unkomprimierbares Vektorfeld.
+Diese Funktion wird in der Literatur auch oft
+\PimiddyBegriff{Projektion} genannt. Führt man $\PimiddyProjection$ am
+Ende des Verfahrens aus, erhält man ein unkomprimierbares Vektorfeld.
 
 \subsubsection{Lösung des Poissonproblems}
 
 Um das Vektorfeld quellenfrei zu machen, muss folgende allgemeine
 Poissongleichung nach $p$ gelöst werden:
 \begin{equation}
-\PimiddyLaplace{p} = x
+\PimiddyLaplace{p} = x,
 \end{equation}
-wobei $x$ ein Skalarfeld ist. Es existieren zahlreiche Lösungsverfahren für solch
-eine Gleichung. Bei der Auswahl des Verfahrens muss beachtet werden, welches
-Verfahren sich gut auf der Grafikkarte umsetzen lässt und möglichst schnell eine
-ausreichend gute Lösung liefert.
+wobei $x$ ein Skalarfeld ist.
 
-Es haben sich mehrere sogenannte \PimiddyBegriff{Iterationsverfahren} als
+Es existieren zahlreiche Lösungsverfahren für solch eine
+Gleichung. Bei der Auswahl des Verfahrens muss beachtet werden,
+welches Verfahren sich gut auf der Grafikkarte umsetzen lässt und
+möglichst schnell eine akzeptable Lösung liefert.
+
+Es haben sich mehrere \PimiddyBegriff{Iterationsverfahren} als
 günstig herausgestellt. Verfahren dieser Art beginnen mit einer initialen Lösung
 (beispielsweise schlicht $p=0$) und nähern sich dann in jedem Iterationsschritt
 weiter der eigentlichen Lösung an.
 
-Betrachtet man große Felder, bieten sich \PimiddyBegriff{Mehrgitterverfahren}
-an. Diese wurde bereits erfolgreich auf GPUs angewendet (siehe \cite{Bolz2002},
-\cite{Matthias2006}). Sie sind allerdings untrivial zu implementieren, da intern
-ein zweites Iterationsverfahren benötigt wird (der sogenannte
-Restriktionsoperator), sowie Methoden zum hoch- und runterskalieren von
-3D-Feldern.
+Betrachtet man große Felder, bieten sich
+\PimiddyBegriff{Mehrgitterverfahren} an. Diese wurden bereits
+erfolgreich auf GPUs angewendet (siehe~\cite{Bolz2002,
+Matthias2006}). Sie sind allerdings untrivial zu implementieren, da
+intern ein zweites Iterationsverfahren benötigt wird (der sogenannte
+Restriktionsoperator), sowie Methoden zum hoch- und runterskalieren
+von 3D-Feldern.
 
 Simplere Iterationsverfahren, die auch in der Praxis schon auf die GPU
 übertragen wurden, sind SOR (\cite{Saltvik2006}),
 Gauss-Seidel-Re"-la"-xa"-ti"-on (\cite{Stam2003}) und das
-Jacobiverfahren (\cite{Crane2007}, \cite{Harris2008},
-\cite{Peschel2009}). Letzteres ist besonders einfach zu implementieren
+Jacobiverfahren (\cite{Crane2007, Harris2008, Peschel2009}). Letzteres ist besonders einfach zu implementieren
 und gleichzeitig hervorragend für die GPU geeignet. Es wurde daher für
 die Implementierung verwendet und soll jetzt näher erläutert werden.
 
@@ -628,7 +630,7 @@ Für die exakte Lösung $p$ des Poissonproblems muss an jeder Stelle $i$ gelten:
 	p_{i-1}
 }
 {
-	(\Delta x)^2
+	{(\Delta x)}^2
 }
 =
 x_i
@@ -643,7 +645,7 @@ p_i
 \frac{
 	p_{j+1} +
 	p_{j-1} -
-	\cdot x_i
+	x_i
 }
 {
 	2
@@ -651,7 +653,7 @@ p_i
 \end{equation}
 
 Der Wert $p_i$ definiert sich also durch seine direkten Nachbarn $p_{i-1},
-p_{i+1}$, die Gleichung ist für sich genommen nicht aufzulösen.
+p_{i+1}$, daher ist die Gleichung für sich genommen nicht aufzulösen.
 
 Sei nun eine Anfangslösung $p^0$ gegeben, z.\,B.\ $p^0_i = 0$ für alle $i$.
 Dann lässt sich eine neue, bessere Lösung bestimmen, indem man die Werte aus
@@ -674,7 +676,7 @@ usw., bis man nahe genug an die exakte Lösung herangekommen ist. In der Praxis
 sind mindestens 20 Iterationen nötig, da das Verfahren sehr langsam konvergiert.
 
 Eine leichte Konvergenzverbesserung erreicht man, indem man die rechte Seite von
-\autoref{eq:stam_jacobi_onedimensional_iterative_solution} nicht direkt als neue
+\cref{eq:stam_jacobi_onedimensional_iterative_solution} nicht direkt als neue
 Lösung nimmt, sondern zwischen der bisherigen Lösung und der neue Lösung mit
 einem Gewichtungsfaktor $\omega$ interpoliert:
 
@@ -695,7 +697,7 @@ p_i^{n+1}
 Dieses Verfahren wird \PimiddyBegriff{gewichtete Jacobi-Iteration} genannt. In
 der Praxis hat sich ein Faktor von $\omega=\frac{2}{3}$ als günstig erwiesen.
 
-In drei Dimensionen ergibt sich dasselbe Schema, nur mit 6 Nachbarn:
+Das Verfahren lässt sich nun auf 3 Dimensionen (6 Nachbarn) verallgemeinern:
 \begin{equation}
 \label{eq:stam_jacobi_3d}
 p_{i,j,k}^{n+1}
@@ -719,7 +721,7 @@ p_{i,j,k}^{n+1}
 
 Bei der Berechnung des Drucks müssen Randbedingungen beachtet
 werden. Dies merkt man zum Beispiel daran, dass nicht jede Gitterzelle
-6 Nachbarn hat, um die rechte Seite von \autoref{eq:stam_jacobi_3d}
+6 Nachbarn hat, um die rechte Seite von \cref{eq:stam_jacobi_3d}
 auszuwerten. Außerdem muss der Druck in Hinderniszellen so gewählt
 werden, dass das Fluid nicht in das Hindernis eindringt, wenn man den
 Druckgradienten im letzten Schritt des Verfahrens von der
@@ -727,9 +729,9 @@ Geschwindigkeit subtrahiert. Hier sollen die umsetzbaren
 Randbedingungen besprochen werden.
 
 Es gibt im Wesentlichen zwei Arten von Randbedingungen bei einer
-Differentialgleichung (wie der Poissongleichung),
-\PimiddyBegriff{Di\-ri\-chlet-Rand\-be\-ding\-ung\-en} und
-\PimiddyBegriff{Von Neu\-mann-Rand\-be\-ding\-ung\-en}:
+Differentialgleichung (wie der Poissongleichung), zum einen die
+\PimiddyBegriff{Di\-ri\-chlet-Rand\-be\-ding\-ung\-en} und zum anderen die
+\PimiddyBegriff{Von-Neu\-mann-Rand\-be\-ding\-ung\-en}:
 
 \begin{itemize}
 \item
@@ -754,9 +756,9 @@ Differentialgleichung (wie der Poissongleichung),
 	\end{equation}
 
 	Beispielsweise könnte man $f(x)=0$ wählen. Wie bereits in
-	\autoref{sec:mathematics_incompressibility_condition_section} erläutert
+	\cref{sec:mathematics_incompressibility_condition_section} erläutert
 	bedeutet das, dass die Geschwindigkeitspfeile nicht in ein Hindernis
-	hinein- oder hinauszeigen dürfen. Das Fluid darf sich aber tangential
+	hinein- oder hinauszeigen dürfen, das Fluid selber darf sich aber tangential
 	frei bewegen. Diese Randbedingung wird deshalb auch spezieller als
 	\PimiddyBegriff{free-slip}-Randbedingung bezeichnet.
 \end{itemize}
@@ -776,32 +778,32 @@ Simulation \PimiddyQuotes{herausfließen}, als würde der Simulationsbereich dor
 noch weitergeführt werden. Diese Art der Randbedingung nennt man
 \PimiddyBegriff{outflow boundary}.
 
-Simuliert man Rauch oder Wasser gibt es noch weitere Arten von Randbedingungen.
-Die Grenze zwischen Wasseroberfläche und Luft nennt man \PimiddyBegriff{free
-surface}-Randbedingung. Um diese umzusetzen müsste man $p=0$ außerhalb
-des Wassers setzen. Diese Randbedingung wird hier nicht weiter beachtet.
+Simuliert man Rauch oder Wasser gibt es noch weitere Arten von
+Randbedingungen.  Die Grenze zwischen Wasseroberfläche und Luft nennt
+man \PimiddyBegriff{free surface}-Randbedingung. Um diese umzusetzen
+müsste man außerhalb des Wassers $p=0$ setzen. Diese Randbedingung
+wird hier nicht weiter beachtet.
 
-Eine Zusammenfassung aller Randbedingungen ist in \autoref{fig:stam_boundary_types} zu sehen.
+Eine Zusammenfassung aller Randbedingungen ist in \cref{fig:stam_boundary_types} zu sehen.
 
 \subsubsection{Randbedingungen in der Simulation}
 
 Es werden zuerst die Randbedingungen für die Hindernisse betrachtet. Hier sollen
-\emph{free-slip}-Bedingungen erzwungen werden. Dies soll nicht explizit
+\emph{free-slip}-Bedingungen erzwungen werden. Diese soll nicht explizit
 hergeleitet werden, es werden nur die Veränderungen am Jacobiverfahren
 beschrieben.
 
 Im bisher beschriebenen Jacobiverfahren betrachtet man jede Zelle $p_{i,j,k}$
-des Gitters und bilden die Summe über alle Nachbarzellen. Um die Randbedingungen
+des Gitters und bildet die Summe über alle Nachbarzellen. Um die Randbedingungen
 einfließen zu lassen, testet man, ob die Nachbarzelle von einem Hindernis
-ausgefüllt ist (hier benutzen wir das Hindernisfeld $b_{i,j,k}$, was eingangs
+ausgefüllt ist (hier benutzen wir das Hindernisfeld $b_{i,j,k}$, welches eingangs
 beschrieben wurde). Gehört die Zelle zu einem Hindernis, wird nicht der
 Druckwert der \emph{Nachbarzelle} zur Summe addiert, sondern der Wert der
-\emph{aktuellen Zelle} (siehe \autoref{fig:stam_modified_jacobi_algorithm}
-\PimiddyTodo{Wieso kann ich hier nur auf die subfigure verweisen?}). Auf
+\emph{aktuellen Zelle} (siehe \cref{fig:stam_modified_jacobi_algorithm}). Auf
 diese Weise kommt es zu keinem Druckunterschied in Richtung eines Hindernisses,
-der Gradient in dieser Richtung ist also 0.  Algorithmus
-\autoref{alg:stam_modified_jacobi_algorithm} zeigt den modifizierten
-Algorithmus.
+der Gradient in dieser Richtung ist also
+0. \cref{alg:stam_modified_jacobi_algorithm} zeigt den modifizierten
+Jacobi-Algorithmus.
 
 \begin{algorithm}
 \caption{Der modifizierte Jacobi-Algorithmus}
@@ -838,29 +840,29 @@ Algorithmus.
 Der Jacobi-Algorithmus löst die Poissongleichung allerdings nur annähernd.
 Folglich werden auch die Randbedingungen nur annähernd gelöst. Dies kann im
 nächsten Simulationsschritt zu Problemen führen. Daher wird in der
-Implementierung die free-slip-Randbedingung nach dem Projektionsschritt
+Implementierung die free-slip-Rand\-be\-din\-gung nach dem Projektionsschritt
 erzwungen (also nachdem der Gradient des Drucks vom Geschwindigkeitsfeld
 subtrahiert wurde).
 
 Idealerweise bräuchten wir dazu noch ein Feld $\vec{n}_{i,j,k}$, was in jedem
 Punkt die Normale des Hindernisses angibt (siehe
-\autoref{fig:stam_boundary_with_normals}). Dies wurde in einigen
-Arbeiten umgesetzt (z.\,B.\ \cite{Bordignon}), es gibt jedoch eine Vereinfachung,
+\cref{fig:stam_boundary_with_normals}). Dies wurde in einigen
+Arbeiten umgesetzt (\PimiddyzB{} \cite{Bordignon}), es gibt jedoch eine Vereinfachung,
 die dieses Feld nicht benötigt: Man iteriert erneut über alle
-Gitterzellen und testet indem für jede Gitterzelle $(i,j,k)$, welche
+Gitterzellen und testet für jede Gitterzelle $(i,j,k)$, welche
 Nachbarzellen von einem Hindernis ausgefüllt sind. Die zugehörige
 Komponente der Geschwindigkeit $\vec{u}_{i,j,k}$ wird dann auf 0
-gesetzt, siehe \autoref{alg:stam_enforce_free_slip}.
+gesetzt (siehe \cref{alg:stam_enforce_free_slip}).
 
 Für die outflow-Randbedingungen am Simulationsrand wird jede Randseite der
 Simulation einzeln betrachtet. Die Geschwindigkeit einer Randzelle wird ersetzt
 durch die Geschwindigkeit der \PimiddyQuotes{nächst inneren} Zelle.
 Beispielsweise werden die Geschwindigkeitswerte $\vec{u}_{0,j,k}$ (also die an
 der linken Simulationsseite) ersetzt durch die Werte $\vec{u}_{1,j,k}$. Analoges
-wird für die anderen Seiten des Kubus getan, allerdings nicht dort, wo
+wird für die anderen Seiten des Kubus getan, mit Ausnahme dort, wo
 inflow-Randbedingungen bestehen, wo also Wind in die Simulation hineinfließt.
 Dadurch ergibt sich am Rand die Divergenz 0, der Druck ist hier also auch
-annähernd 0 \PimiddyTodo{stimmt das überhaupt?}.
+annähernd 0.
 
 \begin{figure}[ht]
 	\begin{subfigure}[t]{0.5\textwidth}
@@ -868,14 +870,15 @@ annähernd 0 \PimiddyTodo{stimmt das überhaupt?}.
 		\includegraphics[width=\textwidth]{images/boundary_field_for_pressure}
 		\caption{Ein beispielhaftes Hindernisfeld $b_{i,j}$}
 	\end{subfigure}
-	~
+    ~
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\def\svgwidth{\textwidth}
 		\input{images/pressure_boundary.eps_tex}
 		\caption{Die in die Druckberechnungen einfließenden Werte.}
-	\label{fig:stam_modified_jacobi_algorithm}
+\label{fig:stam_modified_jacobi_algorithm}
 	\end{subfigure}
+    \caption{Druck in Zusammenhang mit Hindernisfeldern}
 \end{figure}
 
 \begin{algorithm}

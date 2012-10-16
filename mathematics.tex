@@ -29,9 +29,10 @@ Ein \PimiddyBegriff{Vektorfeld} $\vec{u}$ ist eine Abbildung
 \vec{u} \colon \PimiddyReell^n \to \PimiddyReell^n,
 \end{equation*}
 
-die einem Punkt im Raum einen Pfeil zuordnet. So kann \PimiddyzB{}jedem
-Punkt im Raum die Windgeschwindigkeit an diesem Punkt zugeordnet
-werden. \autoref{fig:mathematics_vectorfield} zeigt ein solches
+die einem Punkt $\vec{x}$ im Raum einen Pfeil $\vec{u}(\vec{x})$
+zuordnet. So kann \PimiddyzB{}jedem Punkt im Raum die
+Windgeschwindigkeit an diesem Punkt zugeordnet
+werden. \Cref{fig:mathematics_vectorfield} zeigt ein solches
 Vektorfeld.
 
 $\PimiddyVectorfields(\PimiddyReell^n)$ bezeichne die Menge aller
@@ -41,29 +42,31 @@ differenzierbar.
 Analog ist ein \PimiddyBegriff{Skalarfeld} $p$ eine Abbildung
 
 \begin{equation*}
-p \colon \PimiddyReell^n \to \PimiddyReell
+p \colon \PimiddyReell^n \to \PimiddyReell,
 \end{equation*}
 
-welche einem Punkt im Raum einen skalaren Wert zuordnet. Beispielsweise könnte
-für jeden Punkt im Raum die dortige Temperatur in einem Skalarfeld gespeichert
-sein (siehe \autoref{fig:mathematics_scalarfield}).
+welche einem Punkt $x$ im Raum einen skalaren Wert $p(x)$
+zuordnet. Beispielsweise könnte für jeden Punkt im Raum die dortige
+Temperatur in einem Skalarfeld gespeichert sein (siehe
+\cref{fig:mathematics_scalarfield}).
 $\PimiddyScalarfields(\PimiddyReell^n)$ bezeichne die Menge aller
-Skalarfelder. Auch alle Skalarfelder sind in dieser Arbeit
-differenzierbar.
+Skalarfelder.
+
+Auch alle Skalarfelder in dieser Arbeit sind differenzierbar.
 
 \begin{figure}
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/vectorfield}
 		\caption{Ein Vektorfeld}
-		\label{fig:mathematics_vectorfield}
+\label{fig:mathematics_vectorfield}
 	\end{subfigure}
-	~
+~
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/thermal_imaging}
 		\caption{Die Körpertemperatur eines Pferds als Skalarfeld.}
-		\label{fig:mathematics_scalarfield}
+\label{fig:mathematics_scalarfield}
 	\end{subfigure}
 	\caption{Die betrachteten Feldtypen}
 \end{figure}
@@ -81,35 +84,35 @@ $\PimiddyGrad p$ definiert als:
 \end{equation}
 
 \begin{figure}[ht]
-        \captionsetup{singlelinecheck=off}
-	\begin{subfigure}[t]{0.5\textwidth}
+	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/scalar_field_to_show_gradient}
-		\caption{Das Skalarfeld zur Funktion \[ f(x,y) = \sin(x)\sin(y) \] Rötliche Färbung deutet hohe Werte an, lila und blau geringe.}
-		\label{fig:mathematics_sample_scalar_field}
+		\caption{Das Skalarfeld zur Funktion $f(x,y) = \sin(x)\sin(y)$. Rötliche Färbung deutet hohe Werte an, lila und blau geringe.}
+\label{fig:mathematics_sample_scalar_field}
 	\end{subfigure}
-	~
-	\begin{subfigure}[t]{0.5\textwidth}
+~
+	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/gradient_of_scalar_field}
-		\caption{Der Gradient des Skalarfeldes \[ f(x,y)=(\sin(y)\cos(x),\sin(x)\cos(y)) \]}
-		\label{fig:mathematics_gradient_of_sample_scalar_field}
+		\caption{Der Gradient des Skalarfeldes $f(x,y)=(\sin(y)\cos(x),\sin(x)\cos(y))$}
+\label{fig:mathematics_gradient_of_sample_scalar_field}
 	\end{subfigure}
+		\centering
 	\caption{Der Gradient am Beispiel}
-	\label{fig:mathematics_gradient_of_sample_scalar_field_total}
+\label{fig:mathematics_gradient_of_sample_scalar_field_total}
 \end{figure}
 
 Der Gradient eines Skalarfeldes ist also ein Vektorfeld, nämlich das
-Vektorfeld der partiellen Ableitungen. Genauso wie die Ableitung eines
+Vektorfeld der partiellen Ableitungen. Genau wie die Ableitung eines
 Graphen die Steigung an jedem Punkt angibt, so zeigt der Gradient
-eines Feldes in die Richtung des steilsten Anstiegs. Die Länge des
-Gradienten gibt die Größe der Steigung in diesem Punkt an. Der
+eines Feldes in die Richtung des steilsten Anstiegs, wobei die Länge des
+Gradienten die Größe der Steigung in diesem Punkt angibt. Der
 Gradient des negativen Skalarfeldes $-p$ zeigt folglich in Richtung
 des größten Gefälles.
-\autoref{fig:mathematics_gradient_of_sample_scalar_field_total} zeigt
+\Cref{fig:mathematics_gradient_of_sample_scalar_field_total} zeigt
 ein simples Beispiel für den Gradienten.
 
-Für differenzierbare Vektorfelder $\vec{u}$ ist die
+Für ein differenzierbares Vektorfeld $\vec{u}$ ist die
 \PimiddyBegriff{Divergenz} auf dem Feld definiert als
 
 \begin{equation}
@@ -124,16 +127,10 @@ Für differenzierbare Vektorfelder $\vec{u}$ ist die
 \end{equation}
 
 Hier sind $u^x,u^y,u^z$ die einzelnen Komponenten des Vektorfelds. Die
-Divergenz eines Vektorfelds ist also ein Skalarfeld. Dieses Skalarfeld kann
-gedeutet werden als \PimiddyQuotes{Quellendichte} des ursprünglichen
-Vektorfelds\PimiddyTodo{Hier muss noch ein Bild hin.}. Ein Feld
-$\vec{u}$, welches $\PimiddyDiv \vec{u}=0$ erfüllt, heißt folglich
-\PimiddyBegriff{quellenfrei}.
-
-In der Physik findet man den Gradienten und die Divergenz meist unter dem Symbol
-$\nabla$ vereint. Je nachdem, ob es auf ein Vektor- oder ein Skalarfeld
-angewendet wird, wechselt es die Bedeutung.
-%Diese Notation wird in der Arbeit bevorzugt, da man die Symbole $\PimiddyGrad$ bzw.\ $\PimiddyDiv$ in der Literatur zu Fluiddynamik kaum vorfindet.
+Divergenz eines Vektorfelds ist also ein Skalarfeld. Dieses Skalarfeld
+kann gedeutet werden als \PimiddyQuotes{Quellendichte} des
+ursprünglichen Vektorfelds. Ein Feld $\vec{u}$, welches $\PimiddyDiv
+\vec{u}=0$ erfüllt, heißt folglich \PimiddyBegriff{quellenfrei}.
 
 Auf Vektorfeldern ist schließlich die \PimiddyBegriff{Rotation}
 definiert als:
@@ -153,28 +150,31 @@ definiert als:
 \end{aligned}
 \end{equation}
 
-Wie der Name schon andeutet gibt sie für jeden Punkt des
+Wie der Name schon andeutet, gibt sie für jeden Punkt des
 ursprünglichen Vektorfelds an, wie stark und in welche Richtung das
 Feld in diesem Punkt rotiert. Im Zweidimensionalen ist die Rotation
 auch definiert, hier ergibt sich für jeden Punkt im Raum allerdings
 nur ein Skalar, kein Vektor. Die Rotationsachse ist immer die
-imaginäre \PimiddyQuotes{$z$-Achse} (in
-\autoref{fig:mathematics_scalarfield} wäre die Rotation überall
-konstant). Ein Feld $\vec{u}$, welches $\PimiddyRot \vec{u}=0$
-erfüllt, heißt \PimiddyBegriff{rotationsfrei}.
+imaginäre
+\PimiddyQuotes{$z$-Achse}. \Cref{fig:mathematics_rotation_example}
+zeigt ein Skalarfeld und die dazugehörige Rotation.
+
+Ein Feld $\vec{u}$, welches $\PimiddyRot \vec{u}=0$ erfüllt, heißt
+\PimiddyBegriff{rotationsfrei}.
 
 \begin{figure}
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/vector_field_rotation_arrows}
-		\label{fig:mathematics_image_vectorfield_rotation_arrows}
+\label{fig:mathematics_image_vectorfield_rotation_arrows}
 	\end{subfigure}
-	~
+~
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/vector_field_rotation}
 	\end{subfigure}
 	\caption{Ein 2D-Strömungsfeld, das um ein Hindernis herumfließt mit dazugehöriger Rotation. Negative Rotation ist rot gekennzeichnet, positive in blau.}
+    \label{fig:mathematics_rotation_example}
 \end{figure}
 
 Schaltet man $\PimiddyGrad$ und $\PimiddyDiv$ hintereinander, erhält man den
@@ -187,7 +187,7 @@ Schaltet man $\PimiddyGrad$ und $\PimiddyDiv$ hintereinander, erhält man den
 \end{aligned}
 \end{equation}
 
-Manchmal wird auch das Symbol $\nabla^2$ für den Laplace-Operator benutzt. Im Dreidimensionalen ergibt sich:
+Im Dreidimensionalen ergibt sich:
 
 \begin{equation}
 \PimiddyLaplace p =
@@ -196,10 +196,10 @@ Manchmal wird auch das Symbol $\nabla^2$ für den Laplace-Operator benutzt. Im D
 \frac{\partial^2 p}{\partial^2 z}
 \end{equation}
 
-Intuitiv misst der Operator für jeden Punkt $\vec{x}$ die Abweichung von
-$p(\vec{x})$ zu Punkten in seiner Umgebung. Die diskretisierte Variante dieses
+Intuitiv gibt der Operator für jeden Punkt $\vec{x}$ die Abweichung von
+$p(\vec{x})$ zu Punkten in seiner Umgebung an. Die diskretisierte Variante dieses
 Operators wird deswegen in der Bildverarbeitung zum Erkennen von Kanten in
-Bildern verwendet (siehe \autoref{fig:mathematics_image_laplacian}).
+Bildern verwendet (siehe \cref{fig:mathematics_image_laplacian}).
 
 \begin{figure}[ht]
 	\begin{subfigure}[t]{0.5\textwidth}
@@ -207,12 +207,12 @@ Bildern verwendet (siehe \autoref{fig:mathematics_image_laplacian}).
 		\includegraphics[width=\textwidth]{images/schloss_grey}
 		\caption{Originalbild}
 	\end{subfigure}
-	~
+~
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/schloss_grey_laplace}
 		\caption{Das Bild nach Anwendung des Laplace-Operators}
-		\label{fig:mathematics_image_laplacian}
+\label{fig:mathematics_image_laplacian}
 	\end{subfigure}
 \end{figure}
 
@@ -234,17 +234,16 @@ ergibt sich:
 \subsection{Diskretisierung}
 \label{sec:mathematics_discretization}
 
-Die eben vorgestellten mathematischen Definitionen gehen vom
-unendlichen, kontinuierlichen Raum $\PimiddyReell^n$ aus. Für die
-Berechnungen wird aber ein endliches, diskretes Gitter verwendet, also
-eine Teilmenge von $\PimiddyGanz^n$. Eine Zelle in dem diskreten
-Gitter wird auch \PimiddyBegriff{Voxel} (für
-\PimiddyQuotes{Volumen-Pixel}) genannt. Die eben vorgestellten
-Operatoren müssen in eine diskrete Form gebracht werden. Dies wird
-hier zunächst in einer Dimension erläutert.
+Die vorgestellten mathematischen Definitionen gehen vom unendlichen,
+kontinuierlichen Raum $\PimiddyReell^n$ aus. Für die Berechnungen wird
+aber ein endliches, diskretes Gitter verwendet, \Pimiddydh{} eine
+Teilmenge von $\PimiddyGanz^n$. Eine Zelle in diesem diskreten Gitter
+wird auch \PimiddyBegriff{Voxel} (für \PimiddyQuotes{Volumen-Pixel})
+genannt. Die vorgestellten Operatoren müssen in eine diskrete Form
+gebracht werden, die zunächst in einer Dimension erläutert wird.
 
 Es sei $f \colon \PimiddyReell \to \PimiddyReell$ eine reelle Funktion, von der
-wir in den späteren Berechnungen nur Stützpunkte in regelmäßigen Abständen
+wir in den späteren Berechnungen Stützpunkte in regelmäßigen Abständen
 $\Delta x$ gegeben haben:
 
 \begin{equation}
@@ -254,7 +253,7 @@ f_i = f(x_i) \quad , x_i = n \cdot \Delta x, n \in \PimiddyGanz
 Die (kontinuierliche) Ableitung dieser Funktion ist definiert als
 
 \begin{equation}
-f'(x) = \lim_{h \to 0} \frac{f(x) - f(x+h)}{x - h}
+f'(x) = \lim_{h \to 0} \frac{f(x) - f(x+h)}{x - h}.
 \end{equation}
 
 Je nachdem, wie genau die Simulation sein soll, kann bei der
@@ -264,7 +263,7 @@ Abschätzung der Genauigkeit ist die \PimiddyBegriff{Taylorreihe} von
 $f$ (um den Entwicklungspunkt $a$):
 
 \begin{equation}
-f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2 + O(\Delta x^2)
+f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}{(x-a)}^2 + O(\Delta x^2)
 \end{equation}
 
 Nimmt man als Entwicklungspunkt $f(x_i)$ und setzt $x=x_{i+1}$ erhält man die
@@ -285,22 +284,22 @@ f'(x_i) = \frac{f(x_i) - f(x_{i-1})}{\Delta x} + O(\Delta x)
 
 Der Nachteil dieser beiden Näherungen ist, dass sie einseitig sind (entweder
 nach links oder rechts ausgerichtet) und linearen Fehler $O(\Delta x)$ haben, da
-die Taylorreihe schon nach dem ersten Glied abgeschnitten wird.
+die Taylorreihe bereits nach dem ersten Glied abgeschnitten wird.
 
 Eine bessere Näherung erhält man, wenn man
-\autoref{eq:mathematics_backward_difference} von
-\autoref{eq:mathematics_forward_difference} subtrahiert:
+\cref{eq:mathematics_backward_difference} von
+\cref{eq:mathematics_forward_difference} subtrahiert:
 
 \begin{equation}
 f'(x_i) = \frac{f(x_{i+1}) - f(x_{i-1})}{2 \Delta x} + O(\Delta x^2)
 \end{equation}
 
 Diese Näherung wird \PimiddyBegriff{zentrale Differenz} genannt und
-hat nur quadratischen Fehler $O(\Delta x^2)$. Man kann dieses Schema
-fortführen, um noch bessere Näherung zu erhalten. Dies führt
-allerdings dazu, dass eine immer größere Umgebung des aktuellen
+hat nur quadratischen Fehler $O(\Delta x^2)$. Zwar kann man dieses Schema
+fortführen, um noch bessere Näherung zu erhalten, jedoch führt
+dies dazu, dass eine immer größere Umgebung des aktuellen
 Punktes betrachtet werden muss, was in der späteren Implementierung zu
-viele Speicherzugriffe verursacht.
+viele Speicherzugriffe verursachen würde.
 
 Mit Hilfe der zentralen Differenz lässt sich auch eine Näherung für die zweite
 Ableitung angeben:
@@ -320,14 +319,15 @@ f''(x_i)
 		x_{i-1})
 }
 {
-	(\Delta x)^2
+	{(\Delta x)}^2
 }
 \end{equation}
 
 Da alle Operatoren auf partiellen Ableitungen beruhen, lassen sich nun
 diskrete Näherungen für jeden Operator angeben. Dies ist in
-\autoref{table:mathematics_discrete_operator_table} für 3 Dimensionen für ein
-Skalarfeld $p$ beziehungsweise ein Vektorfeld $\vec{u}$ geschehen.
+\cref{table:mathematics_discrete_operator_table} für ein Skalarfeld
+$p$ beziehungsweise ein Vektorfeld $\vec{u}$ für 3 Dimensionen
+geschehen.
 
 \begin{table}[ht]
 	\caption{Die diskretisierten Feldoperatoren in drei Dimensionen}
@@ -384,7 +384,7 @@ Skalarfeld $p$ beziehungsweise ein Vektorfeld $\vec{u}$ geschehen.
 				6p_{i,j}
 			}
 			{
-				(\Delta x)^2
+				{(\Delta x)}^2
 			}
 			\end{equation*}
 		\\
@@ -403,5 +403,5 @@ Skalarfeld $p$ beziehungsweise ein Vektorfeld $\vec{u}$ geschehen.
 		\\
 		\bottomrule
 	\end{tabular}
-	\label{table:mathematics_discrete_operator_table}
+\label{table:mathematics_discrete_operator_table}
 \end{table}

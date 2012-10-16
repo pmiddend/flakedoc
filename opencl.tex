@@ -56,9 +56,9 @@ zu Prozessoren mit mehreren Kernen (momentan bis zu 8).
 
 In den letzten Jahren ist auch die Leistungsfähigkeit von
 Grafikprozessoren (GPUs) rasant angestiegen (siehe
-\autoref{fig:opencl_gflops_gpu_vs_cpu} und
-\autoref{fig:opencl_gbs_gpu_vs_cpu}). GPUs waren anfangs spezialisierte Recheneinheiten, um die in
-\autoref{sec:opengl} vorgestellte Grafikpipeline umzusetzen. Da jeder
+\cref{fig:opencl_gflops_gpu_vs_cpu} und
+\cref{fig:opencl_gbs_gpu_vs_cpu}). GPUs waren anfangs spezialisierte Recheneinheiten, um die in
+\cref{sec:opengl} vorgestellte Grafikpipeline umzusetzen. Da jeder
 Vertex und jedes Fragment für sich bearbeitet werden kann, bot sich
 hier von Anfang an eine hochparallele Architektur an.
 
@@ -67,14 +67,14 @@ hier von Anfang an eine hochparallele Architektur an.
 		\centering
 		\includegraphics[width=\textwidth]{images/gflops_cpu_vs_gpu}
                 \caption{Anstieg der Gigaflops pro Sekunde im Vergleich zwischen CPUs und GPUs}
-		\label{fig:opencl_gflops_gpu_vs_cpu}
+\label{fig:opencl_gflops_gpu_vs_cpu}
 	\end{subfigure}
-	~
+    ~
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/gbs_cpu_vs_gpu}
                 \caption{Anstieg der Bandbreite im Vergleich zwischen CPUs und GPUs}
-		\label{fig:opencl_gbs_gpu_vs_cpu}
+\label{fig:opencl_gbs_gpu_vs_cpu}
 	\end{subfigure}
         \caption{Vergleich zwischen CPUs und GPUs}
 \end{figure}
@@ -83,7 +83,7 @@ Mit der Zeit stieg aber die Nachfrage nach mächtigeren Shaderprogrammen, um
 aufwändigere Grafikeffekte umzusetzen. Daher wurden die Recheneinheiten der GPUs
 immer weiter verallgemeinert. Mit Hilfe dieser leistungsfähigen Shaderprogramme
 begannen auch Wissenschaftler, Grafikkarten für Rechenaufgaben zu verwenden und
-es entstanden \Pimiddyca 2004 erste Umsetzungen von Stams Methode auf
+es entstanden \Pimiddyca{} 2004 erste Umsetzungen von Stams Methode auf
 Grafikkarten\cite{Wu2004}.
 
 Allerdings war es bis dato weder möglich, rohen Speicher auf der
@@ -95,15 +95,15 @@ gespeichert, die man als \PimiddyQuotes{Rendertargets} angeben
 konnte. Dann wurde ein Rechteck auf den Bildschirm gezeichnet, um die
 Ausführung der Berechnungs-Shader künstlich anzustoßen.
 
-Um komfortabler allgemeine Berechnungen auf der Grafikkarte bzw. auf
+Um komfortabler allgemeine Berechnungen auf der Grafikkarte \Pimiddybzw{} auf
 Mehrkernsystemen zu tätigen, wurden mehrere Frameworks entwickelt,
 unter anderem CUDA von NVidia und AMDs Stream Framework. Diese waren
 aber nicht formal spezifiziert und oft herstellerabhängig. Ein
-CUDA-Programm ist \PimiddyzB nur auf GPUs von NVidia lauffähig.
+CUDA-Programm ist \PimiddyzB{} nur auf GPUs von NVidia lauffähig.
 
 Als Lösung für dieses Problem wurde Ende 2008 das OpenCL-Framework in
 der Version 1.0 veröffentlicht, unterstützt von unter anderem Apple,
-NVidia, AMD und IBM. OpenCL ermöglicht das Erstellen von parallel
+NVidia, AMD und IBM\@. OpenCL ermöglicht das Erstellen von parallel
 laufenden Programmen auf GPUs, CPUs und sogar FPGAs. Man spricht
 allgemein von \PimiddyBegriff{heterogenen Systemen}. Inzwischen ist
 OpenCL bei Version 1.2 angelangt, wobei diese noch nicht von allen
@@ -126,7 +126,7 @@ klassisches Beispiel für nebenläufige Operationsströme bieten
 beispielsweise auf Daten von einem Netzwerksocket wartet, kann ein
 anderer einen Ladebalken anzeigen. Mit Hilfe von Threads können sowohl
 gleiche Bereiche des Codes mehrfach parallel ausgeführt werden
-(\PimiddyzB eine bestimmte Funktion mit verschiedenen Eingaben) oder
+(\PimiddyzB{} eine bestimmte Funktion mit verschiedenen Eingaben) oder
 auch vollkommen verschiedene Bereiche.
 
 In OpenCL werden insgesamt zwei Arten von Parallelität unterschieden:
@@ -199,12 +199,12 @@ werden. Daher müssen als Basis allgemeine Begriffe zur Beschreibung
 von Systemen mit mehreren Prozessoren und Komponenten definiert
 werden. Dies geschieht im Platform-Model.
 
-OpenCLs Platform-Model ist in \autoref{fig:opencl_platform_model}
+OpenCLs Platform-Model ist in \cref{fig:opencl_platform_model}
 dargestellt. Es ist sehr allgemein gehalten, sodass es sich auf eine
 Vielzahl von Hardwaresystemen sinnvoll übertragen lässt. Im Modell
 existiert genau einen \PimiddyBegriff{Host}, der mehrere
 \PimiddyBegriff{Devices} verwaltet. Ein Device ist zum Beispiel eine
-Grafikkarte oder eine CPU. Ein typisches Desktopsystem als Host könnte
+Grafikkarte oder eine CPU\@. Ein typisches Desktopsystem als Host könnte
 beispielsweise drei Devices enthalten: eine CPU und zwei Grafikkarten.
 
 Ein Device hat mehrere \PimiddyBegriff{Compute Units} (CU), die
@@ -243,7 +243,7 @@ freien Funktion in einer normalen Programmiersprache. Sie können den
 Speicher des Devices, auf dem sie ausgeführt werden, sowohl lesen als
 auch schreiben und sind so in der Lage, Ergebnisse zu produzieren.
 
-\PimiddyListingRef{lst:opencl_add_arrays_example} zeigt einen in
+\Cref{lst:opencl_add_arrays_example} zeigt einen in
 OpenCL-C geschriebenen Kernel, der zwei Elemente aus den Arrays
 \PimiddyInlineCode{a} und \PimiddyInlineCode{b} addiert und das
 Ergebnis in ein Array \PimiddyInlineCode{result} zurückschreibt. An
@@ -294,7 +294,7 @@ noch nichts darüber ausgesagt, wie viele Instanzen gleichzeitig
 dreidimensionale Arbeitsgrößen angeben.
 
 Um mit dem Kernel aus
-\PimiddyListingRef{lst:opencl_add_arrays_example} das
+\cref{lst:opencl_add_arrays_example} das
 \PimiddyInlineCode{result}-Array komplett zu füllen, müsste man also
 $\mathcal{G}=\PimiddyFormelText{Länge}(\texttt{result})$ wählen (also eine
 eindimensionale Arbeitsgröße). Das Device startet dann entsprechend
@@ -351,11 +351,11 @@ Work-Group parallel ausgeführt werden.
 \label{sec:opencl_memory_model}
 
 Da OpenCL auf vielen verschieden Systemen lauffähig sein soll, müssen
--- ähnlich wie beim Platform-Model -- allgemeine Begriffe geschaffen
+--- ähnlich wie beim Platform-Model --- allgemeine Begriffe geschaffen
 werden, welche die für den Benutzer verfügbaren Speicherbereiche
 beschreiben.
 
-Es gibt zwei Arten von Speicherobjekten in OpenCL:
+Es gibt zwei Arten von Speicherobjekten in OpenCL\@:
 \PimiddyBegriff{buffer objects} und
 \PimiddyBegriff{image objects}. \PimiddyEnglBegriff{Buffer objects} stellen rohe
 Speicherblöcke einer bestimmten Größe dar, die der Anwender mit
@@ -378,7 +378,7 @@ werden. Ein Device muss nicht zwingend \PimiddyEnglBegriff{image objects}
 unterstützen. Außerdem sind dreidimensionale Texturen sind nicht aus
 Kerneln heraus beschreibbar (zweidimensionale schon).
 
-Des weiteren gibt es 5 verschiedene \emph{Speicherbereiche} in OpenCL:
+Des weiteren gibt es 5 verschiedene \emph{Speicherbereiche} in OpenCL\@:
 
 \begin{description}
 \item[Hostspeicher] Diese Art Speicher ist nur für das Host-Programm
@@ -403,7 +403,7 @@ aktuelle Processing Element verfügbar und enthält unter anderem lokale
 Variablen.
 \end{description}
 
-\autoref{fig:opencl_memory_model} zeigt alle Speichertypen im
+\Cref{fig:opencl_memory_model} zeigt alle Speichertypen im
 Überblick. Es ist erkennbar, dass das Host-Programm lediglich den
 konstanten und den globalen Speicher lesen und schreiben kann. Da der
 Transfer von Host-Speicher zu Device-Speicher allerdings
@@ -538,7 +538,7 @@ normale C99-Funktionen mit Rückgabetyp \PimiddyInlineCode{void}, die
 mit dem Attribut \PimiddyInlineCode{kernel} ausgestattet sind. Nur
 diese Funktionen können von außen als \PimiddyQuotes{Einsprungpunkte}
 für die OpenCL-Runtime benutzt werden. Aus der Funktion
-\PimiddyInlineCode{helper} im Programmcode oben kann \PimiddyzB kein
+\PimiddyInlineCode{helper} im Programmcode oben kann \PimiddyzB{} kein
 \PimiddyEnglBegriff{kernel object} erzeugt werden. Die Funktion
 \PimiddyInlineCode{clCreateKernel} erhält das \PimiddyEnglBegriff{program object} und den
 Namen des Kernels als Parameter.
@@ -562,13 +562,13 @@ Funktion \PimiddyInlineCode{read\_imagef} zur Verfügung.
 
 Sind alle Parameter gesetzt, kann man der Funktion
 \PimiddyInlineCode{clEnqueueNDRangeKernel} das \PimiddyEnglBegriff{kernel object}, sowie die
-in \autoref{sec:opencl_execution_model} beschriebenen Parameter
+in \cref{sec:opencl_execution_model} beschriebenen Parameter
 übergeben und der Kernel wird auf dem Device ausgeführt.
 
 In OpenCL ist es wichtig, jede Variable mit einem Attribut
 auszustatten, die den Speicherbereich der Variable angibt. Mit
 Ausnahme des Hostspeichers gibt es für jeden der in
-\autoref{sec:opencl_memory_model} beschriebenen Bereiche ein
+\cref{sec:opencl_memory_model} beschriebenen Bereiche ein
 Schlüsselwort: \PimiddyInlineCode{private},
 \PimiddyInlineCode{constant}, \PimiddyInlineCode{local} und
 \PimiddyInlineCode{global}. Schreibt man den Speicherbereich nicht
@@ -579,7 +579,7 @@ nicht möglich, einem \PimiddyInlineCode{global float *p} einen Pointer
 
 OpenCL-C definiert neue Datentypen für Vektoren. Diese heißen genauso
 wie die skalaren Typen in C und haben ihre Dimension angehängt
-(\PimiddyzB \PimiddyInlineCode{float4} im Beispiel oben). Für die
+(\PimiddyzB{} \PimiddyInlineCode{float4} im Beispiel oben). Für die
 Dimension sind allerdings nur $1,2,4,8$ und $16$ möglich. Mit
 OpenCL-1.1 ist die Dimension $3$ hinzugekommen. Für Vektoren sind die
 arithmetischen Operatoren in natürlicher Weise überladen, sodass man
@@ -620,9 +620,9 @@ auf minimalen Prozessoren lauffähig ist:
 
 Um das Zusammenspiel aller OpenCL-Komponenten zu verdeutlichen, soll
 hier der Programmcode vorgestellt werden, um zwei Arrays einzulesen,
-sie mit \PimiddyListingRef{lst:opencl_add_arrays_example} zu addieren
+sie mit \cref{lst:opencl_add_arrays_example} zu addieren
 und das Ergebnis auszugeben. Es wird leicht vereinfachter C-Code
-verwendet und \PimiddyzB Fehlerbehandlung weggelassen.
+verwendet und \PimiddyzB{} Fehlerbehandlung weggelassen.
 
 Wir nehmen an, die Variable \PimiddyInlineCode{device} enthielte das
 Gerät, auf dem der Code ausgeführt werden soll. Außerdem sei die Länge
@@ -722,7 +722,7 @@ clEnqueueNDRangeKernel(
 Wenn die Funktion zurückgibt, hat das Device seine Arbeit verrichtet und das
 Ergebnis liegt in \PimiddyInlineCode{result}. Dieses \PimiddyEnglBegriff{buffer
 object} liegt allerdings im globalen Device-Speicher. Um die Werte
-\PimiddyzB auf der Konsole auszugeben, wird der Inhalt in den
+\PimiddyzB{} auf der Konsole auszugeben, wird der Inhalt in den
 Host-Speicher übertragen.
 
 \begin{minted}[frame=lines]{c}
